@@ -1,3 +1,29 @@
+### 说明
+
+TheFairLib 是基于yaf框架,集成了一些基本的类
+
+* 阿里云OSS,使用成本很低,非常实用,个人站点的js,css,image都可以用的
+
+* BigPipe 主要用于h5页面
+
+* DB操作使用  predis / illuminate/database
+
+* App的IM接入了融云
+
+* App的消息推送,接入个推/极光
+
+* 消息列表使用接入kafka nmred/kafka-php
+
+* 全文搜索使用coreseek
+
+* RPC服务器,使用swoole
+
+* 后台或h5使用smarty模板,已升级到最新
+
+* 验证码支持图片/短信验证码,只支持redis,短信目前只接入了云片网
+
+* 微信营销接入有赞
+
 ### 阿里云OSS上传
 
 **config目录下新建AliYun.php文件，不能使用其他名称**

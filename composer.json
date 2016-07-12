@@ -1,7 +1,7 @@
 {
   "name": "lmz/thefairlib",
   "type": "library",
-  "description": "The PHP library for TheFair",
+  "description": "这个类库只能用于与Yaf框架",
   "keywords": [
     "thefair"
   ],

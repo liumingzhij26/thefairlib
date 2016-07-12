@@ -113,7 +113,7 @@ class Utility
      */
     public static function getPhase()
     {
-        $phase = \Config::get('app.phase');
+        $phase = Config::get_app('phase');
         if ($phase != 'staging')
             $phase = '';
 
@@ -298,24 +298,8 @@ class Utility
 
         $path = '/';
         if (empty($domain)) {
-            $host = $_SERVER['HTTP_HOST'];
-
-            if (strpos($host, '.rd.taooo.cc') !== false) {
-                $domain = '.rd.taooo.cc';
-            } elseif (strpos($host, '.taooo.cc') !== false) {
-                $domain = '.taooo.cc';
-            } elseif (strpos($host, '.rd.molandapp.com') !== false) {
-                $domain = '.rd.molandapp.com';
-            } elseif (strpos($host, '.molandapp.com') !== false) {
-                $domain = '.molandapp.com';
-            } elseif (strpos($host, 'intra.api.localdomain') !== false) {
-                $domain = '.taooo.cc';
-            } elseif (strpos($host, 'intra.api.molandapp.com.localdomain') !== false) {
-                $domain = '.molandapp.com';
-            } else {
-                $domainConf = Config::get_app('cookie.default_domain');
-                $domain = !empty($domainConf) ? $domainConf : '';
-            }
+            $domainConf = Config::get_app('cookie.default_domain');
+            $domain = !empty($domainConf) ? $domainConf : '';
         }
 
         $cookie[] = new Cookie($key, $value, $ttl, $path, $domain);
@@ -507,7 +491,7 @@ class Utility
      */
     public static function isMobile($mobile)
     {
-        return preg_match('/^(0|86|17951)?(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}$/', $mobile);
+        return preg_match('/^(0|86|17951)?(13[0-9]|15[012356789]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/', $mobile);
     }
 
     /**
