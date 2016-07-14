@@ -43,7 +43,7 @@ class Logger
     private function output($s){
         $s = date("Y-m-d H:i:s +u").": $s\n";
 
-        $dir = '/home/thefair/logs/www/'.str_replace('.','/',strtolower($this->_name));
+        $dir = '/tmp/logs/www/'.str_replace('.','/',strtolower($this->_name));
         if( !is_dir($dir) ) {
             mkdir($dir, 0777, true);
         }
