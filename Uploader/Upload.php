@@ -62,8 +62,9 @@ class Upload
     private function _upFile($base64)
     {
         //处理base64上传
-        if ($base64) {
-            $this->_base64ToImage($this->fileField);
+        if ("base64" == $base64) {
+            $content = $_POST[$this->fileField];
+            $this->_base64ToImage($content);
             return;
         }
 
