@@ -12,6 +12,7 @@ use TheFairLib\Controller\Service\Error;
 use TheFairLib\Exception\Service\ServiceException;
 use TheFairLib\Logger\Logger;
 use TheFairLib\Service\Swoole\Network\Protocol\BaseServer;
+use TheFairLib\Utility\Utility;
 use Yaf\Application;
 use Yaf\Request\Http;
 
@@ -59,7 +60,7 @@ class RpcServer extends BaseServer
                 if (defined('APP_NAME')) {
                     Logger::Instance()->error(date("Y-m-d H:i:s +u") . "\n"
                         . "请求接口:{$_SERVER['REQUEST_URI']}\n"
-                        . "请求参数:" . json_encode($_REQUEST) . "\n"
+                        . "请求参数:" . Utility::encode($_REQUEST) . "\n"
                         . "错误信息:" . $e->getMessage() . "\n"
                         . "Trace:" . $e->getTraceAsString() . "\n\n");
                 }
@@ -70,7 +71,7 @@ class RpcServer extends BaseServer
                 ];
             }
 
-            $result = json_encode($ret, JSON_UNESCAPED_UNICODE);
+            $result = Utility::encode($ret);
         }
 
         Logger::Instance()->info('onReceive');

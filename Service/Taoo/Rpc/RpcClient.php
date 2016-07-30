@@ -9,9 +9,10 @@
 namespace TheFairLib\Service\Taoo\Rpc;
 use TheFairLib\Config\Config;
 use TheFairLib\DB\Redis\Cache;
-use TheFairLib\Exception\Base;
+use TheFairLib\Exception\BaseException;
 use TheFairLib\Logger\Logger;
 use TheFairLib\Service\Swoole\Client\TCP;
+use TheFairLib\Utility\Utility;
 use Yaf\Exception;
 
 class RpcClient extends TCP
@@ -58,10 +59,10 @@ class RpcClient extends TCP
         if(empty($result)){
             $result = $this->call($url, $params);
             if($cacheTtl !== false){
-                $this->_getCache()->setex($cacheKey, $cacheTtl, json_encode($result, JSON_UNESCAPED_UNICODE));
+                $this->_getCache()->setex($cacheKey, $cacheTtl, Utility::encode($result));
             }
         }else{
-            $result = json_decode($result, true);
+            $result = Utility::decode($result);
         }
 
         //如果设置了只返回结果,当code!=0的时候,直接抛出异常
@@ -81,14 +82,14 @@ class RpcClient extends TCP
     }
 
     protected function _encode($data){
-        $data = base64_encode(gzcompress(json_encode($data, JSON_UNESCAPED_UNICODE)));
+        $data = base64_encode(gzcompress(Utility::encode($data)));
         //因为swoole扩展启用了open_length_check,需要在数据头部增加header @todo 增加长度校验及扩展头
         return pack("N", strlen($data)) .$data;
     }
 
     protected function _decode($data){
         $data = substr($data, 4);
-        return json_decode(gzuncompress(base64_decode($data)), true);
+        return Utility::decode(gzuncompress(base64_decode($data)));
     }
 
     private function _getServiceCacheTtl($url){
@@ -99,7 +100,7 @@ class RpcClient extends TCP
 
     private function _getServiceCacheKey($url, $params){
         $serviceConfig = $this->_getServiceConfigKey($url);
-        return !empty($serviceConfig) ? 'service_cache_'.Config::get_app('phase').'::'.$serviceConfig.'_'.md5($this->getServerTag().$url.json_encode($params)) : null;
+        return !empty($serviceConfig) ? 'service_cache_'.Config::get_app('phase').'::'.$serviceConfig.'_'.md5($this->getServerTag().$url.Utility::encode($params)) : null;
     }
 
     private function _getServiceConfigKey($url){

@@ -9,9 +9,10 @@
 namespace TheFairLib\BigPipe;
 
 use TheFairLib\BigPipe\Render\ScriptOnlyStreamlineRender;
-use TheFairLib\BigPipe\Render\StreamlineRender;
+use TheFairLib\BigPipe\Render\StreamLineRender;
 use TheFairLib\BigPipe\Render\TraditionalRender;
 use TheFairLib\Smarty\Adapter;
+use TheFairLib\Utility\Utility;
 use Yaf\Registry;
 
 abstract class Render{
@@ -49,7 +50,7 @@ abstract class Render{
 
         switch($renderType) {
             case 'Streamline':
-                return new StreamlineRender($pl);
+                return new StreamLineRender($pl);
                 break;
             case 'Traditional':
                 return new TraditionalRender($pl);
@@ -160,7 +161,7 @@ abstract class Render{
         $js		= $pl->getDependsScripts();
 
         //结束
-        return json_encode(
+        return Utility::encode(
             array(
                 'pid' 		=> $pid,
                 'js' 		=> $js,

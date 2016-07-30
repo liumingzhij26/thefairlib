@@ -491,7 +491,7 @@ class Utility
      */
     public static function isMobile($mobile)
     {
-        return preg_match('/^(0|86|17951)?(13[0-9]|15[012356789]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/', $mobile);
+        return preg_match('/^(0|86|17951)?(13[0-9]|15[0-9]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/', $mobile);
     }
 
     /**
@@ -533,5 +533,94 @@ class Utility
         }
         unset ($proArr);
         return $result;
+    }
+
+    /**
+     * 时间戳格式转换
+     *
+     * @param $timestamp
+     * @return bool|string
+     */
+    public static function formatTimestamp($timestamp){
+        $nowTime 	= time();
+        $showTime 	= is_numeric($timestamp) ? $timestamp : strtotime($timestamp);
+        $dur = $nowTime - $showTime;
+        if($dur < 180){
+            return '刚刚';
+        }else{
+            if($dur < 3600){
+                return floor($dur/60).'分钟前';
+            }else{
+                if($dur < 86400){
+                    return floor($dur/3600).'小时前';
+                }else{
+                    if($dur < 864000){
+                        return floor($dur/86400).'天前';
+                    }else{
+                        return date("Y-m-d", $showTime);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 统一封装的encode方法
+     *
+     * @param $data
+     * @param string $format
+     * @return string
+     */
+    public static function encode($data, $format = 'json'){
+        switch($format){
+            case 'json':
+                if(extension_loaded('jsond')){
+                    $ret = jsond_encode($data, JSON_UNESCAPED_UNICODE);
+                }else{
+                    $ret = json_encode($data, JSON_UNESCAPED_UNICODE);
+                }
+                break;
+            case 'base64':
+                $ret = base64_encode($data);
+                break;
+            case 'serialize':
+                $ret = serialize($data);
+                break;
+            default:
+                $ret = $data;
+
+        }
+
+        return $ret;
+    }
+
+    /**
+     * 统一封装的decode方法
+     *
+     * @param $data
+     * @param string $format
+     * @return mixed|string
+     */
+    public static function decode($data, $format = 'json'){
+        switch($format){
+            case 'json':
+                if(extension_loaded('jsond')){
+                    $ret = jsond_decode($data, true);
+                }else{
+                    $ret = json_decode($data, true);
+                }
+                break;
+            case 'base64':
+                $ret = base64_decode($data);
+                break;
+            case 'serialize':
+                $ret = unserialize($data);
+                break;
+            default:
+                $ret = $data;
+
+        }
+
+        return $ret;
     }
 }

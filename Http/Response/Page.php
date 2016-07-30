@@ -22,7 +22,16 @@ class Page extends Response
     private static $_jsonpCallbackName = 'callback';
     private static $_isJsonp = false;
 
-    public function __construct($result, $msg = '', $code = 0, $httpCode = 200){
+    private static $instance = null;
+
+    static public function Instance($result = []){
+        if (empty(self::$instance)) {
+            self::$instance = new static($result);
+        }
+        return self::$instance;
+    }
+
+    public function __construct($result = [], $msg = '', $code = 0, $httpCode = 200){
         $this->setResult($result);
         $this->setMsg($msg);
         $this->setCode($code);
@@ -63,7 +72,7 @@ class Page extends Response
     }
 
     protected function _serialize($content){
-        $content = json_encode($content, JSON_UNESCAPED_UNICODE);
+        $content = Utility::encode($content);
 
         if(self::$_isJsonp === true){
             $content = self::$_jsonpCallbackName . '(' . $content . ');';
@@ -93,5 +102,17 @@ class Page extends Response
             'message' => array('text' => $this->getMsg(), 'action' => 'toast'),
             'result' => (object) $this->getResult(),
         );
+    }
+
+    public function redirect($url){
+        $cookies = Utility::getResponseCookie();
+        if(!empty($cookies)){
+            foreach($cookies as $cookie){
+                $this->setCookie($cookie);
+            }
+        }
+        $this->setHeader('location', $url);
+        $this->setBody('');
+        return parent::send();
     }
 }

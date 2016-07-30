@@ -11,8 +11,9 @@ namespace TheFairLib\BigPipe\Render;
 use TheFairLib\BigPipe\Exception;
 use TheFairLib\BigPipe\Pagelet;
 use TheFairLib\BigPipe\Render;
+use TheFairLib\Utility\Utility;
 
-class StreamlineRender extends Render{
+class StreamLineRender extends Render{
     protected $deferedPagelets = array();
     protected $scripts = array();
     protected $skeletonScripts = array();
@@ -112,7 +113,7 @@ class StreamlineRender extends Render{
     }
 
     protected function renderScriptWithJson($plName, $scripts){
-        return json_encode(array('pid' => $plName, 'js' => $scripts));
+        return Utility::encode(array('pid' => $plName, 'js' => $scripts));
     }
 
     protected function renderSkeletonScripts(){

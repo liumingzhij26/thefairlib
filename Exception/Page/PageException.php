@@ -1,19 +1,19 @@
 <?php
 /**
- * Thefair API Exception
- * API相关异常处理
+ * Thefair Page Exception
+ * 页面相关异常处理
  *
  * @author ZhangHan <zhanghan@thefair.net.cn>
  * @version 1.0
  * @copyright 2015-2025 TheFair
  */
-namespace TheFairLib\Exception\Api;
+namespace TheFairLib\Exception\Page;
 
-use TheFairLib\Config\Config;
 use TheFairLib\Exception\BaseException;
+use TheFairLib\Config\Config;
 use TheFairLib\I18N\TranslateHelper;
 
-class ApiException extends BaseException
+class PageException extends BaseException
 {
     private $extData = array();
     private $extCode = '10000';

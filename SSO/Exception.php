@@ -6,7 +6,8 @@
  * @version 1.0
  * @copyright 2015-2025 TheFair
  */
-namespace TheFairLib\Aliyun;
+namespace TheFairLib\SSO;
+
 use TheFairLib\Exception\BaseException;
 
 class Exception extends BaseException
