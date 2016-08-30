@@ -22,7 +22,7 @@ class Upload
     private $fileName;             //新文件名
     private $fullName;             //完整文件名,即从当前配置目录开始的URL
     private $fileSize;             //文件大小
-    private $fileType;             //文件类型
+    private $fileType = '.png';             //文件类型
     private $stateInfo;            //上传状态信息,
     private $stateMap = array(    //上传状态映射表，国际化用户需考虑此处数据的国际化
         "SUCCESS",                //上传成功标记，在UEditor中内不可改变，否则flash判断会出错
@@ -123,7 +123,7 @@ class Upload
         } else {
             $img = base64_decode($base64Data);
         }
-        $this->fileName = time() . rand(1, 10000) . ".png";
+        $this->fileName = time() . rand(1, 10000) . $this->fileType;
         $this->fullName = $this->_getFolder() . '/' . $this->fileName;
         if (!file_put_contents($this->fullName, $img)) {
             $this->stateInfo = $this->_getStateInfo("IO");
@@ -131,7 +131,6 @@ class Upload
         }
         $this->oriName = "";
         $this->fileSize = strlen($img);
-        $this->fileType = ".png";
     }
 
     /**
