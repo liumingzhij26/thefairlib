@@ -623,4 +623,30 @@ class Utility
 
         return $ret;
     }
+
+    /**
+     * 分词,需要引入 "lmz/phpanalysis": "*"
+     *
+     * @param $str
+     * @return array
+     */
+    public static function participle($str)
+    {
+        \Phpanalysis\Phpanalysis::$loadInit = false;
+        $pa = new \Phpanalysis\Phpanalysis('utf-8', 'utf-8', true);
+        //载入词典
+        $pa->LoadDict();
+        //执行分词
+        $pa->SetSource($str);
+        $pa->differMax = true;
+        $pa->unitWord = true;
+        $pa->StartAnalysis(true);
+        $result = $pa->GetFinallyResult('###', false);
+        $data = [];
+        if (!empty($result)) {
+            $data = explode('###', $result);
+        }
+        return $data;
+    }
+
 }

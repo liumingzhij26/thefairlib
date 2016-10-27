@@ -19,6 +19,9 @@ use Yaf\Registry;
 
 abstract class Error extends ErrorBase
 {
+    /**
+     * @var Page
+     */
     protected static $_responseObj = false;
 
     protected function init()
@@ -45,7 +48,11 @@ abstract class Error extends ErrorBase
                     . "错误信息:" . $e->getMessage() . "\n"
                     . "Trace:" . $e->getTraceAsString() . "\n\n");
             }
-            $this->_DealIllegalRequest($e->getMessage());
+            if ($this->isAjax()) {
+                $this->showError($e->getMessage());
+            } else {
+                $this->_DealIllegalRequest($e->getMessage());
+            }
         }
 
     }
@@ -96,10 +103,7 @@ abstract class Error extends ErrorBase
     {
         self::$_responseObj->setCode($code);
         self::$_responseObj->setMsg($msg);
-        if (!empty($result)) {
-            self::$_responseObj->setResult($result);
-
-        }
+        self::$_responseObj->setResult($result);
         $this->_setResponse(self::$_responseObj->send());
     }
 
