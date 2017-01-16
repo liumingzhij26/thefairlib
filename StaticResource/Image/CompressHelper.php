@@ -15,8 +15,8 @@ class CompressHelper
 {
     public static function getCompressImgUrl($url, $width, $type = 'jpg', $quality = '100')
     {
-        $service = Config::get_image('auto_compress_service');
-        switch ($service) {
+        $service = Config::get_image();
+        switch ($service['auto_compress_service']) {
             case 'aliyun':
                 $urlAry = parse_url($url);
                 if (!empty($service['host']) && in_array($urlAry['host'], $service['host'])) {
