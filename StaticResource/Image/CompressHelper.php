@@ -20,7 +20,6 @@ class CompressHelper
             case 'aliyun':
                 $urlAry = parse_url($url);
                 if (!empty($service['host']) && in_array($urlAry['host'], $service['host'])) {
-                    $urlAry['host'] = $urlAry['host'] == 'static.thefair.net.cn' ? 'image.thefair.net.cn' : 'image.bj.taooo.cc';
                     $urlAry['path'] = $urlAry['path'] . '@1pr_' . (int)$width . 'w' . ($quality != '100' && $type != 'webp' ? '_' . $quality . 'q' : '') . '_1o' . '.' . $type;
                 }
                 break;
