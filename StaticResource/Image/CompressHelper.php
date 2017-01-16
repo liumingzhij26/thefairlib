@@ -13,21 +13,22 @@ use TheFairLib\StaticResource\Exception;
 
 class CompressHelper
 {
-    public static function getCompressImgUrl($url, $width, $type = 'jpg', $quality = '100'){
+    public static function getCompressImgUrl($url, $width, $type = 'jpg', $quality = '100')
+    {
         $service = Config::get_image('auto_compress_service');
-        switch($service){
+        switch ($service) {
             case 'aliyun':
                 $urlAry = parse_url($url);
-                if($urlAry['host'] == 'static.bj.taooo.cc' || $urlAry['host'] == 'static.thefair.net.cn'){
+                if (!empty($service['host']) && in_array($urlAry['host'], $service['host'])) {
                     $urlAry['host'] = $urlAry['host'] == 'static.thefair.net.cn' ? 'image.thefair.net.cn' : 'image.bj.taooo.cc';
-                    $urlAry['path'] = $urlAry['path'].'@1pr_'.(int)$width.'w'.($quality != '100' && $type != 'webp' ? '_'.$quality.'q' : '').'_1o'.'.'.$type;
+                    $urlAry['path'] = $urlAry['path'] . '@1pr_' . (int)$width . 'w' . ($quality != '100' && $type != 'webp' ? '_' . $quality . 'q' : '') . '_1o' . '.' . $type;
                 }
                 break;
             default :
                 throw new Exception('undefined service type');
         }
 
-        return $urlAry['scheme'].'://'.$urlAry['host'].$urlAry['path'].(!empty($urlAry['query']) ? '?'.$urlAry['query'] : '');
+        return $urlAry['scheme'] . '://' . $urlAry['host'] . $urlAry['path'] . (!empty($urlAry['query']) ? '?' . $urlAry['query'] : '');
     }
 
     /**
@@ -42,86 +43,87 @@ class CompressHelper
      * @throws Exception
      *
      * array(
-     * 		'url' => 'http://demo.host/path/{$key1}/{$key2}/{$key3}_demo_'.self::IMG_SELF_WIDTH.'_'.self::IMG_SELF_HEIGHT.'.jpg', //图片地址
-     * 		'rules' => array(
-     * 			'key1' => 'value1',
-     * 			'key2' => 'value2',
-     * 			'key3' => 'value3',
-     * 		),//图片地址中变量替换的原则
-     * 		'custom' => array(
-     * 			'640' => 'http://demo.host/path/special/url.jpg',//自定义某个分辨率下的地址形式（用于跟图片宽高无关的地址）
-     * 		),
+     *        'url' => 'http://demo.host/path/{$key1}/{$key2}/{$key3}_demo_'.self::IMG_SELF_WIDTH.'_'.self::IMG_SELF_HEIGHT.'.jpg', //图片地址
+     *        'rules' => array(
+     *            'key1' => 'value1',
+     *            'key2' => 'value2',
+     *            'key3' => 'value3',
+     *        ),//图片地址中变量替换的原则
+     *        'custom' => array(
+     *            '640' => 'http://demo.host/path/special/url.jpg',//自定义某个分辨率下的地址形式（用于跟图片宽高无关的地址）
+     *        ),
      *      'custom_compress_rate' => 0.5,
      * );
      */
-    public static function autoCompressImg($imgTag, $options, $platform, $resolutionWidth, $type = 'png'){
-        if(empty($resolutionWidth)){
+    public static function autoCompressImg($imgTag, $options, $platform, $resolutionWidth, $type = 'png')
+    {
+        if (empty($resolutionWidth)) {
             throw new Exception('resolution error');
         }
-        $resolutionSetting 	= Config::get_image('resolution_setting');
-        if(!empty($resolutionSetting[$platform])){
+        $resolutionSetting = Config::get_image('resolution_setting');
+        if (!empty($resolutionSetting[$platform])) {
             $platformSetting = $resolutionSetting[$platform];
-        }else{
+        } else {
             $platformSetting = call_user_func_array("array_merge", $resolutionSetting);
         }
         $resolutionWidth = self::getDeviceWithByResolution($platformSetting, $resolutionWidth);
 
-        $allCompressSetting 	= Config::get_image('compress_setting.'.$imgTag);
-        if(!empty($allCompressSetting[$platform])){
+        $allCompressSetting = Config::get_image('compress_setting.' . $imgTag);
+        if (!empty($allCompressSetting[$platform])) {
             $compressSetting = $allCompressSetting[$platform];
-        }elseif(!empty($allCompressSetting['default'])){
+        } elseif (!empty($allCompressSetting['default'])) {
             $compressSetting = $allCompressSetting['default'];
-        }else{
+        } else {
             $compressSetting = call_user_func_array("array_merge", $allCompressSetting);
         }
 
-        $allQualitySetting 	= Config::get_image('quality_setting.'.$imgTag);
-        if(!empty($allQualitySetting)){
-            if(!empty($allQualitySetting[$platform])){
+        $allQualitySetting = Config::get_image('quality_setting.' . $imgTag);
+        if (!empty($allQualitySetting)) {
+            if (!empty($allQualitySetting[$platform])) {
                 $qualitySetting = $allQualitySetting[$platform];
-            }elseif(!empty($allCompressSetting['default'])){
+            } elseif (!empty($allCompressSetting['default'])) {
                 $qualitySetting = $allQualitySetting['default'];
-            }else{
+            } else {
                 $qualitySetting = call_user_func_array("array_merge", $allQualitySetting);
             }
 
-        }else{
+        } else {
             $qualitySetting = '100';
         }
 
         //合并临时配置
-        if(!empty($options['custom_compress_rate'])){
+        if (!empty($options['custom_compress_rate'])) {
             $compressRate = $options['custom_compress_rate'];
-        }else{
+        } else {
             $compressRate = 1;
         }
 
-        if(!empty($platformSetting) && !empty($compressSetting)){
-            $search 	= [];
-            $replace	= [];
-            if(!empty($options['rules'])){
-                foreach($options['rules'] as $k => $v){
-                    $search[] 	= '{$'.$k.'}';
-                    $replace[]	= $v;
+        if (!empty($platformSetting) && !empty($compressSetting)) {
+            $search = [];
+            $replace = [];
+            if (!empty($options['rules'])) {
+                foreach ($options['rules'] as $k => $v) {
+                    $search[] = '{$' . $k . '}';
+                    $replace[] = $v;
                 }
             }
             $tmpQuality = !empty($qualitySetting[$resolutionWidth]) ? $qualitySetting[$resolutionWidth] : (!empty($qualitySetting['default']) ? $qualitySetting['default'] : '100');
             $tmpSetting = !empty($compressSetting[$resolutionWidth]) ? $compressSetting[$resolutionWidth] : (!empty($compressSetting['default']) ? $compressSetting['default'] : 1);
             $tmpSetting = $tmpSetting * $compressRate;
-            if(!empty($tmpSetting)){
+            if (!empty($tmpSetting)) {
                 $imgUrl = '';
-                if(!empty($options['custom'][$resolutionWidth])){
+                if (!empty($options['custom'][$resolutionWidth])) {
                     $imgUrl = $options['custom'][$resolutionWidth];
-                }elseif(!empty($options['url'])){
+                } elseif (!empty($options['url'])) {
                     $imgUrl = $options['url'];
                 }
-                if(!empty($imgUrl)){
-                    $imgUrl = self::getCompressImgUrl($imgUrl, $resolutionWidth * (float) $tmpSetting, $type, $tmpQuality);
+                if (!empty($imgUrl)) {
+                    $imgUrl = self::getCompressImgUrl($imgUrl, $resolutionWidth * (float)$tmpSetting, $type, $tmpQuality);
                 }
-            }else{
+            } else {
                 throw new Exception('resolution error 1');
             }
-        }else{
+        } else {
             throw new Exception('resolution error 2');
         }
 
@@ -129,18 +131,19 @@ class CompressHelper
         return $imgUrl;
     }
 
-    public static function getDeviceWithByResolution($resolutionList, $resolutionWidth){
-        $min    = false;
-        $key    = '';
-        foreach($resolutionList as $tmpWidth){
+    public static function getDeviceWithByResolution($resolutionList, $resolutionWidth)
+    {
+        $min = false;
+        $key = '';
+        foreach ($resolutionList as $tmpWidth) {
             $tmp = abs($resolutionWidth - $tmpWidth);
-            if($min !== false && $tmp <= $min){
+            if ($min !== false && $tmp <= $min) {
                 $min = $tmp;
                 $key = $tmpWidth;
-            }elseif($min === false){
+            } elseif ($min === false) {
                 $min = $tmp;
                 $key = $tmpWidth;
-            }else{
+            } else {
                 continue;
             }
         }
