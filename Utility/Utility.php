@@ -11,6 +11,7 @@ namespace TheFairLib\Utility;
 
 use TheFairLib\Config\Config;
 use TheFairLib\Http\Cookie;
+use Endroid\QrCode\QrCode;
 
 class Utility
 {
@@ -665,26 +666,39 @@ class Utility
      * @param $content
      * @param int $setSize
      * @param int $padding
+     * @param bool $base64
      * @param string $logoPath
-     * @return mixed
+     * @param array $foregroundColor
+     * @param array $backgroundColor
+     * @return string
      */
-    public static function qrCode($content, $setSize = 300, $padding = 0, $logoPath = '')
+    public static function qrCode($content, $setSize = 300, $padding = 0, $base64 = false, $logoPath = '', $foregroundColor = [], $backgroundColor = [])
     {
-        $qrCode = new \Endroid\QrCode\QrCode();
+        $qrCode = new QrCode();
+        if (empty($foregroundColor)) {
+            $foregroundColor = ['r' => 0, 'g' => 0, 'b' => 0, 'a' => 0];
+        }
+        if (empty($backgroundColor)) {
+            $backgroundColor = ['r' => 255, 'g' => 255, 'b' => 255, 'a' => 0];
+        }
         $qrCode
             ->setText($content)
             ->setExtension('png')
             ->setSize($setSize)
             ->setPadding($padding)
             ->setErrorCorrection('high')
-            ->setForegroundColor(array('r' => 0, 'g' => 0, 'b' => 0, 'a' => 0))
-            ->setBackgroundColor(array('r' => 255, 'g' => 255, 'b' => 255, 'a' => 0))
+            ->setForegroundColor($foregroundColor)
+            ->setBackgroundColor($backgroundColor)
             ->setLabelFontSize(16)
             ->setImageType(QrCode::IMAGE_TYPE_PNG);
-        if(!empty($logoPath) && file_exists($logoPath)) {
+        if (!empty($logoPath) && file_exists($logoPath)) {
             $qrCode->setLogo($logoPath);
         }
-        return $qrCode->get();
+        $data = $qrCode->get();
+        if ($base64) {
+            $data = 'data:image/png;base64,' . base64_encode($data);
+        }
+        return $data;
     }
 
 }
