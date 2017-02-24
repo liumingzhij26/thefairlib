@@ -13,21 +13,24 @@ use TheFairLib\StaticResource\Exception;
 
 class CompressHelper
 {
-    public static function getCompressImgUrl($url, $width, $type = 'jpg', $quality = '100')
+    public static function getCompressImgUrl($url, $width, $type = 'jpg', $quality = '100', $version = '1.0')
     {
         $service = Config::get_image();
         switch ($service['auto_compress_service']) {
             case 'aliyun':
                 $urlAry = parse_url($url);
                 if (!empty($service['host']) && in_array($urlAry['host'], $service['host'])) {
-                    $urlAry['path'] = $urlAry['path'] . '@1pr_' . (int)$width . 'w' . ($quality != '100' && $type != 'webp' ? '_' . $quality . 'q' : '') . '_1o' . '.' . $type;
+                    if ($version >= '2.0') {
+                        $urlAry['path'] = $urlAry['path'] . '?x-oss-process=image/resize,w_' . (int)$width . ($quality != '100' ? ',/quality,q_' . $quality : '') . '/format,' . $type;
+                    } else {
+                        $urlAry['path'] = $urlAry['path'] . '@1pr_' . (int)$width . 'w' . ($quality != '100' && $type != 'webp' ? '_' . $quality . 'q' : '') . '_1o' . '.' . $type;
+                    }
                 }
                 break;
             default :
                 throw new Exception('undefined service type');
         }
-
-        return $urlAry['scheme'] . '://' . $urlAry['host'] . $urlAry['path'] . (!empty($urlAry['query']) ? '?' . $urlAry['query'] : '');
+        return $urlAry['scheme'] . '://' . $urlAry['host'] . $urlAry['path'] . (!empty($urlAry['query']) ? '&' . $urlAry['query'] : '');
     }
 
     /**
