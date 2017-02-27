@@ -21,20 +21,31 @@ class SSOClient
     private static $_tokenCookieKey;
 
     /**
+     * 授权登录
+     *
      * @param array $customConfig
+     * @param string $type
      * @return SSOClient
      */
-    static public function Instance($customConfig = [])
+    static public function Instance($customConfig = [], $type = 'user')
     {
         if (empty(self::$instance)) {
-            self::$instance = new self($customConfig);
+            self::$instance = new self($customConfig, $type);
         }
         return self::$instance;
     }
 
-    public function __construct($customConfig = [])
+    public function __construct($customConfig = [], $type)
     {
-        $systemConfig = (array)Config::get_user_sso_client();
+        $systemConfig = [];
+        switch ($type) {
+            case 'user' :
+                $systemConfig = (array)Config::get_user_sso_client();
+                break;
+            case 'admin' :
+                $systemConfig = (array)Config::get_user_sso_admin();
+                break;
+        }
         $config = array_merge($systemConfig, $customConfig);
 
         self::_checkConfig($config);
@@ -53,6 +64,10 @@ class SSOClient
             if (!empty($config[$confKey])) {
                 self::${$key} = $config[$confKey];
             } else {
+                if (empty($config['cookie_domain'])) {
+                    self::${$key} = Utility::getUrlToDomain($_SERVER['SERVER_NAME']);
+                    continue;
+                }
                 throw new Exception('config error:' . $confKey);
             }
         }
