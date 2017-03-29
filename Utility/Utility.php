@@ -723,4 +723,20 @@ class Utility
         return $re_domain;
     }
 
+    /**
+     * 获得url上的参数值
+     *
+     * @param $url
+     * @param $stringName
+     * @return string
+     */
+    public static function getUrlQueryString($url, $stringName)
+    {
+        $data = parse_url($url);
+        if (isset($data['query'])) {
+            parse_str($data['query'], $data);
+        }
+        return !empty($data[$stringName]) ? $data[$stringName] : '';
+    }
+
 }
