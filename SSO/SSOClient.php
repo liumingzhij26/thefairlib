@@ -27,7 +27,7 @@ class SSOClient
      * @param string $type
      * @return SSOClient
      */
-    static public function Instance($customConfig = [], $type = 'user')
+    static public function Instance($customConfig = [], $type = 'client')
     {
         if (empty(self::$instance)) {
             self::$instance = new self($customConfig, $type);
@@ -37,15 +37,8 @@ class SSOClient
 
     public function __construct($customConfig = [], $type)
     {
-        $systemConfig = [];
-        switch ($type) {
-            case 'user' :
-                $systemConfig = (array)Config::get_user_sso_client();
-                break;
-            case 'admin' :
-                $systemConfig = (array)Config::get_user_sso_admin();
-                break;
-        }
+        $name = "get_user_sso_{$type}";
+        $systemConfig = (array)Config::$name();
         $config = array_merge($systemConfig, $customConfig);
 
         self::_checkConfig($config);
@@ -83,11 +76,11 @@ class SSOClient
             $fields = $this->_getDecryptAccount($account);
             if (count($fields) != 6) {
                 $checkRet = false;
-            }else{
+            } else {
                 list($uid, $md5Mobile, $nick, $md5Password, $state, $serverTk) = $fields;
                 if ($token != $serverTk) {
                     $checkRet = false;
-                }else {
+                } else {
                     $this->_setCurrentUid($uid);
                 }
             }
