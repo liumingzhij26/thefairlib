@@ -12,6 +12,7 @@ use Illuminate\Database\Capsule\Manager;
 use TheFairLib\Config\Config;
 use TheFairLib\DB\Redis\Cache;
 use TheFairLib\DB\Redis\Storage;
+use TheFairLib\Queue\Rabbitmq\Rabbitmq;
 use TheFairLib\Utility\Utility;
 
 abstract class DataModel
@@ -180,17 +181,17 @@ abstract class DataModel
     /**
      * 分页获取数据的方法
      *
-     * @param string $dbName 数据库名称
-     * @param string $tableName 表名
-     * @param string|array $where where子句
-     * @param array $fields 需要查询的数据库字段数组
-     * @param int $page 当前请求页数
-     * @param string $order 排序规则，如：'uid desc'
-     * @param int $itemPerPage 每页返回多少行数据
-     * @return array 结果集
-     * @throws Exception
+     * @param $dbName
+     * @param $tableName
+     * @param $where
+     * @param $fields
+     * @param int $page
+     * @param string $order
+     * @param int $itemPerPage
+     * @param string $groupBy
+     * @return array
      */
-    protected function _getItemListByPage($dbName, $tableName, $where, $fields, $page = 1, $order = '', $itemPerPage = 20)
+    protected function _getItemListByPage($dbName, $tableName, $where, $fields, $page = 1, $order = '', $itemPerPage = 20, $groupBy = '')
     {
         $shardingKey = $this->_shardingKey === null ? '*' : $this->_shardingKey;
         $sqlObj = $this->db($dbName)->table($tableName);
@@ -204,6 +205,9 @@ abstract class DataModel
             $sqlObj = $this->db($dbName)->table($tableName);
             if (!empty($where)) {
                 $sqlObj = is_array($where) && count($where) == 2 ? $sqlObj->whereRaw($where[0], $where[1]) : $sqlObj->whereRaw($where);
+            }
+            if(!empty($groupBy)){
+                $sqlObj = $sqlObj->groupBy($groupBy);
             }
             if (!empty($order)) {
                 $sqlObj = $sqlObj->orderByRaw($order);
@@ -484,6 +488,7 @@ abstract class DataModel
         //redis关闭
         Storage::closeConnection();
         Cache::closeConnection();
+        Rabbitmq::closeConnection();//关闭MQ
     }
 
     public static function clearSessionCache(){

@@ -1,9 +1,10 @@
 <?php
+
 namespace TheFairLib\Uploader;
-    /**
-     * Class Upload
-     * @package Uploader
-     */
+/**
+ * Class Upload
+ * @package Uploader
+ */
 /*
 $file = new TheFairLib\Uploader\Upload('files', array(
     "savePath" => Registry::get('config')->cache['temp'],
@@ -181,7 +182,7 @@ class Upload
      * 文件大小检测
      * @return bool
      */
-    private function  _checkSize()
+    private function _checkSize()
     {
         return $this->fileSize <= ($this->config["maxSize"] * 1024);
     }

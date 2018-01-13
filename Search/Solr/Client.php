@@ -180,7 +180,8 @@ class Client
             if (!is_a($query, 'SolrQuery')) {
                 throw new Exception('query必须是一个SolrParams对象');
             }
-            if (empty($query->getStart())) {
+            $start = $query->getStart();
+            if (empty($start)) {
                 $offset = ($page - 1) * $limit;
                 $query->setStart($offset);
                 $query->setRows($limit);
@@ -195,6 +196,8 @@ class Client
                 $this->_page['page_count'] = $pageCount;
                 $this->_page['item_count'] = $result['numFound'];
                 $this->_page['item_list'] = $result['docs'];
+                $hl = $queryResponse->getResponse()->highlighting;
+                $this->_page['highlighting'] = !empty($hl) ? $hl : [];
             }
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
