@@ -17,11 +17,10 @@ use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Message\AMQPMessage;
 use TheFairLib\Config\Config;
 use \PhpAmqpLib\Connection\AMQPStreamConnection;
+use TheFairLib\Utility\Utility;
 
 class Rabbitmq
 {
-    static public $server = 'default';
-
     static public $instance;
 
     /**
@@ -37,15 +36,20 @@ class Rabbitmq
 
 
     /**
+     * Rabbitmq
+     *
+     * @param string $server
+     * @param string $vhost
      * @return Rabbitmq
      */
-    static public function Instance()
+    static public function Instance($server = 'default', $vhost = '')
     {
         $class = get_called_class();
-        if (empty(self::$instance)) {
+        if (empty(self::$instance) || empty(self::$_channel)) {
             self::$instance = new $class();
-            $config = Config::get_queue_rabbitmq(self::$server);
-            self::$_conn = new AMQPStreamConnection($config['host'], $config['port'], $config['user'], $config['pass'], $config['vhost']);
+            $config = Config::get_queue_rabbitmq($server);
+            if (empty($vhost)) $vhost = $config['vhost'];
+            self::$_conn = new AMQPStreamConnection($config['host'], $config['port'], $config['user'], $config['pass'], $vhost);
             self::$_channel = self::$_conn->channel();
         }
         return self::$instance;
@@ -58,6 +62,7 @@ class Rabbitmq
             self::$_conn->close();
             self::$_conn = null;
             self::$_channel = null;
+            self::$instance = null;
         }
     }
 
@@ -84,7 +89,7 @@ class Rabbitmq
                 'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT
             ];
             if (is_array($messageBody)) {
-                $messageBody = json_encode($messageBody, JSON_UNESCAPED_UNICODE);
+                $messageBody = Utility::encode($messageBody);
                 $header = [
                     'content_type' => 'application/json',
                     'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT
@@ -95,6 +100,8 @@ class Rabbitmq
             return true;
         } catch (\Exception $e) {
             self::closeConnection();
+            throw new \Exception($e->getMessage(), $e->getCode(), $e->getTraceAsString());
+
         }
     }
 
@@ -105,6 +112,7 @@ class Rabbitmq
      * @param $exchange
      * @param $router
      * @param $func
+     * @throws \Exception
      */
     public function consumer($queue, $exchange, $router, $func)
     {
@@ -122,6 +130,7 @@ class Rabbitmq
 
         } catch (\Exception $e) {
             self::closeConnection();
+            throw new \Exception($e->getMessage(), $e->getCode(), $e->getTraceAsString());
         }
     }
 

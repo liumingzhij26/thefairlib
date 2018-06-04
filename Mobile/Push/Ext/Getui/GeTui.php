@@ -6,10 +6,12 @@
  * @version 1.0
  * @copyright 2015-2025 TheFair
  */
+
 namespace TheFairLib\Mobile\Push\Ext\Getui;
 
 use TheFairLib\Config\Config;
 use TheFairLib\Mobile\Push\Ext\PushInterface;
+use TheFairLib\Utility\Utility;
 use Yaf\Exception;
 
 require_once(dirname(__FILE__) . '/' . 'IGt.Push.php');
@@ -147,14 +149,14 @@ class GeTui implements PushInterface
      * @param $link
      * @param $badge
      * @param string $logoUrl
-     * @return \Array
+     * @return array
      * @throws Exception
      * @throws \Exception
      */
-    public function pushMessageToSingle($clientId, $tempType, $platform, $title, $message, $link, $badge, $logoUrl = 'http://resource.bj.taooo.cc/touch/images/logo.png')
+    public function pushMessageToSingle($clientId, $tempType, $platform, $title, $message, $link, $badge, $logoUrl = '')
     {
-        if (empty($clientId) || !in_array($tempType, ['Transmission', 'Notification', 'Link']) || !in_array($platform, ['iphone', 'android'])
-            || empty($title) || strlen($title) >= 40 || empty($message)
+        if (empty($clientId) || !in_array($tempType, ['Transmission', 'Notification', 'Link']) || !in_array($platform, ['iphone', 'android', 'ios'])
+            || empty($title) || empty($message)
         ) {
             throw new Exception('error push param' . json_encode([$clientId, $tempType, $platform, $title, $message, $link, $badge, $logoUrl], JSON_UNESCAPED_UNICODE));
         }
@@ -172,12 +174,14 @@ class GeTui implements PushInterface
         $apn->contentAvailable = 1;
         $apn->category = "ACTIONABLE";
         $apn->customMsg = ['p' => $link];
-        if ($platform == 'iphone') {
+        $msg = ['p' => $link, 'title' => $title, 'content' => $message];
+        $msg = Utility::encode($msg);
+        if (in_array($platform, ['iphone', 'ios'])) {
             $tempType = 'Transmission';
-            $template = $this->_setTemplate($tempType, $title, $message, $link, $logoUrl);
+            $template = $this->_setTemplate($tempType, $title, $message, $link, $logoUrl, 'logo.png', 1, $msg);
             $template->set_pushInfo("", $badge, $message, "", "payload", "", "", "");
         } else {
-            $template = $this->_setTemplate($tempType, $title, $message, $link, $logoUrl);
+            $template = $this->_setTemplate($tempType, $title, $message, $link, $logoUrl, 'logo.png', 2, $msg);
         }
         $template->set_apnInfo($apn);
         //个推信息体
@@ -215,16 +219,16 @@ class GeTui implements PushInterface
      * @param $link
      * @param int $badge
      * @param string $logoUrl
-     * @return \Array
+     * @return array
      * @throws Exception
      * @throws \Exception
      */
-    public function pushMessageToList($clientList, $tempType, $platform, $title, $message, $link, $badge = 1, $logoUrl = 'http://resource.bj.taooo.cc/touch/images/logo.png')
+    public function pushMessageToList($clientList, $tempType, $platform, $title, $message, $link, $badge = 1, $logoUrl = '')
     {
-        if (empty($clientList) || !in_array($tempType, ['Transmission', 'Notification', 'Link']) || !in_array($platform, ['iphone', 'android'])
+        if (empty($clientList) || !in_array($tempType, ['Transmission', 'Notification', 'Link']) || !in_array($platform, ['iphone', 'android', 'ios'])
             || empty($title) || strlen($title) >= 40 || empty($message)
         ) {
-            throw new Exception('error push param' . json_decode([$tempType, $platform, $title, $message, $link, $badge, $logoUrl], JSON_UNESCAPED_UNICODE));
+            throw new Exception('error push param' . json_encode([$tempType, $platform, $title, $message, $link, $badge, $logoUrl], JSON_UNESCAPED_UNICODE));
         }
         putenv("gexin_pushList_needDetails=true");
         putenv("gexin_pushList_needAsync=true");
@@ -242,12 +246,14 @@ class GeTui implements PushInterface
         $apn->contentAvailable = 1;
         $apn->category = "ACTIONABLE";
         $apn->customMsg = ['p' => $link];
-        if ($platform == 'iphone') {
+        $msg = ['p' => $link, 'title' => $title, 'content' => $message];
+        $msg = Utility::encode($msg);
+        if (in_array($platform, ['iphone', 'ios'])) {
             $tempType = 'Transmission';
-            $template = $this->_setTemplate($tempType, $title, $message, $link, $logoUrl);
+            $template = $this->_setTemplate($tempType, $title, $message, $link, $logoUrl, 'logo.png', 1, $msg);
             $template->set_pushInfo("", $badge, $message, "", "payload", "", "", "");
         } else {
-            $template = $this->_setTemplate($tempType, $title, $message, $link, $logoUrl);
+            $template = $this->_setTemplate($tempType, $title, $message, $link, $logoUrl, 'logo.png', 1, $msg);
         }
         $template->set_apnInfo($apn);
         //个推信息体
@@ -310,8 +316,8 @@ class GeTui implements PushInterface
                 $template = new \IGtTransmissionTemplate();
                 $template->set_appId($this->_appID);//应用appid
                 $template->set_appkey($this->_appKey);//应用appkey
-                $template->set_transmissionType(1);//透传消息类型
-                $template->set_transmissionContent($message);//透传内容
+                $template->set_transmissionType($transmission);//透传消息类型
+                $template->set_transmissionContent($transmissionContent);//透传内容
                 break;
         }
         if (empty($template)) {
