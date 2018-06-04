@@ -328,7 +328,7 @@ class OssUpload
      */
     private function _getFileExt()
     {
-        return strtolower(strrchr($this->file["name"], '.'));
+        return strtolower(strrchr($this->fileType, '.'));
     }
 
     /**
