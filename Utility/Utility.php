@@ -128,24 +128,22 @@ class Utility
 
     /**
      * 加密
-     * @static
+     *
      * @param $data
+     * @param $key
+     * @param string $iv //为了向下兼容给一个默认的iv
      * @return string
      */
-    public static function Encrypt($data, $key)
+    public static function Encrypt($data, $key, $iv = 'INBJAY3Q9VLpl5L3/gMM9Q==')
     {
-        $cipher = MCRYPT_TRIPLEDES;
-        $modes = MCRYPT_MODE_ECB;
+        if (strlen($iv) != 24) {
+            return ErrorCode::$IllegalIv;
+        }
+        $aesIV = base64_decode($iv);
 
-        # Add PKCS7 padding.
-        $block = mcrypt_get_block_size($cipher, $modes);
-        $pad = $block - (strlen($data) % $block);
-        $data .= str_repeat(chr($pad), $pad);
+        $result = openssl_encrypt($data, "AES-128-CBC", $key, 1, $aesIV);
 
-        $iv = mcrypt_create_iv(mcrypt_get_iv_size($cipher, $modes), MCRYPT_RAND);
-        $encrypted = @mcrypt_encrypt($cipher, $key, $data, $modes, $iv);
-
-        return base64_encode($encrypted);
+        return base64_encode($result);
     }
 
     /**
@@ -154,20 +152,16 @@ class Utility
      * @param $data
      * @return string
      */
-    public static function Decrypt($data, $key)
+    public static function Decrypt($data, $key, $iv = 'INBJAY3Q9VLpl5L3/gMM9Q==')
     {
-        $cipher = MCRYPT_TRIPLEDES;
-        $modes = MCRYPT_MODE_ECB;
+        if (strlen($iv) != 24) {
+            return ErrorCode::$IllegalIv;
+        }
+        $aesIV = base64_decode($iv);
 
-        $iv = mcrypt_create_iv(mcrypt_get_iv_size($cipher, $modes), MCRYPT_RAND);
-        $data = @mcrypt_decrypt($cipher, $key, base64_decode($data), $modes, $iv);
+        $aesCipher = base64_decode($data);
 
-        # Strip padding out.
-        $block = mcrypt_get_block_size($cipher, $modes);
-        $pad = ord($data[($len = strlen($data)) - 1]);
-        $decrypted = substr($data, 0, strlen($data) - $pad);
-
-        return $decrypted;
+        return openssl_decrypt($aesCipher, "AES-128-CBC", $key, 1, $aesIV);
     }
 
     /**
@@ -739,4 +733,24 @@ class Utility
         return !empty($data[$stringName]) ? $data[$stringName] : '';
     }
 
+}
+
+
+/**
+ * error code 说明.
+ * <ul>
+ *    <li>-41001: encodingAesKey 非法</li>
+ *    <li>-41003: aes 解密失败</li>
+ *    <li>-41004: 解密后得到的buffer非法</li>
+ *    <li>-41005: base64加密失败</li>
+ *    <li>-41016: base64解密失败</li>
+ * </ul>
+ */
+class ErrorCode
+{
+    public static $OK = 0;
+    public static $IllegalAesKey = -41001;
+    public static $IllegalIv = -41002;
+    public static $IllegalBuffer = -41003;
+    public static $DecodeBase64Error = -41004;
 }
