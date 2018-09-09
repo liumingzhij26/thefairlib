@@ -1,4 +1,4 @@
-### 说明
+### 说明，兼容php7.0+
 
 TheFairLib 是基于yaf框架,集成了一些基本的类
 
@@ -12,9 +12,9 @@ TheFairLib 是基于yaf框架,集成了一些基本的类
 
 * App的消息推送,接入个推/极光
 
-* 消息列表使用接入kafka nmred/kafka-php
+* 消息列表使用接入rabbitMq
 
-* 全文搜索使用coreseek
+* 全文搜索使用solr/es
 
 * RPC服务器,使用swoole
 
