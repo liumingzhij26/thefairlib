@@ -1,5 +1,20 @@
 ### 说明，兼容php7.0+
 
+```
+{
+  "config": {"vendor-dir": "vendor"},
+  "require": {
+    "lmz/thefairlib": "*"
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.phpcomposer.com"
+    }
+  }
+}
+```
+
 TheFairLib 是基于yaf框架,集成了一些基本的类
 
 * 阿里云OSS,使用成本很低,非常实用,个人站点的js,css,image都可以用的
