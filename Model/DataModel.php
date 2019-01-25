@@ -6,6 +6,7 @@
  * @version 1.0
  * @copyright 2015-2025 TheFair
  */
+
 namespace TheFairLib\Model;
 
 use Illuminate\Database\Capsule\Manager;
@@ -67,7 +68,7 @@ abstract class DataModel
      */
     protected function Storage($serverName = '')
     {
-        if(empty($serverName)){
+        if (empty($serverName)) {
             $serverName = $this->server;
         }
         return Storage::getInstance($serverName);
@@ -81,7 +82,7 @@ abstract class DataModel
      */
     protected function Cache($serverName = '')
     {
-        if(empty($serverName)){
+        if (empty($serverName)) {
             $serverName = $this->server;
         }
         return Cache::getInstance($serverName);
@@ -96,13 +97,13 @@ abstract class DataModel
     protected function getPrefix($type, $dataType)
     {
         $productPrefix = '';
-        if(defined('PRODUCT_NAME')){
-            $productPrefix = PRODUCT_NAME.'#';
+        if (defined('PRODUCT_NAME')) {
+            $productPrefix = PRODUCT_NAME . '#';
         }
         if (!in_array($type, ['Cache', 'Storage']) || !in_array($dataType, ['key', 'hash', 'set', 'zset', 'list', 'string', 'geo'])) {
             throw new Exception('Redis cahce prefix config error!');
         }
-        return $productPrefix.$type . '#' . Config::get_app('phase') . '#' . $dataType . '#';
+        return $productPrefix . $type . '#' . Config::get_app('phase') . '#' . $dataType . '#';
     }
 
     /**
@@ -142,7 +143,8 @@ abstract class DataModel
      * @return \PDO
      * @throws Exception
      */
-    protected function readDb($dbName = ''){
+    protected function readDb($dbName = '')
+    {
         return $this->db($dbName)->getReadPdo();
     }
 
@@ -153,7 +155,8 @@ abstract class DataModel
      * @return \PDO
      * @throws Exception
      */
-    protected function writeDb($dbName = ''){
+    protected function writeDb($dbName = '')
+    {
         return $this->db($dbName)->getPdo();
     }
 
@@ -168,7 +171,7 @@ abstract class DataModel
         $ret = $this->db('default')->select('select uuid_short() as uuid');
         $uuid = $ret[0]['uuid'];
         if (!empty($uuid)) {
-            return $uuid;
+            return intval(substr("{$uuid}", -18));
         } else {
             throw new Exception('uuid error', [], 50000);
         }
@@ -216,7 +219,7 @@ abstract class DataModel
             if (!empty($where)) {
                 $sqlObj = is_array($where) && count($where) == 2 ? $sqlObj->whereRaw($where[0], $where[1]) : $sqlObj->whereRaw($where);
             }
-            if(!empty($groupBy)){
+            if (!empty($groupBy)) {
                 $sqlObj = $sqlObj->groupBy($groupBy);
             }
             if (!empty($order)) {
@@ -252,25 +255,25 @@ abstract class DataModel
         $itemPerPage = min(50, $itemPerPage);
         $pageCount = ceil($total / $itemPerPage);
         $list = [];
-        if($total){
-            if(!empty($lastItemId)){
+        if ($total) {
+            if (!empty($lastItemId)) {
                 $start = $this->_getItemRankFromCache($listCacheKey, $lastItemId, $order);
                 $start += 1;
-            }else{
+            } else {
                 $start = $lastItemId;
             }
 
             $end = $start + $itemPerPage - 1;
             $funcName = $order == 'desc' ? 'zRevRange' : 'zRange';
 
-            if($withScores === true){
+            if ($withScores === true) {
                 $list = $this->Storage()->$funcName($listCacheKey, $start, $end, 'WITHSCORES');
-            }else{
+            } else {
                 $list = $this->Storage()->$funcName($listCacheKey, $start, $end);
             }
-            if(!empty($list)){
+            if (!empty($list)) {
                 $lastItemId = end($list);
-                if($withScores === true){
+                if ($withScores === true) {
                     $lastItemId = key($list);
                 }
             }
@@ -284,7 +287,7 @@ abstract class DataModel
         ];
 
         $lastPos = $this->_getItemRankFromCache($listCacheKey, $lastItemId, $order);
-        if($lastPos != $total - 1 && !empty($list)){
+        if ($lastPos != $total - 1 && !empty($list)) {
             $result['last_item_id'] = (string)$lastItemId;
         }
         return $result;
@@ -309,16 +312,16 @@ abstract class DataModel
         $itemPerPage = min(50, $itemPerPage);
         $pageCount = ceil($total / $itemPerPage);
         $list = [];
-        if($total){
-            if(!empty($lastItemId)){
+        if ($total) {
+            if (!empty($lastItemId)) {
                 $offset = $this->_getItemRankFromCache($listCacheKey, $lastItemId, $order);
                 $offset += 1;
-            }else{
+            } else {
                 $offset = $lastItemId;
             }
 
             $funcName = $order == 'desc' ? 'zRevRangeByScore' : 'zRangeByScore';
-            if($order == 'desc'){
+            if ($order == 'desc') {
                 $tmp = $rangeMin;
                 $rangeMin = $rangeMax;
                 $rangeMax = $tmp;
@@ -328,9 +331,9 @@ abstract class DataModel
                 'withscores' => $withScores, 'limit' => [$offset, $itemPerPage]
             ];
             $list = $this->Storage()->$funcName($listCacheKey, $rangeMin, $rangeMax, $options);
-            if(!empty($list)){
+            if (!empty($list)) {
                 $lastItemId = end($list);
-                if($withScores === true){
+                if ($withScores === true) {
                     $lastItemId = key($list);
                 }
             }
@@ -344,7 +347,7 @@ abstract class DataModel
         ];
 
         $lastPos = $this->_getItemRankFromCache($listCacheKey, $lastItemId, $order);
-        if($lastPos != $total - 1 && !empty($list)){
+        if ($lastPos != $total - 1 && !empty($list)) {
             $result['last_item_id'] = (string)$lastItemId;
         }
         return $result;
@@ -358,7 +361,8 @@ abstract class DataModel
      * @param string $order
      * @return int
      */
-    protected function _getItemRankFromCache($listCacheKey, $lastItemId, $order = 'desc'){
+    protected function _getItemRankFromCache($listCacheKey, $lastItemId, $order = 'desc')
+    {
         return $order == 'desc' ? $this->Storage()->zRevRank($listCacheKey, $lastItemId) : $this->Storage()->zRank($listCacheKey, $lastItemId);
     }
 
@@ -375,7 +379,7 @@ abstract class DataModel
         $itemPerPage = min(50, $itemPerPage);
         $pageCount = ceil($total / $itemPerPage);
         $list = [];
-        if($total){
+        if ($total) {
             $list = $this->Storage()->sRandMember($listCacheKey, $itemPerPage);
         }
 
@@ -485,12 +489,13 @@ abstract class DataModel
     /**
      * 关闭数据库连接
      */
-    public static function closeDb(){
-        if(!empty(self::$capsule)){
+    public static function closeDb()
+    {
+        if (!empty(self::$capsule)) {
             $tmp = self::$capsule;
             $connections = $tmp->getDatabaseManager()->getConnections();
-            if(!empty($connections)){
-                foreach($connections as $dbName => $connection){
+            if (!empty($connections)) {
+                foreach ($connections as $dbName => $connection) {
                     $tmp->getDatabaseManager()->disconnect($dbName);
                 }
             }
@@ -501,7 +506,8 @@ abstract class DataModel
         Rabbitmq::closeConnection();//关闭MQ
     }
 
-    public static function clearSessionCache(){
+    public static function clearSessionCache()
+    {
         Utility::clearRegistry();
     }
 }
