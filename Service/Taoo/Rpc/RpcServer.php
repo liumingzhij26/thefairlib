@@ -97,12 +97,14 @@ class RpcServer extends BaseServer
 
             $responseTime = microtime(true) - $start;//响应时间
 
-            Logger::Instance()->access($dateTime, 'error', $eventType, $responseTime, $serverIp, $clientIp, $url, $params, $e->getExtCode(), $msg);
+            Logger::Instance()->access($dateTime, 'error', $eventType, $responseTime, $serverIp, $clientIp, $url, $params, $e->getCode(), $msg);
         }
         return $server->send($clientId, $this->_encode($result));
     }
 
     /**
+     * 服务启动
+     *
      * @param \swoole_server $server
      * @param $workerId
      */
@@ -126,6 +128,8 @@ class RpcServer extends BaseServer
     }
 
     /**
+     * 服务关闭事件
+     *
      * @param \swoole_server $server
      * @param $workerId
      */

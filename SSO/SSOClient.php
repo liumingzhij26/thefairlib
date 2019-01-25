@@ -6,6 +6,7 @@
  * @version 1.0
  * @copyright 2015-2025 TheFair
  */
+
 namespace TheFairLib\SSO;
 
 use TheFairLib\Config\Config;
@@ -96,7 +97,7 @@ class SSOClient
         $token = $this->_getToken();
         $ttl = $this->_getCookieTtl($keepLoginStatus);
         $uid = $userInfo['uid'];
-        $account = $this->_getEncryptAccount($uid, $userInfo['mobile'], $userInfo['nick'], $userInfo['password'], $userInfo['state'], $token);
+        $account = $this->_getEncryptAccount($uid, (!empty($userInfo['mobile']) ? $userInfo['mobile'] : ''), $userInfo['nick'], $userInfo['password'], $userInfo['state'], $token);
         $cookies = [
             [self::$_tokenCookieKey, $token, $ttl],
             [self::$_accountCookieKey, $account, $ttl],
