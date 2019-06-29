@@ -1,4 +1,5 @@
 #忽略电脑中的文件
 .DS_Store
 .idea
+ide/*
 vendor
