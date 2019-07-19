@@ -90,19 +90,15 @@ class Rabbitmq
     /**
      * 生产者,如果不传msg就返回对象
      *
-     * @param $queue //队列名称
-     * @param $messageBody //内容
-     * @param string $exchange //交换器
-     * @param string //$type
-     * @param $router //router
+     * @param $messageBody
+     * @param $exchange
+     * @param $router
      * @return bool
      * @throws Exception
      */
-    public function publish($queue, $messageBody, $exchange, $type, $router)
+    public function publish($messageBody, $exchange, $router)
     {
         try {
-            // @todo 请先手动创建队列
-
             $header = [
                 'content_type' => 'text/plain',
                 'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT
@@ -115,12 +111,10 @@ class Rabbitmq
                 ];
             }
             $message = new AMQPMessage($messageBody, $header);
-            self::$_channel->basic_publish($message, $exchange, $router);
-            return true;
+            return self::$_channel->basic_publish($message, $exchange, $router);
         } catch (Exception $e) {
             self::closeConnection();
             throw new Exception($e->getMessage(), $e->getCode(), $e->getTraceAsString());
-
         }
     }
 
@@ -147,7 +141,6 @@ class Rabbitmq
      * 延迟消息，延迟消息需要注意：需要现在服务器上注册一个exchange 和queue否则不能用
      * 延迟消息队列只能fix x-delayed-message 没有其他type
      *
-     * @param $queue //队列名称
      * @param $messageBody //内容
      * @param $delay
      * @param string $exchange //交换器
@@ -155,7 +148,7 @@ class Rabbitmq
      * @return bool
      * @throws Exception
      */
-    public function publishDelay($queue, $messageBody, $delay, $exchange, $router)
+    public function publishDelay($messageBody, $delay, $exchange, $router)
     {
         try {
 
@@ -185,13 +178,11 @@ class Rabbitmq
      * 消费者
      *
      * @param $queue
-     * @param $exchange
-     * @param $router
      * @param $func
      * @param $qos // prefetch_count：预读取消息的数量  a_global false 单独应用于信道上的每个新消费者
      * @throws Exception
      */
-    public function consumer($queue, $exchange, $router, $func, array $qos = [])
+    public function consumer($queue, $func, array $qos = [])
     {
         try {
             if (empty($qos)) {
@@ -202,29 +193,6 @@ class Rabbitmq
                 ];
             }
             self::$_channel->basic_qos($qos['prefetch_size'], $qos['prefetch_count'], $qos['a_global']);
-
-            self::$_channel->basic_consume($queue, '', false, false, false, false, $func);
-
-            while (count(self::$_channel->callbacks)) {
-                self::$_channel->wait();
-            }
-
-        } catch (Exception $e) {
-            self::closeConnection();
-            throw new Exception($e->getMessage(), $e->getCode(), $e->getTraceAsString());
-        }
-    }
-
-    /**
-     * 消费者
-     *
-     * @param $queue
-     * @param $func
-     * @throws Exception
-     */
-    public function consumerV1($queue, $func)
-    {
-        try {
 
             self::$_channel->basic_consume($queue, '', false, false, false, false, $func);
 
