@@ -13,6 +13,7 @@
 
 namespace TheFairLib\Queue\Rabbitmq;
 
+use Exception;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
@@ -95,7 +96,7 @@ class Rabbitmq
      * @param string //$type
      * @param $router //router
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function publish($queue, $messageBody, $exchange, $type, $router)
     {
@@ -116,9 +117,9 @@ class Rabbitmq
             $message = new AMQPMessage($messageBody, $header);
             self::$_channel->basic_publish($message, $exchange, $router);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::closeConnection();
-            throw new \Exception($e->getMessage(), $e->getCode(), $e->getTraceAsString());
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getTraceAsString());
 
         }
     }
@@ -152,7 +153,7 @@ class Rabbitmq
      * @param string $exchange //交换器
      * @param $router //router
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function publishDelay($queue, $messageBody, $delay, $exchange, $router)
     {
@@ -174,9 +175,9 @@ class Rabbitmq
 
             self::$_channel->basic_publish($message, $exchange, $router);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::closeConnection();
-            throw new \Exception($e->getMessage(), $e->getCode(), $e->getTraceAsString());
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getTraceAsString());
         }
     }
 
@@ -188,7 +189,7 @@ class Rabbitmq
      * @param $router
      * @param $func
      * @param $qos // prefetch_count：预读取消息的数量  a_global false 单独应用于信道上的每个新消费者
-     * @throws \Exception
+     * @throws Exception
      */
     public function consumer($queue, $exchange, $router, $func, array $qos = [])
     {
@@ -208,9 +209,9 @@ class Rabbitmq
                 self::$_channel->wait();
             }
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::closeConnection();
-            throw new \Exception($e->getMessage(), $e->getCode(), $e->getTraceAsString());
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getTraceAsString());
         }
     }
 
@@ -219,7 +220,7 @@ class Rabbitmq
      *
      * @param $queue
      * @param $func
-     * @throws \Exception
+     * @throws Exception
      */
     public function consumerV1($queue, $func)
     {
@@ -231,9 +232,9 @@ class Rabbitmq
                 self::$_channel->wait();
             }
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::closeConnection();
-            throw new \Exception($e->getMessage(), $e->getCode(), $e->getTraceAsString());
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getTraceAsString());
         }
     }
 

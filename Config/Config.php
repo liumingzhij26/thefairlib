@@ -2,9 +2,9 @@
 /**
  * Config 类，获取各种通用配置
  *
- * @author ZhangHan <zhanghan@thefair.net.cn>
+ * @author liumingzhij26@gmail.com
  * @version 1.0
- * @copyright 2015-2025 TheFair
+ * @copyright 2015-2025
  */
 namespace TheFairLib\Config;
 

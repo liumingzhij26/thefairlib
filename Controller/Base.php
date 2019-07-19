@@ -3,7 +3,7 @@
  * TheFairLib\Controller
  * Controller基类
  *
- * @author ZhangHan <zhanghan@thefair.net.cn>
+ * @author liumingzhij26@gmail.com
  * @version 1.0.0
  */
 
