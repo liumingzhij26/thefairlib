@@ -88,8 +88,10 @@ class AliyunRabbitmqClient
     {
         if (!empty(self::$instance) && !empty(self::$_conn)) {
             foreach (self::$instance as $key => $v) {
-                self::$_channel[$key]->close();
-                self::$_conn[$key]->close();
+                if (self::$_channel[$key]->is_open()) {
+                    self::$_channel[$key]->close();
+                    self::$_conn[$key]->close();
+                }
             }
             self::$_conn = null;
             self::$_channel = null;
