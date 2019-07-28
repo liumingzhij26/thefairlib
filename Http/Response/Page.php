@@ -6,6 +6,7 @@
  * @version 1.0
  * @copyright 2015-2025
  */
+
 namespace TheFairLib\Http\Response;
 
 use TheFairLib\Http\Response;
@@ -24,14 +25,16 @@ class Page extends Response
 
     private static $instance = null;
 
-    static public function Instance($result = []){
+    static public function Instance($result = [])
+    {
         if (empty(self::$instance)) {
             self::$instance = new static($result);
         }
         return self::$instance;
     }
 
-    public function __construct($result = [], $msg = '', $code = 0, $httpCode = 200){
+    public function __construct($result = [], $msg = '', $code = 0, $httpCode = 200)
+    {
         $this->setResult($result);
         $this->setMsg($msg);
         $this->setCode($code);
@@ -39,79 +42,92 @@ class Page extends Response
         parent::__construct($this->_buildApiBody(), $httpCode);
     }
 
-    public function getResult(){
+    public function getResult()
+    {
         return $this->_result;
     }
 
-    public function getMsg(){
+    public function getMsg()
+    {
         return $this->_msg;
     }
 
-    public function getCode(){
+    public function getCode()
+    {
         return $this->_code;
     }
 
-    public function setResult($result){
+    public function setResult($result)
+    {
         return $this->_result = $result;
     }
 
-    public function setMsg($msg){
+    public function setMsg($msg)
+    {
         return $this->_msg = $msg;
     }
 
-    public function setCode($code){
+    public function setCode($code)
+    {
         return $this->_code = $code;
     }
 
-    public static function setCallBack($callback){
+    public static function setCallBack($callback)
+    {
         return self::$_jsonpCallbackName = $callback;
     }
 
-    public static function setIsJsonp($isJsonp){
+    public static function setIsJsonp($isJsonp)
+    {
         return self::$_isJsonp = $isJsonp;
     }
 
-    protected function _serialize($content){
+    protected function _serialize($content)
+    {
         $content = Utility::encode($content);
 
-        if(self::$_isJsonp === true){
+        if (self::$_isJsonp === true) {
             $content = self::$_jsonpCallbackName . '(' . $content . ');';
         }
 
         return $content;
     }
 
-    protected function _getContentType(){
+    protected function _getContentType()
+    {
         return 'application/json;charset=utf-8';
     }
 
-    public function send(){
+    public function send($dealHeader = true)
+    {
         $cookies = Utility::getResponseCookie();
-        if(!empty($cookies)){
-            foreach($cookies as $cookie){
+        if (!empty($cookies)) {
+            foreach ($cookies as $cookie) {
                 $this->setCookie($cookie);
             }
         }
         $this->setBody($this->_buildApiBody());
-        return parent::send();
+        return parent::send($dealHeader);
     }
 
-    private function _buildApiBody(){
+    private function _buildApiBody()
+    {
         return array(
             'code' => $this->getCode(),
             'message' => array('text' => $this->getMsg(), 'action' => 'toast'),
-            'result' => (object) $this->getResult(),
+            'result' => (object)$this->getResult(),
         );
     }
 
-    public function redirect($url){
+    public function redirect($url)
+    {
         $cookies = Utility::getResponseCookie();
-        if(!empty($cookies)){
-            foreach($cookies as $cookie){
+        if (!empty($cookies)) {
+            foreach ($cookies as $cookie) {
                 $this->setCookie($cookie);
             }
         }
-        $this->setHeader('Cache-Control','no-cache, private');
+        $this->setHeader('Cache-Control', 'no-cache, private');
         $this->setHeader('location', $url);
         $this->setBody('');
         return parent::send();
