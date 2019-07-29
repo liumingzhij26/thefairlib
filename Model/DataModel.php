@@ -13,6 +13,7 @@ use Illuminate\Database\Capsule\Manager;
 use TheFairLib\Config\Config;
 use TheFairLib\DB\Redis\Cache;
 use TheFairLib\DB\Redis\Storage;
+use TheFairLib\Queue\Rabbitmq\AliyunRabbitmqClient;
 use TheFairLib\Queue\Rabbitmq\Rabbitmq;
 use TheFairLib\Search\Solr\Client;
 use TheFairLib\Utility\Utility;
@@ -505,6 +506,7 @@ abstract class DataModel
         Storage::closeConnection();
         Cache::closeConnection();
         Rabbitmq::closeConnection();//关闭MQ
+        AliyunRabbitmqClient::closeConnection();//关闭MQ
         Client::closeConnection();//solr
     }
 
