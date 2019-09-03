@@ -1,12 +1,12 @@
 <?php
 /***************************************************************************
  *
- * Copyright (c) 2017 thefair.net.cn, Inc. All Rights Reserved
+ * Copyright (c) liumingzhi, Inc. All Rights Reserved
  *
  **************************************************************************
  *
  * @file Client.php
- * @author mingzhi(liumingzhi@thefair.net.cn)
+ * @author mingzhi(liumingzhij26@gmail.com)
  * @date 2017-05-26 16:00:00
  *
  **/

@@ -2,7 +2,7 @@
 /**
  * DingxiangClient.php
  *
- * @author wangjianqiu <wangjianqiu@thefair.net.cn>
+ * @author liumingzhi <liumingzhij26@gmail.com>
  * @version 1.0
  * @copyright 2018-2018 TheFair
  */
