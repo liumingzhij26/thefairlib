@@ -136,9 +136,6 @@ class Utility
      */
     public static function Encrypt($data, $key, $iv = 'INBJAY3Q9VLpl5L3/gMM9Q==')
     {
-        if (strlen($iv) != 24) {
-            return ErrorCode::$IllegalIv;
-        }
         $aesIV = base64_decode($iv);
 
         $result = openssl_encrypt($data, "AES-128-CBC", $key, 1, $aesIV);
@@ -154,9 +151,6 @@ class Utility
      */
     public static function Decrypt($data, $key, $iv = 'INBJAY3Q9VLpl5L3/gMM9Q==')
     {
-        if (strlen($iv) != 24) {
-            return ErrorCode::$IllegalIv;
-        }
         $aesIV = base64_decode($iv);
 
         $aesCipher = base64_decode($data);
