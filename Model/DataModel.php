@@ -13,8 +13,7 @@ use Illuminate\Database\Capsule\Manager;
 use TheFairLib\Config\Config;
 use TheFairLib\DB\Redis\Cache;
 use TheFairLib\DB\Redis\Storage;
-use TheFairLib\Queue\Rabbitmq\AliyunRabbitmqClient;
-use TheFairLib\Queue\Rabbitmq\Rabbitmq;
+use TheFairLib\Queue\Rabbitmq\RabbitmqProducerClient;
 use TheFairLib\Search\Solr\Client;
 use TheFairLib\Utility\Utility;
 
@@ -205,6 +204,7 @@ abstract class DataModel
      * @param int $itemPerPage
      * @param string $groupBy
      * @return array
+     * @throws Exception
      */
     protected function _getItemListByPage($dbName, $tableName, $where, $fields, $page = 1, $order = '', $itemPerPage = 20, $groupBy = '')
     {
@@ -490,6 +490,8 @@ abstract class DataModel
 
     /**
      * 关闭数据库连接
+     *
+     * @throws \Exception
      */
     public static function closeDb()
     {
@@ -505,8 +507,7 @@ abstract class DataModel
         //redis关闭
         Storage::closeConnection();
         Cache::closeConnection();
-        Rabbitmq::closeConnection();//关闭MQ
-        AliyunRabbitmqClient::closeConnection();//关闭MQ
+        RabbitmqProducerClient::allCloseConnection();//关闭MQ
         Client::closeConnection();//solr
     }
 
