@@ -1,6 +1,7 @@
 <?php
 
-class PushPayload {
+class PushPayload
+{
     private static $EFFECTIVE_DEVICE_TYPES = array('ios', 'android', 'winphone');
     private static $LIMIT_KEYS = array('X-Rate-Limit-Limit'=>'rateLimitLimit', 'X-Rate-Limit-Remaining'=>'rateLimitRemaining', 'X-Rate-Limit-Reset'=>'rateLimitReset');
     const PUSH_URL = 'https://api.jpush.cn/v3/push';
@@ -26,11 +27,13 @@ class PushPayload {
      * PushPayload constructor.
      * @param $client JPush
      */
-    function __construct($client) {
+    public function __construct($client)
+    {
         $this->client = $client;
     }
 
-    public function setPlatform($platform) {
+    public function setPlatform($platform)
+    {
         if (is_string($platform) && strcasecmp("all", $platform) === 0) {
             $this->platform = "all";
         } else {
@@ -42,7 +45,7 @@ class PushPayload {
             }
 
             $_platform = array();
-            foreach($platform as $type) {
+            foreach ($platform as $type) {
                 $type = strtolower($type);
                 if (!in_array($type, self::$EFFECTIVE_DEVICE_TYPES)) {
                     throw new InvalidArgumentException("Invalid device type: " . $type);
@@ -56,7 +59,8 @@ class PushPayload {
         return $this;
     }
 
-    public function setAudience($all) {
+    public function setAudience($all)
+    {
         if (strtolower($all) === 'all') {
             $this->addAllAudience();
             return $this;
@@ -65,18 +69,20 @@ class PushPayload {
         }
     }
 
-    public function addAllAudience() {
+    public function addAllAudience()
+    {
         $this->audience = "all";
         return $this;
     }
 
-    public function addTag($tag) {
+    public function addTag($tag)
+    {
         if (is_null($this->tags)) {
             $this->tags = array();
         }
 
         if (is_array($tag)) {
-            foreach($tag as $_tag) {
+            foreach ($tag as $_tag) {
                 if (!is_string($_tag)) {
                     throw new InvalidArgumentException("Invalid tag value");
                 }
@@ -84,7 +90,7 @@ class PushPayload {
                     array_push($this->tags, $_tag);
                 }
             }
-        } else if (is_string($tag)) {
+        } elseif (is_string($tag)) {
             if (!in_array($tag, $this->tags)) {
                 array_push($this->tags, $tag);
             }
@@ -93,16 +99,16 @@ class PushPayload {
         }
 
         return $this;
-
     }
 
-    public function addTagAnd($tag) {
+    public function addTagAnd($tag)
+    {
         if (is_null($this->tagAnds)) {
             $this->tagAnds = array();
         }
 
         if (is_array($tag)) {
-            foreach($tag as $_tag) {
+            foreach ($tag as $_tag) {
                 if (!is_string($_tag)) {
                     throw new InvalidArgumentException("Invalid tag_and value");
                 }
@@ -110,7 +116,7 @@ class PushPayload {
                     array_push($this->tagAnds, $_tag);
                 }
             }
-        } else if (is_string($tag)) {
+        } elseif (is_string($tag)) {
             if (!in_array($tag, $this->tagAnds)) {
                 array_push($this->tagAnds, $tag);
             }
@@ -121,13 +127,14 @@ class PushPayload {
         return $this;
     }
 
-    public function addAlias($alias) {
+    public function addAlias($alias)
+    {
         if (is_null($this->alias)) {
             $this->alias = array();
         }
 
         if (is_array($alias)) {
-            foreach($alias as $_alias) {
+            foreach ($alias as $_alias) {
                 if (!is_string($_alias)) {
                     throw new InvalidArgumentException("Invalid alias value");
                 }
@@ -135,7 +142,7 @@ class PushPayload {
                     array_push($this->alias, $_alias);
                 }
             }
-        } else if (is_string($alias)) {
+        } elseif (is_string($alias)) {
             if (!in_array($alias, $this->alias)) {
                 array_push($this->alias, $alias);
             }
@@ -146,13 +153,14 @@ class PushPayload {
         return $this;
     }
 
-    public function addRegistrationId($registrationId) {
+    public function addRegistrationId($registrationId)
+    {
         if (is_null($this->registrationIds)) {
             $this->registrationIds = array();
         }
 
         if (is_array($registrationId)) {
-            foreach($registrationId as $_registrationId) {
+            foreach ($registrationId as $_registrationId) {
                 if (!is_string($_registrationId)) {
                     throw new InvalidArgumentException("Invalid registration_id value");
                 }
@@ -160,7 +168,7 @@ class PushPayload {
                     array_push($this->registrationIds, $_registrationId);
                 }
             }
-        } else if (is_string($registrationId)) {
+        } elseif (is_string($registrationId)) {
             if (!in_array($registrationId, $this->registrationIds)) {
                 array_push($this->registrationIds, $registrationId);
             }
@@ -171,7 +179,8 @@ class PushPayload {
         return $this;
     }
 
-    public function setNotificationAlert($alert) {
+    public function setNotificationAlert($alert)
+    {
         if (!is_string($alert)) {
             throw new InvalidArgumentException("Invalid alert value");
         }
@@ -179,7 +188,8 @@ class PushPayload {
         return $this;
     }
 
-    public function addIosNotification($alert=null, $sound=null, $badge=null, $content_available=null, $category=null, $extras=null) {
+    public function addIosNotification($alert=null, $sound=null, $badge=null, $content_available=null, $category=null, $extras=null)
+    {
         $ios = array();
 
         if (!is_null($alert)) {
@@ -248,7 +258,8 @@ class PushPayload {
         return $this;
     }
 
-    public function addAndroidNotification($alert=null, $title=null, $builderId=null, $extras=null) {
+    public function addAndroidNotification($alert=null, $title=null, $builderId=null, $extras=null)
+    {
         $android = array();
 
         if (!is_null($alert)) {
@@ -259,10 +270,10 @@ class PushPayload {
         }
 
         if (!is_null($title)) {
-            if(!is_string($title)) {
+            if (!is_string($title)) {
                 throw new InvalidArgumentException("Invalid android title value");
             }
-            if(strlen($title) > 0) {
+            if (strlen($title) > 0) {
                 $android['title'] = $title;
             }
         }
@@ -291,7 +302,8 @@ class PushPayload {
         return $this;
     }
 
-    public function addWinPhoneNotification($alert=null, $title=null, $_open_page=null, $extras=null) {
+    public function addWinPhoneNotification($alert=null, $title=null, $_open_page=null, $extras=null)
+    {
         $winPhone = array();
 
         if (!is_null($alert)) {
@@ -305,7 +317,7 @@ class PushPayload {
             if (!is_string($title)) {
                 throw new InvalidArgumentException("Invalid winphone title notification");
             }
-            if(strlen($title) > 0) {
+            if (strlen($title) > 0) {
                 $winPhone['title'] = $title;
             }
         }
@@ -336,7 +348,8 @@ class PushPayload {
         return $this;
     }
 
-    public function setSmsMessage($content, $delay_time) {
+    public function setSmsMessage($content, $delay_time)
+    {
         $sms = array();
         if (is_null($content) || !is_string($content) || strlen($content) < 0 || strlen($content) > 480) {
             throw new InvalidArgumentException('Invalid sms content, sms content\'s length must in [0, 480]');
@@ -355,7 +368,8 @@ class PushPayload {
     }
 
 
-    public function setMessage($msg_content, $title=null, $content_type=null, $extras=null) {
+    public function setMessage($msg_content, $title=null, $content_type=null, $extras=null)
+    {
         $message = array();
 
         if (is_null($msg_content) || !is_string($msg_content)) {
@@ -391,7 +405,8 @@ class PushPayload {
         return $this;
     }
 
-    public function setOptions($sendno=null, $time_to_live=null, $override_msg_id=null, $apns_production=null, $big_push_duration=null) {
+    public function setOptions($sendno=null, $time_to_live=null, $override_msg_id=null, $apns_production=null, $big_push_duration=null)
+    {
         $options = array();
 
         if (!is_null($sendno)) {
@@ -437,7 +452,8 @@ class PushPayload {
         return $this;
     }
 
-    public function build() {
+    public function build()
+    {
         $payload = array();
 
         // validate platform
@@ -463,9 +479,9 @@ class PushPayload {
 
         if (is_null($this->audience) && count($audience) <= 0) {
             throw new InvalidArgumentException("audience must be set");
-        } else if (!is_null($this->audience) && count($audience) > 0) {
+        } elseif (!is_null($this->audience) && count($audience) > 0) {
             throw new InvalidArgumentException("you can't add tags/alias/registration_id/tag_and when audience='all'");
-        } else if (is_null($this->audience)) {
+        } elseif (is_null($this->audience)) {
             $payload["audience"] = $audience;
         } else {
             $payload["audience"] = $this->audience;
@@ -536,28 +552,33 @@ class PushPayload {
         return $payload;
     }
 
-    public function toJSON() {
+    public function toJSON()
+    {
         $payload = $this->build();
         return json_encode($payload);
     }
 
-    public function printJSON() {
+    public function printJSON()
+    {
         echo $this->toJSON();
         return $this;
     }
 
-    public function send() {
+    public function send()
+    {
         $response = $this->client->_request(PushPayload::PUSH_URL, JPush::HTTP_POST, $this->toJSON());
         return $this->__processResp($response);
     }
 
-    public function validate() {
+    public function validate()
+    {
         $response = $this->client->_request(PushPayload::PUSH_VALIDATE_URL, JPush::HTTP_POST, $this->toJSON());
         return $this->__processResp($response);
     }
 
-    private function __processResp($response) {
-        if($response['http_code'] === 200) {
+    private function __processResp($response)
+    {
+        if ($response['http_code'] === 200) {
             $body = array();
             $body['data'] = json_decode($response['body']);
             $headers = $response['headers'];
@@ -578,8 +599,8 @@ class PushPayload {
             throw new APIRequestException($response);
         }
     }
-    private function generateSendno() {
+    private function generateSendno()
+    {
         return rand(100000, 4294967294);
     }
-
 }

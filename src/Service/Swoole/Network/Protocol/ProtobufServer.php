@@ -90,12 +90,10 @@ class ProtobufServer extends Protocol implements \TheFairLib\Service\Swoole\Serv
 
     public function onRequest($serv, $fd, $request)
     {
-
     }
 
     public function onStart($serv, $workerId)
     {
-
     }
 
     public function onShutdown($serv, $workerId)
@@ -113,16 +111,13 @@ class ProtobufServer extends Protocol implements \TheFairLib\Service\Swoole\Serv
 
     public function onTask($serv, $taskId, $fromId, $data)
     {
-
     }
 
     public function onTimer($serv, $interval)
     {
-
     }
 
     public function onFinish($serv, $taskId, $data)
     {
-
     }
 }

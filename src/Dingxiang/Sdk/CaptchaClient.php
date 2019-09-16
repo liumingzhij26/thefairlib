@@ -6,7 +6,7 @@
  * Date: 2017/8/24
  * Time: 21:05
  */
-include (__DIR__ . "/model/CaptchaResponse.php");
+include(__DIR__ . "/model/CaptchaResponse.php");
 
 class CaptchaClient
 {
@@ -16,20 +16,22 @@ class CaptchaClient
     private $captchaResponse;
     private $timeout = 2;
 
-    function __construct($appId, $appSecret)
+    public function __construct($appId, $appSecret)
     {
         $this->appId = $appId;
         $this->appSecret = $appSecret;
     }
 
-    public function setTimeOut($timeout) {
+    public function setTimeOut($timeout)
+    {
         if ($timeout < 0) {
             # code...
             return;
         }
         $this->timeout = $timeout;
     }
-    public function setCaptchaUrl($captchaUrl) {
+    public function setCaptchaUrl($captchaUrl)
+    {
         $this->captchaUrl = $captchaUrl;
     }
 
@@ -98,13 +100,15 @@ class CaptchaClient
         $this->$property_name = $value;
     }
 
-    public function setResponse($captchaResponse, $msg, $fp) {
+    public function setResponse($captchaResponse, $msg, $fp)
+    {
         $captchaResponse->setResult(true);
         $captchaResponse->setServerStatus($msg);
         $this->close($fp);
     }
 
-    public function close($fp){
+    public function close($fp)
+    {
         try {
             if ($fp != null) {
                 fclose($fp);

@@ -25,16 +25,16 @@ require_once __DIR__ . '/lib/YZTokenClient.php';
  */
 class Youzanyun
 {
-    static public $instance;
+    public static $instance;
 
     /**
      * @var \YZTokenClient
      */
-    static private $client = null;
+    private static $client = null;
 
-    CONST TOKEN = 'CACHE_STRING_YOUZANYUN_ACCESS_TOKEN_INFO';
+    const TOKEN = 'CACHE_STRING_YOUZANYUN_ACCESS_TOKEN_INFO';
 
-    static private $config = [];
+    private static $config = [];
 
     /**
      * Youzanyun
@@ -44,7 +44,7 @@ class Youzanyun
      * @return Youzanyun
      * @throws Exception
      */
-    static public function Instance($config = [], $type = 'book')
+    public static function Instance($config = [], $type = 'book')
     {
         $class = get_called_class();
         if (empty(self::$instance)) {
@@ -72,7 +72,7 @@ class Youzanyun
         return self::$client->post($method, self::$config['version'], $params, $files);
     }
 
-    static public function getToken($type)
+    public static function getToken($type)
     {
         $redis = Cache::getInstance('default');
         $name = self::TOKEN . '#' . $type;

@@ -20,7 +20,7 @@ class Client
      * @param mixed $refresh_token OAuth认证返回的token secret
      * @return void
      */
-    function __construct($akey, $skey, $access_token, $refresh_token = NULL)
+    public function __construct($akey, $skey, $access_token, $refresh_token = null)
     {
         $this->oauth = new OAuth($akey, $skey, $access_token, $refresh_token);
     }
@@ -34,7 +34,7 @@ class Client
      * @param bool $enable 是否开启调试信息
      * @return void
      */
-    function set_debug($enable)
+    public function set_debug($enable)
     {
         $this->oauth->debug = $enable;
     }
@@ -48,7 +48,7 @@ class Client
      * @param string $ip 用户IP
      * @return bool IP为非法IP字符串时，返回false，否则返回true
      */
-    function set_remote_ip($ip)
+    public function set_remote_ip($ip)
     {
         if (ip2long($ip) !== false) {
             $this->oauth->remote_ip = $ip;
@@ -69,7 +69,7 @@ class Client
      * @param int $base_app 是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
      * @return array
      */
-    function public_timeline($page = 1, $count = 50, $base_app = 0)
+    public function public_timeline($page = 1, $count = 50, $base_app = 0)
     {
         $params = array();
         $params['count'] = intval($count);
@@ -93,7 +93,7 @@ class Client
      * @param int $feature 过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
      * @return array
      */
-    function home_timeline($page = 1, $count = 50, $since_id = 0, $max_id = 0, $base_app = 0, $feature = 0)
+    public function home_timeline($page = 1, $count = 50, $since_id = 0, $max_id = 0, $base_app = 0, $feature = 0)
     {
         $params = array();
         if ($since_id) {
@@ -127,7 +127,7 @@ class Client
      * @param int $feature 微博类型，0全部，1原创，2图片，3视频，4音乐. 返回指定类型的微博信息内容。转为为0。可选。
      * @return array
      */
-    function friends_timeline($page = 1, $count = 50, $since_id = 0, $max_id = 0, $base_app = 0, $feature = 0)
+    public function friends_timeline($page = 1, $count = 50, $since_id = 0, $max_id = 0, $base_app = 0, $feature = 0)
     {
         return $this->home_timeline($since_id, $max_id, $count, $page, $base_app, $feature);
     }
@@ -149,7 +149,7 @@ class Client
      * @param int $trim_user 返回值中user信息开关，0：返回完整的user信息、1：user字段仅返回uid，默认为0。
      * @return array
      */
-    function user_timeline_by_id($uid = NULL, $page = 1, $count = 50, $since_id = 0, $max_id = 0, $feature = 0, $trim_user = 0, $base_app = 0)
+    public function user_timeline_by_id($uid = null, $page = 1, $count = 50, $since_id = 0, $max_id = 0, $feature = 0, $trim_user = 0, $base_app = 0)
     {
         $params = array();
         $params['uid'] = $uid;
@@ -188,7 +188,7 @@ class Client
      * @param int $base_app 是否基于当前应用来获取数据。1为限制本应用微博，0为不做限制。默认为0。
      * @return array
      */
-    function user_timeline_by_name($screen_name = NULL, $page = 1, $count = 50, $since_id = 0, $max_id = 0, $feature = 0, $trim_user = 0, $base_app = 0)
+    public function user_timeline_by_name($screen_name = null, $page = 1, $count = 50, $since_id = 0, $max_id = 0, $feature = 0, $trim_user = 0, $base_app = 0)
     {
         $params = array();
         $params['screen_name'] = $screen_name;
@@ -222,7 +222,7 @@ class Client
      * @param int $feature 过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
      * @return array
      */
-    function timeline_batch_by_name($screen_name, $page = 1, $count = 50, $feature = 0, $base_app = 0)
+    public function timeline_batch_by_name($screen_name, $page = 1, $count = 50, $feature = 0, $base_app = 0)
     {
         $params = array();
         if (is_array($screen_name) && !empty($screen_name)) {
@@ -249,7 +249,7 @@ class Client
      * @param int $feature 过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
      * @return array
      */
-    function timeline_batch_by_id($uids, $page = 1, $count = 50, $feature = 0, $base_app = 0)
+    public function timeline_batch_by_id($uids, $page = 1, $count = 50, $feature = 0, $base_app = 0)
     {
         $params = array();
         if (is_array($uids) && !empty($uids)) {
@@ -282,7 +282,7 @@ class Client
      * @param int $filter_by_author 作者筛选类型，0：全部、1：我关注的人、2：陌生人，默认为0。
      * @return array
      */
-    function repost_timeline($sid, $page = 1, $count = 50, $since_id = 0, $max_id = 0, $filter_by_author = 0)
+    public function repost_timeline($sid, $page = 1, $count = 50, $since_id = 0, $max_id = 0, $filter_by_author = 0)
     {
         $this->id_format($sid);
 
@@ -313,7 +313,7 @@ class Client
      * @param int $max_id 若指定此参数，则返回ID小于或等于max_id的记录。可选。
      * @return array
      */
-    function repost_by_me($page = 1, $count = 50, $since_id = 0, $max_id = 0)
+    public function repost_by_me($page = 1, $count = 50, $since_id = 0, $max_id = 0)
     {
         $params = array();
         if ($since_id) {
@@ -344,7 +344,7 @@ class Client
      * @param int $filter_by_type 原创筛选类型，0：全部微博、1：原创的微博，默认为0。
      * @return array
      */
-    function mentions($page = 1, $count = 50, $since_id = 0, $max_id = 0, $filter_by_author = 0, $filter_by_source = 0, $filter_by_type = 0)
+    public function mentions($page = 1, $count = 50, $since_id = 0, $max_id = 0, $filter_by_author = 0, $filter_by_source = 0, $filter_by_type = 0)
     {
         $params = array();
         if ($since_id) {
@@ -373,7 +373,7 @@ class Client
      * @param int $id 要获取已发表的微博ID, 如ID不存在返回空
      * @return array
      */
-    function show_status($id)
+    public function show_status($id)
     {
         $this->id_format($id);
         $params = array();
@@ -389,7 +389,7 @@ class Client
      * @param string $ids 需要查询的微博ID，用半角逗号分隔，最多不超过50个。
      * @return array
      */
-    function show_batch($ids)
+    public function show_batch($ids)
     {
         $params = array();
         if (is_array($ids) && !empty($ids)) {
@@ -413,7 +413,7 @@ class Client
      * @param int $is_batch 是否使用批量模式，0：否、1：是，默认为0。
      * @return array
      */
-    function querymid($id, $type = 1, $is_batch = 0)
+    public function querymid($id, $type = 1, $is_batch = 0)
     {
         $params = array();
         $params['id'] = $id;
@@ -434,7 +434,7 @@ class Client
      * @param int $isBase62 MID是否是base62编码，0：否、1：是，默认为0。
      * @return array
      */
-    function queryid($mid, $type = 1, $is_batch = 0, $inbox = 0, $isBase62 = 0)
+    public function queryid($mid, $type = 1, $is_batch = 0, $inbox = 0, $isBase62 = 0)
     {
         $params = array();
         $params['mid'] = $mid;
@@ -454,7 +454,7 @@ class Client
      * @param int $base_app 是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
      * @return array
      */
-    function repost_daily($count = 20, $base_app = 0)
+    public function repost_daily($count = 20, $base_app = 0)
     {
         $params = array();
         $params['count'] = intval($count);
@@ -471,7 +471,7 @@ class Client
      * @param int $base_app 是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
      * @return array
      */
-    function repost_weekly($count = 20, $base_app = 0)
+    public function repost_weekly($count = 20, $base_app = 0)
     {
         $params = array();
         $params['count'] = intval($count);
@@ -488,7 +488,7 @@ class Client
      * @param int $base_app 是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
      * @return array
      */
-    function comments_daily($count = 20, $base_app = 0)
+    public function comments_daily($count = 20, $base_app = 0)
     {
         $params = array();
         $params['count'] = intval($count);
@@ -505,7 +505,7 @@ class Client
      * @param int $base_app 是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
      * @return array
      */
-    function comments_weekly($count = 20, $base_app = 0)
+    public function comments_weekly($count = 20, $base_app = 0)
     {
         $params = array();
         $params['count'] = intval($count);
@@ -526,14 +526,16 @@ class Client
      * @param int $is_comment 是否在转发的同时发表评论，0：否、1：评论给当前微博、2：评论给原微博、3：都评论，默认为0。
      * @return array
      */
-    function repost($sid, $text = NULL, $is_comment = 0)
+    public function repost($sid, $text = null, $is_comment = 0)
     {
         $this->id_format($sid);
 
         $params = array();
         $params['id'] = $sid;
         $params['is_comment'] = $is_comment;
-        if ($text) $params['status'] = $text;
+        if ($text) {
+            $params['status'] = $text;
+        }
 
         return $this->oauth->post('statuses/repost', $params);
     }
@@ -548,7 +550,7 @@ class Client
      * @param int $id 要删除的微博ID
      * @return array
      */
-    function delete($id)
+    public function delete($id)
     {
         return $this->destroy($id);
     }
@@ -563,7 +565,7 @@ class Client
      * @param int $id 要删除的微博ID
      * @return array
      */
-    function destroy($id)
+    public function destroy($id)
     {
         $this->id_format($id);
         $params = array();
@@ -588,7 +590,7 @@ class Client
      * @param int $visible 微博的可见性，0：所有人能看，1：仅自己可见，2：密友可见，3：指定分组可见，默认为0
      * @return array
      */
-    function update($status, $lat = NULL, $long = NULL, $annotations = NULL, $visible = 0)
+    public function update($status, $lat = null, $long = null, $annotations = null, $visible = 0)
     {
         $params = array();
         $params['status'] = $status;
@@ -623,7 +625,7 @@ class Client
      * @param int $visible 微博的可见性，0：所有人能看，1：仅自己可见，2：密友可见，3：指定分组可见，默认为0
      * @return array
      */
-    function upload($status, $pic_path, $lat = NULL, $long = NULL, $visible = 0)
+    public function upload($status, $pic_path, $lat = null, $long = null, $visible = 0)
     {
         $params = array();
         $params['status'] = $status;
@@ -655,7 +657,7 @@ class Client
      * @param string $url 图片的URL地址，必须以http开头。
      * @return array
      */
-    function upload_url_text($status, $url, $visible = 0, $list_id = NULL, $pic_id = NULL, $lat = NULL, $long = NULL, $annotations = NULL)
+    public function upload_url_text($status, $url, $visible = 0, $list_id = null, $pic_id = null, $lat = null, $long = null, $annotations = null)
     {
         $params = array();
         $params['status'] = $status;
@@ -691,7 +693,7 @@ class Client
      * @param string $language 语言类别，"cnname"简体，"twname"繁体。默认为"cnname"。可选
      * @return array
      */
-    function emotions($type = "face", $language = "cnname")
+    public function emotions($type = "face", $language = "cnname")
     {
         $params = array();
         $params['type'] = $type;
@@ -713,7 +715,7 @@ class Client
      * @param int $filter_by_author 作者筛选类型，0：全部、1：我关注的人、2：陌生人，默认为0。
      * @return array
      */
-    function get_comments_by_sid($sid, $page = 1, $count = 50, $since_id = 0, $max_id = 0, $filter_by_author = 0)
+    public function get_comments_by_sid($sid, $page = 1, $count = 50, $since_id = 0, $max_id = 0, $filter_by_author = 0)
     {
         $params = array();
         $this->id_format($sid);
@@ -745,7 +747,7 @@ class Client
      * @param int $filter_by_source 来源筛选类型，0：全部、1：来自微博的评论、2：来自微群的评论，默认为0。
      * @return array
      */
-    function comments_by_me($page = 1, $count = 50, $since_id = 0, $max_id = 0, $filter_by_source = 0)
+    public function comments_by_me($page = 1, $count = 50, $since_id = 0, $max_id = 0, $filter_by_source = 0)
     {
         $params = array();
         if ($since_id) {
@@ -775,7 +777,7 @@ class Client
      * @param int $filter_by_source 来源筛选类型，0：全部、1：来自微博的评论、2：来自微群的评论，默认为0。
      * @return array
      */
-    function comments_to_me($page = 1, $count = 50, $since_id = 0, $max_id = 0, $filter_by_author = 0, $filter_by_source = 0)
+    public function comments_to_me($page = 1, $count = 50, $since_id = 0, $max_id = 0, $filter_by_author = 0, $filter_by_source = 0)
     {
         $params = array();
         if ($since_id) {
@@ -806,7 +808,7 @@ class Client
      * @param int $max_id 若指定此参数，则返回ID小于或等于max_id的评论。可选。
      * @return array
      */
-    function comments_timeline($page = 1, $count = 50, $since_id = 0, $max_id = 0)
+    public function comments_timeline($page = 1, $count = 50, $since_id = 0, $max_id = 0)
     {
         $params = array();
         if ($since_id) {
@@ -835,7 +837,7 @@ class Client
      * @param int $filter_by_source 来源筛选类型，0：全部、1：来自微博的评论、2：来自微群的评论，默认为0。
      * @return array
      */
-    function comments_mentions($page = 1, $count = 50, $since_id = 0, $max_id = 0, $filter_by_author = 0, $filter_by_source = 0)
+    public function comments_mentions($page = 1, $count = 50, $since_id = 0, $max_id = 0, $filter_by_author = 0, $filter_by_source = 0)
     {
         $params = array();
         $params['since_id'] = $since_id;
@@ -856,7 +858,7 @@ class Client
      * @param string $cids 需要查询的批量评论ID，用半角逗号分隔，最大50
      * @return array
      */
-    function comments_show_batch($cids)
+    public function comments_show_batch($cids)
     {
         $params = array();
         if (is_array($cids) && !empty($cids)) {
@@ -881,7 +883,7 @@ class Client
      * @param int $comment_ori 当评论转发微博时，是否评论给原微博，0：否、1：是，默认为0。
      * @return array
      */
-    function send_comment($id, $comment, $comment_ori = 0)
+    public function send_comment($id, $comment, $comment_ori = 0)
     {
         $params = array();
         $params['comment'] = $comment;
@@ -901,7 +903,7 @@ class Client
      * @param int $cid 要删除的评论id
      * @return array
      */
-    function comment_destroy($cid)
+    public function comment_destroy($cid)
     {
         $params = array();
         $params['cid'] = $cid;
@@ -919,7 +921,7 @@ class Client
      * @param string $ids 需要删除的评论ID，用半角逗号隔开，最多20个。
      * @return array
      */
-    function comment_destroy_batch($ids)
+    public function comment_destroy_batch($ids)
     {
         $params = array();
         if (is_array($ids) && !empty($ids)) {
@@ -948,7 +950,7 @@ class Client
      * @param int $comment_ori 当评论转发微博时，是否评论给原微博，0：否、1：是，默认为0。
      * @return array
      */
-    function reply($sid, $text, $cid, $without_mention = 0, $comment_ori = 0)
+    public function reply($sid, $text, $cid, $without_mention = 0, $comment_ori = 0)
     {
         $this->id_format($sid);
         $this->id_format($cid);
@@ -960,7 +962,6 @@ class Client
         $params['comment_ori'] = $comment_ori;
 
         return $this->oauth->post('comments/reply', $params);
-
     }
 
     /**
@@ -973,10 +974,10 @@ class Client
      * @param int $uid 用户UID。
      * @return array
      */
-    function show_user_by_id($uid)
+    public function show_user_by_id($uid)
     {
         $params = array();
-        if ($uid !== NULL) {
+        if ($uid !== null) {
             $this->id_format($uid);
             $params['uid'] = $uid;
         }
@@ -994,7 +995,7 @@ class Client
      * @param string $screen_name 用户UID。
      * @return array
      */
-    function show_user_by_name($screen_name)
+    public function show_user_by_name($screen_name)
     {
         $params = array();
         $params['screen_name'] = $screen_name;
@@ -1011,7 +1012,7 @@ class Client
      * @param mixed $domain 用户个性域名。例如：lazypeople，而不是http://weibo.com/lazypeople
      * @return array
      */
-    function domain_show($domain)
+    public function domain_show($domain)
     {
         $params = array();
         $params['domain'] = $domain;
@@ -1026,7 +1027,7 @@ class Client
      * @param string $uids 需要查询的用户ID，用半角逗号分隔，一次最多20个。
      * @return array
      */
-    function users_show_batch_by_id($uids)
+    public function users_show_batch_by_id($uids)
     {
         $params = array();
         if (is_array($uids) && !empty($uids)) {
@@ -1048,7 +1049,7 @@ class Client
      * @param string $screen_name 需要查询的用户昵称，用半角逗号分隔，一次最多20个。
      * @return array
      */
-    function users_show_batch_by_name($screen_name)
+    public function users_show_batch_by_name($screen_name)
     {
         $params = array();
         if (is_array($screen_name) && !empty($screen_name)) {
@@ -1072,7 +1073,7 @@ class Client
      * @param int $uid 要获取的用户的ID。
      * @return array
      */
-    function friends_by_id($uid, $cursor = 0, $count = 50)
+    public function friends_by_id($uid, $cursor = 0, $count = 50)
     {
         $params = array();
         $params['cursor'] = $cursor;
@@ -1095,7 +1096,7 @@ class Client
      * @param string $screen_name 要获取的用户的 screen_name
      * @return array
      */
-    function friends_by_name($screen_name, $cursor = 0, $count = 50)
+    public function friends_by_name($screen_name, $cursor = 0, $count = 50)
     {
         $params = array();
         $params['cursor'] = $cursor;
@@ -1116,7 +1117,7 @@ class Client
      * @param int $page 返回结果的页码，默认为1。
      * @return array
      */
-    function friends_in_common($uid, $suid = NULL, $page = 1, $count = 50)
+    public function friends_in_common($uid, $suid = null, $page = 1, $count = 50)
     {
         $params = array();
         $params['uid'] = $uid;
@@ -1137,7 +1138,7 @@ class Client
      * @param int $sort 排序类型，0：按关注时间最近排序，默认为0。
      * @return array
      **/
-    function bilateral($uid, $page = 1, $count = 50, $sort = 0)
+    public function bilateral($uid, $page = 1, $count = 50, $sort = 0)
     {
         $params = array();
         $params['uid'] = $uid;
@@ -1158,7 +1159,7 @@ class Client
      * @param int $sort 排序类型，0：按关注时间最近排序，默认为0。
      * @return array
      **/
-    function bilateral_ids($uid, $page = 1, $count = 50, $sort = 0)
+    public function bilateral_ids($uid, $page = 1, $count = 50, $sort = 0)
     {
         $params = array();
         $params['uid'] = $uid;
@@ -1180,7 +1181,7 @@ class Client
      * @param int $uid 要获取的用户 UID，默认为当前用户
      * @return array
      */
-    function friends_ids_by_id($uid, $cursor = 0, $count = 500)
+    public function friends_ids_by_id($uid, $cursor = 0, $count = 500)
     {
         $params = array();
         $this->id_format($uid);
@@ -1202,7 +1203,7 @@ class Client
      * @param string $screen_name 要获取的用户的 screen_name，默认为当前用户
      * @return array
      */
-    function friends_ids_by_name($screen_name, $cursor = 0, $count = 500)
+    public function friends_ids_by_name($screen_name, $cursor = 0, $count = 500)
     {
         $params = array();
         $params['cursor'] = $cursor;
@@ -1220,7 +1221,7 @@ class Client
      * @param string $uids 需要获取备注的用户UID，用半角逗号分隔，最多不超过50个。
      * @return array
      **/
-    function friends_remark_batch($uids)
+    public function friends_remark_batch($uids)
     {
         $params = array();
         if (is_array($uids) && !empty($uids)) {
@@ -1244,7 +1245,7 @@ class Client
      * @param int $cursor false 返回结果的游标，下一页用返回值里的next_cursor，上一页用previous_cursor，默认为0。
      * @return array
      **/
-    function followers_by_id($uid, $cursor = 0, $count = 50)
+    public function followers_by_id($uid, $cursor = 0, $count = 50)
     {
         $params = array();
         $this->id_format($uid);
@@ -1264,7 +1265,7 @@ class Client
      * @param int $cursor false 返回结果的游标，下一页用返回值里的next_cursor，上一页用previous_cursor，默认为0。
      * @return array
      **/
-    function followers_by_name($screen_name, $cursor = 0, $count = 50)
+    public function followers_by_name($screen_name, $cursor = 0, $count = 50)
     {
         $params = array();
         $params['screen_name'] = $screen_name;
@@ -1283,7 +1284,7 @@ class Client
      * @param int $cursor 返回结果的游标，下一页用返回值里的next_cursor，上一页用previous_cursor，默认为0。
      * @return array
      **/
-    function followers_ids_by_id($uid, $cursor = 0, $count = 50)
+    public function followers_ids_by_id($uid, $cursor = 0, $count = 50)
     {
         $params = array();
         $this->id_format($uid);
@@ -1303,7 +1304,7 @@ class Client
      * @param int $cursor 返回结果的游标，下一页用返回值里的next_cursor，上一页用previous_cursor，默认为0。
      * @return array
      **/
-    function followers_ids_by_name($screen_name, $cursor = 0, $count = 50)
+    public function followers_ids_by_name($screen_name, $cursor = 0, $count = 50)
     {
         $params = array();
         $params['screen_name'] = $screen_name;
@@ -1321,7 +1322,7 @@ class Client
      * @param int $count 返回的记录条数，默认为20，最大不超过200。
      * @return array
      **/
-    function followers_active($uid, $count = 20)
+    public function followers_active($uid, $count = 20)
     {
         $param = array();
         $this->id_format($uid);
@@ -1341,7 +1342,7 @@ class Client
      * @param int $page 返回结果的页码，默认为1。
      * @return array
      **/
-    function friends_chain_followers($uid, $page = 1, $count = 50)
+    public function friends_chain_followers($uid, $page = 1, $count = 50)
     {
         $params = array();
         $this->id_format($uid);
@@ -1362,13 +1363,13 @@ class Client
      * @param mixed $source_id 源用户UID，可选，默认为当前的用户
      * @return array
      */
-    function is_followed_by_id($target_id, $source_id = NULL)
+    public function is_followed_by_id($target_id, $source_id = null)
     {
         $params = array();
         $this->id_format($target_id);
         $params['target_id'] = $target_id;
 
-        if ($source_id != NULL) {
+        if ($source_id != null) {
             $this->id_format($source_id);
             $params['source_id'] = $source_id;
         }
@@ -1387,12 +1388,12 @@ class Client
      * @param mixed $source_name 源用户的微博昵称，可选，默认为当前的用户
      * @return array
      */
-    function is_followed_by_name($target_name, $source_name = NULL)
+    public function is_followed_by_name($target_name, $source_name = null)
     {
         $params = array();
         $params['target_screen_name'] = $target_name;
 
-        if ($source_name != NULL) {
+        if ($source_name != null) {
             $params['source_screen_name'] = $source_name;
         }
 
@@ -1409,7 +1410,7 @@ class Client
      * @param int $uid 要关注的用户UID
      * @return array
      */
-    function follow_by_id($uid)
+    public function follow_by_id($uid)
     {
         $params = array();
         $this->id_format($uid);
@@ -1427,7 +1428,7 @@ class Client
      * @param string $screen_name 要关注的用户昵称
      * @return array
      */
-    function follow_by_name($screen_name)
+    public function follow_by_name($screen_name)
     {
         $params = array();
         $params['screen_name'] = $screen_name;
@@ -1443,7 +1444,7 @@ class Client
      * @param string $uids 要关注的用户UID，用半角逗号分隔，最多不超过20个。
      * @return array
      */
-    function follow_create_batch($uids)
+    public function follow_create_batch($uids)
     {
         $params = array();
         if (is_array($uids) && !empty($uids)) {
@@ -1467,7 +1468,7 @@ class Client
      * @param int $uid 要取消关注的用户UID
      * @return array
      */
-    function unfollow_by_id($uid)
+    public function unfollow_by_id($uid)
     {
         $params = array();
         $this->id_format($uid);
@@ -1485,7 +1486,7 @@ class Client
      * @param string $screen_name 要取消关注的用户昵称
      * @return array
      */
-    function unfollow_by_name($screen_name)
+    public function unfollow_by_name($screen_name)
     {
         $params = array();
         $params['screen_name'] = $screen_name;
@@ -1503,7 +1504,7 @@ class Client
      * @param string $remark 备注信息。
      * @return array
      */
-    function update_remark($uid, $remark)
+    public function update_remark($uid, $remark)
     {
         $params = array();
         $this->id_format($uid);
@@ -1525,7 +1526,7 @@ class Client
      * @param int $max_id 返回ID不大于max_id(时间不晚于max_id)的私信。可选。
      * @return array
      */
-    function list_dm($page = 1, $count = 50, $since_id = 0, $max_id = 0)
+    public function list_dm($page = 1, $count = 50, $since_id = 0, $max_id = 0)
     {
         $params = array();
         if ($since_id) {
@@ -1553,7 +1554,7 @@ class Client
      * @param int $max_id 返回ID不大于max_id(时间不晚于max_id)的私信。可选。
      * @return array
      */
-    function list_dm_sent($page = 1, $count = 50, $since_id = 0, $max_id = 0)
+    public function list_dm_sent($page = 1, $count = 50, $since_id = 0, $max_id = 0)
     {
         $params = array();
         if ($since_id) {
@@ -1578,7 +1579,7 @@ class Client
      * @param int $cursor 返回结果的游标，下一页用返回值里的next_cursor，上一页用previous_cursor，默认为0。
      * @return array
      */
-    function dm_user_list($count = 20, $cursor = 0)
+    public function dm_user_list($count = 20, $cursor = 0)
     {
         $params = array();
         $params['count'] = $count;
@@ -1598,7 +1599,7 @@ class Client
      * @param int $page 返回结果的页码，默认为1。
      * @return array
      */
-    function dm_conversation($uid, $page = 1, $count = 50, $since_id = 0, $max_id = 0)
+    public function dm_conversation($uid, $page = 1, $count = 50, $since_id = 0, $max_id = 0)
     {
         $params = array();
         $this->id_format($uid);
@@ -1624,7 +1625,7 @@ class Client
      * @param string $dmids 需要查询的私信ID，用半角逗号分隔，一次最多50个
      * @return array
      */
-    function dm_show_batch($dmids)
+    public function dm_show_batch($dmids)
     {
         $params = array();
         if (is_array($dmids) && !empty($dmids)) {
@@ -1650,7 +1651,7 @@ class Client
      * @param int $id 需要发送的微博ID。
      * @return array
      */
-    function send_dm_by_id($uid, $text, $id = NULL)
+    public function send_dm_by_id($uid, $text, $id = null)
     {
         $params = array();
         $this->id_format($uid);
@@ -1675,7 +1676,7 @@ class Client
      * @param int $id 需要发送的微博ID。
      * @return array
      */
-    function send_dm_by_name($screen_name, $text, $id = NULL)
+    public function send_dm_by_name($screen_name, $text, $id = null)
     {
         $params = array();
         $params['text'] = $text;
@@ -1697,7 +1698,7 @@ class Client
      * @param int $did 要删除的私信主键ID
      * @return array
      */
-    function delete_dm($did)
+    public function delete_dm($did)
     {
         $this->id_format($did);
         $params = array();
@@ -1715,7 +1716,7 @@ class Client
      * @param mixed $dids 欲删除的一组私信ID，用半角逗号隔开，或者由一组评论ID组成的数组。最多20个。例如："4976494627, 4976262053"或array(4976494627,4976262053);
      * @return array
      */
-    function delete_dms($dids)
+    public function delete_dms($dids)
     {
         $params = array();
         if (is_array($dids) && !empty($dids)) {
@@ -1739,7 +1740,7 @@ class Client
      * @param int $uid 需要获取基本信息的用户UID，默认为当前登录用户。
      * @return array
      */
-    function account_profile_basic($uid = NULL)
+    public function account_profile_basic($uid = null)
     {
         $params = array();
         if ($uid) {
@@ -1757,7 +1758,7 @@ class Client
      * @param int $uid 需要获取教育信息的用户UID，默认为当前登录用户。
      * @return array
      */
-    function account_education($uid = NULL)
+    public function account_education($uid = null)
     {
         $params = array();
         if ($uid) {
@@ -1775,7 +1776,7 @@ class Client
      * @param string $uids 需要获取教育信息的用户UID，用半角逗号分隔，最多不超过20。
      * @return array
      */
-    function account_education_batch($uids)
+    public function account_education_batch($uids)
     {
         $params = array();
         if (is_array($uids) && !empty($uids)) {
@@ -1799,7 +1800,7 @@ class Client
      * @param int $uid 需要获取教育信息的用户UID，默认为当前登录用户。
      * @return array
      */
-    function account_career($uid = NULL)
+    public function account_career($uid = null)
     {
         $params = array();
         if ($uid) {
@@ -1817,7 +1818,7 @@ class Client
      * @param string $uids 需要获取教育信息的用户UID，用半角逗号分隔，最多不超过20。
      * @return array
      */
-    function account_career_batch($uids)
+    public function account_career_batch($uids)
     {
         $params = array();
         if (is_array($uids) && !empty($uids)) {
@@ -1840,7 +1841,7 @@ class Client
      * @access public
      * @return array
      */
-    function get_privacy()
+    public function get_privacy()
     {
         return $this->oauth->get('account/get_privacy');
     }
@@ -1862,7 +1863,7 @@ class Client
      * @access public
      * @return array
      */
-    function school_list($query)
+    public function school_list($query)
     {
         $params = $query;
 
@@ -1877,7 +1878,7 @@ class Client
      * @access public
      * @return array
      */
-    function rate_limit_status()
+    public function rate_limit_status()
     {
         return $this->oauth->get('account/rate_limit_status');
     }
@@ -1890,7 +1891,7 @@ class Client
      * @access public
      * @return array
      */
-    function get_uid()
+    public function get_uid()
     {
         return $this->oauth->get('account/get_uid');
     }
@@ -1930,7 +1931,7 @@ class Client
      *  - 只填某日时，采用0000-00-28格式。
      * @return array
      */
-    function update_profile($profile)
+    public function update_profile($profile)
     {
         return $this->oauth->post('account/profile/basic_update', $profile);
     }
@@ -1952,7 +1953,7 @@ class Client
      *  - visible        int        开放等级，0：仅自己可见、1：关注的人可见、2：所有人可见。
      * @return array
      */
-    function edu_update($edu_update)
+    public function edu_update($edu_update)
     {
         return $this->oauth->post('account/profile/edu_update', $edu_update);
     }
@@ -1965,7 +1966,7 @@ class Client
      * @param int $id 教育信息里的学校ID。
      * @return array
      */
-    function edu_destroy($id)
+    public function edu_destroy($id)
     {
         $this->id_format($id);
         $params = array();
@@ -1992,7 +1993,7 @@ class Client
      * 参数id为空，则为新建职业信息，参数company变为必填项，参数id非空，则为更新，参数company可选
      * @return array
      */
-    function car_update($car_update)
+    public function car_update($car_update)
     {
         return $this->oauth->post('account/profile/car_update', $car_update);
     }
@@ -2006,7 +2007,7 @@ class Client
      * @param int $id 职业信息里的公司ID
      * @return array
      */
-    function car_destroy($id)
+    public function car_destroy($id)
     {
         $this->id_format($id);
         $params = array();
@@ -2022,7 +2023,7 @@ class Client
      * @param string $image_path 要上传的头像路径, 支持url。[只支持png/jpg/gif三种格式, 增加格式请修改get_image_mime方法] 必须为小于700K的有效的GIF, JPG图片. 如果图片大于500像素将按比例缩放。
      * @return array
      */
-    function update_profile_image($image_path)
+    public function update_profile_image($image_path)
     {
         $params = array();
         $params['image'] = "@{$image_path}";
@@ -2046,7 +2047,7 @@ class Client
      * 以上参数全部选填
      * @return array
      */
-    function update_privacy($privacy_settings)
+    public function update_privacy($privacy_settings)
     {
         return $this->oauth->post('account/update_privacy', $privacy_settings);
     }
@@ -2063,7 +2064,7 @@ class Client
      * @param  int $count 单页返回的记录条数，默认为50。
      * @return array
      */
-    function get_favorites($page = 1, $count = 50)
+    public function get_favorites($page = 1, $count = 50)
     {
         $params = array();
         $params['page'] = intval($page);
@@ -2083,7 +2084,7 @@ class Client
      * @param int $id 需要查询的收藏ID。
      * @return array
      */
-    function favorites_show($id)
+    public function favorites_show($id)
     {
         $params = array();
         $this->id_format($id);
@@ -2103,7 +2104,7 @@ class Client
      * @param int $page 返回结果的页码，默认为1。
      * @return array
      */
-    function favorites_by_tags($tid, $page = 1, $count = 50)
+    public function favorites_by_tags($tid, $page = 1, $count = 50)
     {
         $params = array();
         $params['tid'] = $tid;
@@ -2123,7 +2124,7 @@ class Client
      * @param int $page 返回结果的页码，默认为1。
      * @return array
      */
-    function favorites_tags($page = 1, $count = 50)
+    public function favorites_tags($page = 1, $count = 50)
     {
         $params = array();
         $params['count'] = $count;
@@ -2141,7 +2142,7 @@ class Client
      * @param int $sid 收藏的微博id
      * @return array
      */
-    function add_to_favorites($sid)
+    public function add_to_favorites($sid)
     {
         $this->id_format($sid);
         $params = array();
@@ -2159,7 +2160,7 @@ class Client
      * @param int $id 要删除的收藏微博信息ID.
      * @return array
      */
-    function remove_from_favorites($id)
+    public function remove_from_favorites($id)
     {
         $this->id_format($id);
         $params = array();
@@ -2178,7 +2179,7 @@ class Client
      * @param mixed $fids 欲删除的一组私信ID，用半角逗号隔开，或者由一组评论ID组成的数组。最多20个。例如："231101027525486630,201100826122315375"或array(231101027525486630,201100826122315375);
      * @return array
      */
-    function remove_from_favorites_batch($fids)
+    public function remove_from_favorites_batch($fids)
     {
         $params = array();
         if (is_array($fids) && !empty($fids)) {
@@ -2204,7 +2205,7 @@ class Client
      * @param string $tags 需要更新的标签内容，用半角逗号分隔，最多不超过2条。
      * @return array
      */
-    function favorites_tags_update($id, $tags)
+    public function favorites_tags_update($id, $tags)
     {
         $params = array();
         $params['id'] = $id;
@@ -2228,7 +2229,7 @@ class Client
      * @param string $tag 需要更新的标签内容。必填
      * @return array
      */
-    function favorites_update_batch($tid, $tag)
+    public function favorites_update_batch($tid, $tag)
     {
         $params = array();
         $params['tid'] = $tid;
@@ -2245,7 +2246,7 @@ class Client
      * @param int $tid 需要更新的标签ID。必填
      * @return array
      */
-    function favorites_tags_destroy_batch($tid)
+    public function favorites_tags_destroy_batch($tid)
     {
         $params = array();
         $params['tid'] = $tid;
@@ -2262,7 +2263,7 @@ class Client
      * @param int $count 单页大小。缺省值10。可选。
      * @return array
      */
-    function get_trends($uid = NULL, $page = 1, $count = 10)
+    public function get_trends($uid = null, $page = 1, $count = 10)
     {
         $params = array();
         if ($uid) {
@@ -2287,7 +2288,7 @@ class Client
      * @param string $trend_name 话题关键字。
      * @return array
      */
-    function trends_is_follow($trend_name)
+    public function trends_is_follow($trend_name)
     {
         $params = array();
         $params['trend_name'] = $trend_name;
@@ -2302,7 +2303,7 @@ class Client
      * @param  int $base_app 是否基于当前应用来获取数据。1表示基于当前应用来获取数据，默认为0。可选。
      * @return array
      */
-    function hourly_trends($base_app = 0)
+    public function hourly_trends($base_app = 0)
     {
         $params = array();
         $params['base_app'] = $base_app;
@@ -2318,7 +2319,7 @@ class Client
      * @param int $base_app 是否基于当前应用来获取数据。1表示基于当前应用来获取数据，默认为0。可选。
      * @return array
      */
-    function daily_trends($base_app = 0)
+    public function daily_trends($base_app = 0)
     {
         $params = array();
         $params['base_app'] = $base_app;
@@ -2335,7 +2336,7 @@ class Client
      * @param int $base_app 是否基于当前应用来获取数据。1表示基于当前应用来获取数据，默认为0。可选。
      * @return array
      */
-    function weekly_trends($base_app = 0)
+    public function weekly_trends($base_app = 0)
     {
         $params = array();
         $params['base_app'] = $base_app;
@@ -2352,7 +2353,7 @@ class Client
      * @param string $trend_name 要关注的话题关键词。
      * @return array
      */
-    function follow_trends($trend_name)
+    public function follow_trends($trend_name)
     {
         $params = array();
         $params['trend_name'] = $trend_name;
@@ -2368,7 +2369,7 @@ class Client
      * @param int $tid 要取消关注的话题ID。
      * @return array
      */
-    function unfollow_trends($tid)
+    public function unfollow_trends($tid)
     {
         $this->id_format($tid);
 
@@ -2388,7 +2389,7 @@ class Client
      * @param int $count 单页大小。缺省值20，最大值200。可选。
      * @return array
      */
-    function get_tags($uid = NULL, $page = 1, $count = 20)
+    public function get_tags($uid = null, $page = 1, $count = 20)
     {
         $params = array();
         if ($uid) {
@@ -2411,7 +2412,7 @@ class Client
      * @param  string $uids 要获取标签的用户ID。最大20，逗号分隔。必填
      * @return array
      */
-    function get_tags_batch($uids)
+    public function get_tags_batch($uids)
     {
         $params = array();
         if (is_array($uids) && !empty($uids)) {
@@ -2434,7 +2435,7 @@ class Client
      * @param int $count 单页大小。缺省值10，最大值10。可选。
      * @return array
      */
-    function get_suggest_tags($count = 10)
+    public function get_suggest_tags($count = 10)
     {
         $params = array();
         $params['count'] = intval($count);
@@ -2450,7 +2451,7 @@ class Client
      * @param mixed $tags 要创建的一组标签，每个标签的长度不可超过7个汉字，14个半角字符。多个标签之间用逗号间隔，或由多个标签构成的数组。如："abc,drf,efgh,tt"或array("abc", "drf", "efgh", "tt")
      * @return array
      */
-    function add_tags($tags)
+    public function add_tags($tags)
     {
         $params = array();
         if (is_array($tags) && !empty($tags)) {
@@ -2470,7 +2471,7 @@ class Client
      * @param int $tag_id 标签ID，必填参数
      * @return array
      */
-    function delete_tag($tag_id)
+    public function delete_tag($tag_id)
     {
         $params = array();
         $params['tag_id'] = $tag_id;
@@ -2486,7 +2487,7 @@ class Client
      * @param mixed $ids 必选参数，要删除的tag id，多个id用半角逗号分割，最多10个。或由多个tag id构成的数组。如：“553,554,555"或array(553, 554, 555)
      * @return array
      */
-    function delete_tags($ids)
+    public function delete_tags($ids)
     {
         $params = array();
         if (is_array($ids) && !empty($ids)) {
@@ -2506,7 +2507,7 @@ class Client
      * @param string $nickname 需要验证的昵称。4-20个字符，支持中英文、数字、"_"或减号。必填
      * @return array
      */
-    function verify_nickname($nickname)
+    public function verify_nickname($nickname)
     {
         $params = array();
         $params['nickname'] = $nickname;
@@ -2523,7 +2524,7 @@ class Client
      * @param int $count 返回的记录条数，默认为10。
      * @return array
      */
-    function search_users($q, $count = 10)
+    public function search_users($q, $count = 10)
     {
         $params = array();
         $params['q'] = $q;
@@ -2540,7 +2541,7 @@ class Client
      * @param int $count 返回的记录条数，默认为10。
      * @return array
      */
-    function search_statuses($q, $count = 10)
+    public function search_statuses($q, $count = 10)
     {
         $params = array();
         $params['q'] = $q;
@@ -2559,7 +2560,7 @@ class Client
      * @param int $type 学校类型，0：全部、1：大学、2：高中、3：中专技校、4：初中、5：小学，默认为0。选填
      * @return array
      */
-    function search_schools($q, $count = 10, $type = 1)
+    public function search_schools($q, $count = 10, $type = 1)
     {
         $params = array();
         $params['q'] = $q;
@@ -2577,7 +2578,7 @@ class Client
      * @param int $count 返回的记录条数，默认为10。
      * @return array
      */
-    function search_companies($q, $count = 10)
+    public function search_companies($q, $count = 10)
     {
         $params = array();
         $params['q'] = $q;
@@ -2597,7 +2598,7 @@ class Client
      * @param int $range 联想范围，0：只联想关注人、1：只联想关注人的备注、2：全部，默认为2。选填
      * @return array
      */
-    function search_at_users($q, $count = 10, $type = 0, $range = 2)
+    public function search_at_users($q, $count = 10, $type = 0, $range = 2)
     {
         $params = array();
         $params['q'] = $q;
@@ -2630,7 +2631,7 @@ class Client
      * 以上参数全部选填
      * @return array
      */
-    function search_statuses_high($query)
+    public function search_statuses_high($query)
     {
         return $this->oauth->get('search/statuses', $query);
     }
@@ -2658,7 +2659,7 @@ class Client
      * 以上所有参数全部选填
      * @return array
      */
-    function search_users_keywords($query)
+    public function search_users_keywords($query)
     {
         return $this->oauth->get('search/users', $query);
     }
@@ -2687,7 +2688,7 @@ class Client
      *  - stockplayer:炒股高手
      * @return array
      */
-    function hot_users($category = "default")
+    public function hot_users($category = "default")
     {
         $params = array();
         $params['category'] = $category;
@@ -2706,7 +2707,7 @@ class Client
      * @return array
      * @ignore
      */
-    function suggestions_may_interested($page = 1, $count = 10)
+    public function suggestions_may_interested($page = 1, $count = 10)
     {
         $params = array();
         $params['page'] = $page;
@@ -2724,7 +2725,7 @@ class Client
      * @param int $num 返回结果数目，默认为10。
      * @return array
      */
-    function suggestions_users_by_status($content, $num = 10)
+    public function suggestions_users_by_status($content, $num = 10)
     {
         $params = array();
         $params['content'] = $content;
@@ -2741,7 +2742,7 @@ class Client
      * @param int $page 返回页码，默认1。选填
      * @return array
      */
-    function hot_favorites($page = 1, $count = 20)
+    public function hot_favorites($page = 1, $count = 20)
     {
         $params = array();
         $params['count'] = $count;
@@ -2753,7 +2754,8 @@ class Client
      * @param $longUrl
      * @return mixed
      */
-    function short_url($longUrl){
+    public function short_url($longUrl)
+    {
         $params = [];
         $params['url_long'] = urlencode($longUrl);
 
@@ -2768,7 +2770,7 @@ class Client
      * @param int $uid 不感兴趣的用户的UID。
      * @return array
      */
-    function put_users_not_interested($uid)
+    public function put_users_not_interested($uid)
     {
         $params = array();
         $params['uid'] = $uid;
@@ -2784,8 +2786,12 @@ class Client
      */
     protected function request_with_pager($url, $page = false, $count = false, $params = array())
     {
-        if ($page) $params['page'] = $page;
-        if ($count) $params['count'] = $count;
+        if ($page) {
+            $params['page'] = $page;
+        }
+        if ($count) {
+            $params['count'] = $count;
+        }
 
         return $this->oauth->get($url, $params);
     }
@@ -2795,20 +2801,28 @@ class Client
      */
     protected function request_with_uid($url, $uid_or_name, $page = false, $count = false, $cursor = false, $post = false, $params = array())
     {
-        if ($page) $params['page'] = $page;
-        if ($count) $params['count'] = $count;
-        if ($cursor) $params['cursor'] = $cursor;
+        if ($page) {
+            $params['page'] = $page;
+        }
+        if ($count) {
+            $params['count'] = $count;
+        }
+        if ($cursor) {
+            $params['cursor'] = $cursor;
+        }
 
-        if ($post) $method = 'post';
-        else $method = 'get';
+        if ($post) {
+            $method = 'post';
+        } else {
+            $method = 'get';
+        }
 
-        if ($uid_or_name !== NULL) {
+        if ($uid_or_name !== null) {
             $this->id_format($uid_or_name);
             $params['id'] = $uid_or_name;
         }
 
         return $this->oauth->$method($url, $params);
-
     }
 
     /**
@@ -2822,5 +2836,4 @@ class Client
             $id = trim($id);
         }
     }
-
 }

@@ -1,6 +1,7 @@
 <?php
 
-class SchedulePayload {
+class SchedulePayload
+{
     private static $LIMIT_KEYS = array('X-Rate-Limit-Limit'=>'rateLimitLimit', 'X-Rate-Limit-Remaining'=>'rateLimitRemaining', 'X-Rate-Limit-Reset'=>'rateLimitReset');
 
     const SCHEDULES_URL = 'https://api.jpush.cn/v3/schedules';
@@ -10,12 +11,14 @@ class SchedulePayload {
      * SchedulePayload constructor.
      * @param $client JPush
      */
-    public function __construct($client) {
+    public function __construct($client)
+    {
         $this->client = $client;
     }
 
 
-    public function createSingleSchedule($name, $push_payload, $trigger) {
+    public function createSingleSchedule($name, $push_payload, $trigger)
+    {
         if (!is_string($name)) {
             throw new InvalidArgumentException('Invalid schedule name');
         }
@@ -34,7 +37,8 @@ class SchedulePayload {
         return $this->__processResp($response);
     }
 
-    public function createPeriodicalSchedule($name, $push_payload, $trigger) {
+    public function createPeriodicalSchedule($name, $push_payload, $trigger)
+    {
         if (!is_string($name)) {
             throw new InvalidArgumentException('Invalid schedule name');
         }
@@ -53,7 +57,8 @@ class SchedulePayload {
         return $this->__processResp($response);
     }
 
-    public function updateSingleSchedule($schedule_id, $name=null, $enabled=null, $push_payload=null, $trigger=null) {
+    public function updateSingleSchedule($schedule_id, $name=null, $enabled=null, $push_payload=null, $trigger=null)
+    {
         if (!is_string($schedule_id)) {
             throw new InvalidArgumentException('Invalid schedule id');
         }
@@ -99,7 +104,8 @@ class SchedulePayload {
         return $this->__processResp($response);
     }
 
-    public function updatePeriodicalSchedule($schedule_id, $name=null, $enabled=null, $push_payload=null, $trigger=null) {
+    public function updatePeriodicalSchedule($schedule_id, $name=null, $enabled=null, $push_payload=null, $trigger=null)
+    {
         if (!is_string($schedule_id)) {
             throw new InvalidArgumentException('Invalid schedule id');
         }
@@ -145,7 +151,8 @@ class SchedulePayload {
         return $this->__processResp($response);
     }
 
-    public function getSchedules($page=1) {
+    public function getSchedules($page=1)
+    {
         if (!is_int($page)) {
             throw new InvalidArgumentException('Invalid pages');
         }
@@ -154,7 +161,8 @@ class SchedulePayload {
         return $this->__processResp($response);
     }
 
-    public function getSchedule($schedule_id) {
+    public function getSchedule($schedule_id)
+    {
         if (!is_string($schedule_id)) {
             throw new InvalidArgumentException('Invalid schedule id');
         }
@@ -163,7 +171,8 @@ class SchedulePayload {
         return $this->__processResp($response);
     }
 
-    public function deleteSchedule($schedule_id) {
+    public function deleteSchedule($schedule_id)
+    {
         if (!is_string($schedule_id)) {
             throw new InvalidArgumentException('Invalid schedule id');
         }
@@ -172,8 +181,9 @@ class SchedulePayload {
         return $this->__processResp($response);
     }
 
-    private function __processResp($response) {
-        if($response['http_code'] === 200) {
+    private function __processResp($response)
+    {
+        if ($response['http_code'] === 200) {
             $body = array();
             $data = json_decode($response['body']);
             if (!is_null($data)) {
@@ -198,4 +208,3 @@ class SchedulePayload {
         }
     }
 }
-

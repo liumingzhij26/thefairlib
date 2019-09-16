@@ -13,15 +13,14 @@ use TheFairLib\Search\Sphinx\Sphinx;
 
 class Search
 {
-
-    static public $instance;
+    public static $instance;
 
     private $_server = 'sphinx';
 
     /**
      * @return Search
      */
-    static public function Instance()
+    public static function Instance()
     {
         $class = get_called_class();
         if (empty(self::$instance)) {
@@ -37,11 +36,10 @@ class Search
     public function getApplication()
     {
         switch ($this->_server) {
-            case 'sphinx' :
+            case 'sphinx':
                 return Sphinx::Instance()->init();
                 break;
         }
         throw new Exception('error ', $this->_server);
     }
-
 }

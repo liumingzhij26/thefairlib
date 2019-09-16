@@ -20,7 +20,7 @@ class Logistics extends API
     /**
      * @return Logistics
      */
-    static public function Instance()
+    public static function Instance()
     {
         return parent::Instance();
     }

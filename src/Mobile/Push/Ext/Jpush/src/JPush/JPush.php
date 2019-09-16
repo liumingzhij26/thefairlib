@@ -6,7 +6,8 @@ require_once("core/DevicePayload.php");
 require_once("core/SchedulePayload.php");
 require_once("core/JPushException.php");
 
-class JPush {
+class JPush
+{
     const DISABLE_SOUND = "_disable_Sound";
     const DISABLE_BADGE = 0x10000;
     const USER_AGENT = 'JPush-API-PHP-Client';
@@ -25,7 +26,8 @@ class JPush {
     private $logFile;
 
 
-    public function __construct($appKey, $masterSecret, $logFile=self::DEFAULT_LOG_FILE, $retryTimes=self::DEFAULT_MAX_RETRY_TIMES) {
+    public function __construct($appKey, $masterSecret, $logFile=self::DEFAULT_LOG_FILE, $retryTimes=self::DEFAULT_MAX_RETRY_TIMES)
+    {
         if (is_null($appKey) || is_null($masterSecret)) {
             throw new InvalidArgumentException("appKey and masterSecret must be set.");
         }
@@ -43,19 +45,23 @@ class JPush {
         $this->logFile = $logFile;
     }
 
-    public function push() {
+    public function push()
+    {
         return new PushPayload($this);
     }
 
-    public function report() {
+    public function report()
+    {
         return new ReportPayload($this);
     }
 
-    public function device() {
+    public function device()
+    {
         return new DevicePayload($this);
     }
 
-    public function schedule() {
+    public function schedule()
+    {
         return new SchedulePayload($this);
     }
 
@@ -69,7 +75,8 @@ class JPush {
      * @return array
      * @throws APIConnectionException
      */
-    public function _request($url, $method, $body=null, $times=1) {
+    public function _request($url, $method, $body=null, $times=1)
+    {
         $this->log("Send " . $method . " " . $url . ", body:" . $body . ", times:" . $times);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -92,7 +99,7 @@ class JPush {
         // 设置Post参数
         if ($method === self::HTTP_POST) {
             curl_setopt($ch, CURLOPT_POST, true);
-        } else if ($method === self::HTTP_DELETE || $method === self::HTTP_PUT) {
+        } elseif ($method === self::HTTP_DELETE || $method === self::HTTP_PUT) {
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
         }
         if (!is_null($body)) {
@@ -113,10 +120,10 @@ class JPush {
         if ($errorCode) {
             if ($errorCode === 28) {
                 throw new APIConnectionException("Response timeout. Your request has probably be received by JPush Server,please check that whether need to be pushed again.", true);
-            } else if ($errorCode === 56) {
+            } elseif ($errorCode === 56) {
                 // resolve error[56 Problem (2) in the Chunked-Encoded data]
                 throw new APIConnectionException("Response timeout, maybe cause by old CURL version. Your request has probably be received by JPush Server, please check that whether need to be pushed again.", true);
-            } else if ($times >= $this->retryTimes) {
+            } elseif ($times >= $this->retryTimes) {
                 throw new APIConnectionException("Connect timeout. Please retry later. Error:" . $errorCode . " " . curl_error($ch));
             } else {
                 $this->log("Send " . $method . " " . $url . " fail, curl_code:" . $errorCode . ", body:" . $body . ", times:" . $times);
@@ -132,8 +139,8 @@ class JPush {
                 if (!empty($line)) {
                     if ($i === 0) {
                         $headers['http_code'] = $line;
-                    } else if (strpos($line, ": ")) {
-                        list ($key, $value) = explode(': ', $line);
+                    } elseif (strpos($line, ": ")) {
+                        list($key, $value) = explode(': ', $line);
                         $headers[$key] = $value;
                     }
                 }
@@ -146,13 +153,10 @@ class JPush {
         return $response;
     }
 
-    public function log($content) {
+    public function log($content)
+    {
         if (!is_null($this->logFile)) {
             error_log($content . "\r\n", 3, $this->logFile);
         }
     }
-
-
-
 }
-

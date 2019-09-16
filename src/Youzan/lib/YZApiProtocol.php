@@ -1,5 +1,6 @@
 <?php
-class YZApiProtocol {
+class YZApiProtocol
+{
     const APP_ID_KEY = 'app_id';
     const METHOD_KEY = 'method';
     const TIMESTAMP_KEY = 'timestamp';
@@ -22,8 +23,11 @@ class YZApiProtocol {
     const ERR_PARAMETER = 41000;
     const ERR_LOGIC = 50000;
 
-    public static function sign($appSecret, $params, $method = 'md5') {
-        if (!is_array($params)) $params = array();
+    public static function sign($appSecret, $params, $method = 'md5')
+    {
+        if (!is_array($params)) {
+            $params = array();
+        }
 
         ksort($params);
         $text = '';
@@ -34,7 +38,8 @@ class YZApiProtocol {
         return self::hash($method, $appSecret . $text . $appSecret);
     }
 
-    private static function hash($method, $text) {
+    private static function hash($method, $text)
+    {
         switch ($method) {
             case 'md5':
             default:
@@ -44,12 +49,13 @@ class YZApiProtocol {
         return $signature;
     }
 
-    public static function allowed_sign_methods() {
+    public static function allowed_sign_methods()
+    {
         return array('md5');
     }
 
-    public static function allowed_format() {
+    public static function allowed_format()
+    {
         return array('json');
     }
-
 }

@@ -6,6 +6,6 @@
  * Time: 下午2:12
  */
 
-class IGtAPNTemplate extends IGtBaseTemplate{
-
-} 
+class IGtAPNTemplate extends IGtBaseTemplate
+{
+}

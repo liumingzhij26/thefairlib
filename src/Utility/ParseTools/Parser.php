@@ -13,7 +13,7 @@ class Parser
      * @param bool $needMarkUpText 是否需要给markup加text调试
      * @return Parser
      */
-    static public function Instance($needMarkUpText=false)
+    public static function Instance($needMarkUpText=false)
     {
         $class = get_called_class();
         $key = $class . strval($needMarkUpText);
@@ -30,7 +30,7 @@ class Parser
      * @return string
      * @throws \PHPHtmlParser\Exceptions\UnknownChildTypeException
      */
-    function parseToRAML($content)
+    public function parseToRAML($content)
     {
         $content = '<body>' . $content . '</body>';
         $preHtml = PreParser::Instance()->preHtml($content);
@@ -56,7 +56,8 @@ class Parser
     /**
      * @return NodeBuilder
      */
-    private function _getNodeBuilder(){
+    private function _getNodeBuilder()
+    {
         return NodeBuilder::Instance($this->_needMarkUpText);
     }
 
@@ -106,13 +107,13 @@ class Parser
                                 $this->_parseMarkUps($item, $sourceAml);
                                 $this->_parseSentence($item, $sourceAml);
                                 $ret[] = $sourceAml;
-                            } else if (in_array($tagName, self::$hTagNameArray)) {
+                            } elseif (in_array($tagName, self::$hTagNameArray)) {
                                 $align = ParseUtils::Instance()->getCssValueFromItem($item, 'text\-align');
                                 $id = ParseUtils::Instance()->getDataId($item);
                                 $sourceAml = $this->_getNodeBuilder()->buildTextNode($sourceContent, $tagName, $align, $id);
                                 $this->_parseMarkUps($item, $sourceAml);
                                 $ret[] = $sourceAml;
-                            } else if ($tagName == 'ul') {
+                            } elseif ($tagName == 'ul') {
                                 $lis = $this->_getChildrenByTag($item, 'li');
 
                                 foreach ($lis as $liitem) {
@@ -123,17 +124,16 @@ class Parser
                                     $ret[] = $sourceAml;
                                 }
                             }
-
-                        } else if ($tagName == 'img') { // 图片类型 <img>
+                        } elseif ($tagName == 'img') { // 图片类型 <img>
                             $id = ParseUtils::Instance()->getDataId($item);
                             $ret[] = $this->_getNodeBuilder()->buildImgNode($item, $id);
-                        } else if (strpos($item->innerHtml(), 'img') !== false) { // <p><img></img></p>
+                        } elseif (strpos($item->innerHtml(), 'img') !== false) { // <p><img></img></p>
                             $imgChild = $this->_getFirstChildByTag($item, 'img');
                             if ($imgChild) {
                                 $id = ParseUtils::Instance()->getDataId($item);
                                 $ret[] = $this->_getNodeBuilder()->buildImgNode($imgChild, $id);
                             }
-                        } else if ($tagName == 'p') {
+                        } elseif ($tagName == 'p') {
 //                            $id = ParseUtils::Instance()->getDataId($item);
 //                            $ret[] = $this->_getNodeBuilder()->buildEmptyNode($id);
                         }
@@ -248,7 +248,4 @@ class Parser
             $start = $result[$index] + 1;
         }
     }
-
-
 }
-

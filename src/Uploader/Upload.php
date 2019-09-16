@@ -1,6 +1,7 @@
 <?php
 
 namespace TheFairLib\Uploader;
+
 /**
  * Class Upload
  * @package Uploader

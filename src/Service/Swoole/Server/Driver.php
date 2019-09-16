@@ -3,11 +3,11 @@ namespace TheFairLib\Service\Swoole\Server;
 
 interface Driver
 {
-    function run($setting);
+    public function run($setting);
 
-    function send($client_id, $data);
+    public function send($client_id, $data);
 
-    function close($client_id);
+    public function close($client_id);
 
-    function setProtocol($protocol);
+    public function setProtocol($protocol);
 }

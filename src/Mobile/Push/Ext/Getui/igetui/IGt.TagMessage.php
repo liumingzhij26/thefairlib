@@ -1,37 +1,43 @@
 <?php
 header("Content-Type: text/html; charset=utf-8");
-class IGtTagMessage extends IGtMessage{
+class IGtTagMessage extends IGtMessage
+{
 
     //array('','',..)
-    var $appIdList;
-    var $tag;
-    var $speed=0;
+    public $appIdList;
+    public $tag;
+    public $speed=0;
 
-    function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    function get_appIdList() {
+    public function get_appIdList()
+    {
         return $this->appIdList;
     }
 
-    function  set_appIdList($appIdList) {
+    public function set_appIdList($appIdList)
+    {
         $this->appIdList = $appIdList;
     }
 
-    function get_tag() {
+    public function get_tag()
+    {
         return $this->tag;
     }
 
-    function set_tag($tag) {
+    public function set_tag($tag)
+    {
         $this->tag = $tag;
     }
 
-    function get_speed()
+    public function get_speed()
     {
         return $this->speed;
     }
-    function set_speed($speed)
+    public function set_speed($speed)
     {
         $this->speed=$speed;
     }

@@ -12,5 +12,4 @@ use TheFairLib\Exception\BaseException;
 
 class JuheException extends BaseException
 {
-
 }

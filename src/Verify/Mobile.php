@@ -6,13 +6,12 @@ use TheFairLib\Config\Config;
 
 class Mobile
 {
-
-    static public $instance;
+    public static $instance;
 
     /**
      * @return \TheFairLib\Verify\Mobile\Inter\Sms
      */
-    static public function Instance($config = [])
+    public static function Instance($config = [])
     {
         $class = get_called_class();
         if (empty(self::$instance[$class])) {
@@ -30,7 +29,7 @@ class Mobile
      */
     private function _setOptions($config = [])
     {
-        if(empty($config)){
+        if (empty($config)) {
             $config = Config::get_verify();
         }
 
@@ -44,5 +43,4 @@ class Mobile
         }
         return new $class($config);
     }
-
 }

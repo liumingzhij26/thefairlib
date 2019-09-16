@@ -20,25 +20,29 @@ class Controller extends Base
      * @var Page
      */
     protected static $_responseObj = false;
-    protected function init(){
-        if(self::$_responseObj === false){
+    protected function init()
+    {
+        if (self::$_responseObj === false) {
             self::$_responseObj = new Page(new \stdClass());
         }
     }
 
-    public function showResult($result, $msg = '', $code = '0'){
+    public function showResult($result, $msg = '', $code = '0')
+    {
         self::$_responseObj->setCode($code);
         self::$_responseObj->setMsg($msg);
         self::$_responseObj->setResult($result);
         $this->_setResponse(self::$_responseObj->send());
     }
 
-    public function showError($error, $result = array() , $code = '40001'){
+    public function showError($error, $result = array(), $code = '40001')
+    {
         $this->showResult($result, $error, $code);
     }
 
-    public function showBPPage($pageName){
-        if(!self::$_responseObj instanceof BigPipe){
+    public function showBPPage($pageName)
+    {
+        if (!self::$_responseObj instanceof BigPipe) {
             self::$_responseObj = new BigPipe();
         }
         $pageClassName = ucfirst($this->getRequest()->getModuleName())."\\Page\\".ucfirst($this->getRequest()->getControllerName())."\\".ucfirst($pageName);
@@ -46,23 +50,29 @@ class Controller extends Base
         $this->_setResponse(self::$_responseObj->send());
     }
 
-    public function assign($varName, $varValue){
+    public function assign($varName, $varValue)
+    {
         return $this->getView()->assign($varName, $varValue);
     }
 
     public function display($actionName = '', $varArray = [])
     {
-        if(empty($actionName)){
+        if (empty($actionName)) {
             $actionName = $this->getRequest()->getActionName();
         }
         $cookies = Utility::getResponseCookie();
-        if(!empty($cookies)){
+        if (!empty($cookies)) {
             foreach ($cookies as $cookie) {
-                if($cookie instanceof Cookie){
-                    setcookie($cookie->getName(), $cookie->getValue(),
-                        $cookie->getExpire(), $cookie->getPath(),
-                        $cookie->getDomain(), $cookie->getSecure(),
-                        $cookie->getHttpOnly());
+                if ($cookie instanceof Cookie) {
+                    setcookie(
+                        $cookie->getName(),
+                        $cookie->getValue(),
+                        $cookie->getExpire(),
+                        $cookie->getPath(),
+                        $cookie->getDomain(),
+                        $cookie->getSecure(),
+                        $cookie->getHttpOnly()
+                    );
                 }
             }
         }
@@ -74,7 +84,8 @@ class Controller extends Base
      *
      * @return bool
      */
-    public function isAjax(){
+    public function isAjax()
+    {
         return $this->getRequest()->isXmlHttpRequest();
     }
 

@@ -12,7 +12,7 @@ class Response
     public $cookie;
     public $body;
 
-    static $HTTP_HEADERS = array(
+    public static $HTTP_HEADERS = array(
         100 => "100 Continue",
         101 => "101 Switching Protocols",
         200 => "200 OK",
@@ -43,13 +43,13 @@ class Response
         503 => "503 Service Unavailable",
         506 => "506 Variant Also Negotiates");
 
-    function send_http_status($code)
+    public function send_http_status($code)
     {
         $this->head[0] = $this->http_protocol . ' ' . self::$HTTP_HEADERS[$code];
         $this->http_status = $code;
     }
 
-    function send_head($key, $value)
+    public function send_head($key, $value)
     {
         $this->head[$key] = $value;
     }
@@ -64,22 +64,28 @@ class Response
      * @param null $secure
      * @param null $httponly
      */
-    function setcookie($name, $value = null, $expire = null, $path = '/', $domain = null, $secure = null, $httponly = null)
+    public function setcookie($name, $value = null, $expire = null, $path = '/', $domain = null, $secure = null, $httponly = null)
     {
-        if ($value == null) $value = 'deleted';
+        if ($value == null) {
+            $value = 'deleted';
+        }
         $cookie = "$name=$value; expires=Tue, " . date("D, d-M-Y H:i:s T", $expire) . "; path=$path";
-        if ($domain) $cookie .= "; domain=$domain";
-        if ($httponly) $cookie .= '; httponly';
+        if ($domain) {
+            $cookie .= "; domain=$domain";
+        }
+        if ($httponly) {
+            $cookie .= '; httponly';
+        }
         $this->cookie[] = $cookie;
     }
 
 
-    function addHeader(array $header)
+    public function addHeader(array $header)
     {
         $this->head = array_merge($this->head, $header);
     }
 
-    function getHeader($fastcgi = false)
+    public function getHeader($fastcgi = false)
     {
         $out = '';
         if ($fastcgi) {
@@ -118,7 +124,7 @@ class Response
         return $out;
     }
 
-    function noCache()
+    public function noCache()
     {
         $this->head['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0';
         $this->head['Pragma'] = 'no-cache';

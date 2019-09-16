@@ -10,19 +10,18 @@ require_once(dirname(__FILE__) . '/' . 'IGt.Push.php');
 
 class IGtBatch
 {
-    var $batchId;
-    var $innerMsgList = array();
-    var $seqId = 0;
-    var $APPKEY;
-    var $push;
-    var $lastPostData;
+    public $batchId;
+    public $innerMsgList = array();
+    public $seqId = 0;
+    public $APPKEY;
+    public $push;
+    public $lastPostData;
 
     public function __construct($appkey, $push)
     {
         $this->APPKEY = $appkey;
         $this->push = $push;
         $this->batchId = uniqid();
-
     }
 
     public function getBatchId()
@@ -46,7 +45,7 @@ class IGtBatch
 
     public function createSingleJson($message, $target)
     {
-        $params = $this->push->getSingleMessagePostData($message,$target);
+        $params = $this->push->getSingleMessagePostData($message, $target);
         return json_encode($params);
     }
 
@@ -79,6 +78,7 @@ class IGtBatch
         return $result;
     }
 
-    public function setApiUrl($apiUrl) {
+    public function setApiUrl($apiUrl)
+    {
     }
 }

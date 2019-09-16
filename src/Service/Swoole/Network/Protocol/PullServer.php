@@ -42,22 +42,18 @@ class PullServer extends TheFairLib\Service\Swoole\Network\Protocol implements T
 
     public function onConnect($server, $fd, $fromId)
     {
-
     }
 
     public function onClose($server, $fd, $fromId)
     {
-
     }
 
     public function onTask($serv, $taskId, $fromId, $data)
     {
-
     }
 
     public function onFinish($serv, $taskId, $data)
     {
-
     }
 
     //启动定时期,监听IPC通道
@@ -104,24 +100,28 @@ class PullServer extends TheFairLib\Service\Swoole\Network\Protocol implements T
     public function pepoll($opt = 'ADD', $type = 'def', $event = SWOOLE_EVENT_READ)
     {
         $fd = $this->getFd($type);
-        if ($fd === -1) return false;
+        if ($fd === -1) {
+            return false;
+        }
         $readHandle = $this->getHandle('read');
         $writeHandle = $this->getHandle('write');
-        if ($writeHandle === null && $readHandle === null) return false;
+        if ($writeHandle === null && $readHandle === null) {
+            return false;
+        }
         switch ($opt) {
-            case 'ADD' : {
+            case 'ADD': {
                 $ret = swoole_event_add($fd, $readHandle, $writeHandle, $event);
                 break;
             }
-            case 'MOD' : {
+            case 'MOD': {
                 $ret = swoole_event_set($fd, $readHandle, $writeHandle, $event);
                 break;
             }
-            case 'DEL' : {
+            case 'DEL': {
                 $ret = swoole_event_del($fd, $readHandle, $writeHandle, $event);
                 break;
             }
-            default : {
+            default: {
                 return false;
                 break;
             }

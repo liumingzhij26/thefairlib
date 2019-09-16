@@ -3,7 +3,6 @@ namespace TheFairLib\Service\Swoole\Client;
 
 class Protocal extends Base
 {
-
     public $host;
     public $port;
     public $data;
@@ -12,7 +11,6 @@ class Protocal extends Base
 
     public function __construct($host, $port, $data, $timeout, $protocolType)
     {
-
     }
 
     /**
@@ -36,7 +34,6 @@ class Protocal extends Base
      */
     public function unPackRsp($r, $k, $calltime, $data)
     {
-
     }
 
     /**

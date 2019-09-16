@@ -6,7 +6,8 @@
  * Time: 下午7:26
  */
 
-class ServicesRegion {
+class ServicesRegion
+{
     /**
      * 东南亚
      */

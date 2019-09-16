@@ -1,5 +1,6 @@
 <?php
 namespace TheFairLib\Service\Swoole\Network;
+
 /**
  * Class Server
  * @package Swoole\Network

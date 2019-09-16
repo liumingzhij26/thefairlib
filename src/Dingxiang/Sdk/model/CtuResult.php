@@ -27,8 +27,8 @@ class CtuResult
         $this->riskLevel = $riskLevel;
     }
 
-    public function hasRisk() {
+    public function hasRisk()
+    {
         return $this->riskLevel == RiskLevel::REJECT || $this->riskLevel == RiskLevel::REVIEW;
     }
-
 }

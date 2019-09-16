@@ -21,5 +21,4 @@ class HitRule
         $this->id = $id;
         $this->leftValue = $leftValue;
     }
-
 }

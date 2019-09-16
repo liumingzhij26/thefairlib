@@ -16,16 +16,16 @@ use TheFairLib\Queue\Inter;
 
 class Kafka
 {
-    static public $server = 'default';
+    public static $server = 'default';
 
-    static public $instance;
+    public static $instance;
 
-    static private $_config = [];
+    private static $_config = [];
 
     /**
      * @return Kafka
      */
-    static public function Instance()
+    public static function Instance()
     {
         $class = get_called_class();
         if (empty(self::$instance)) {
@@ -69,5 +69,4 @@ class Kafka
         $consumer->setMaxBytes(102400);
         return $consumer;
     }
-
 }

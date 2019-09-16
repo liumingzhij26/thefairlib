@@ -3,7 +3,6 @@ namespace TheFairLib\Service\Swoole\Client;
 
 abstract class Base
 {
-
     protected $_ip;
     protected $_port;
     protected $_syncType;
@@ -20,7 +19,7 @@ abstract class Base
         //获取服务器配置
         $this->_config = $this->_getServiceConfig($serverTag);
         $config = $this->getSingleServerConfig($serverTag);
-        if(empty($config['ip']) || empty($config['ip']) || empty($config['ip'])){
+        if (empty($config['ip']) || empty($config['ip']) || empty($config['ip'])) {
             throw new \Exception('Service '. $serverTag. ' Config Error!');
         }
         $this->_serverTag = $serverTag;
@@ -38,7 +37,7 @@ abstract class Base
      * @param string $syncType
      * @return $this
      */
-    static public function Instance($serverTag, $syncType = 'sync')
+    public static function Instance($serverTag, $syncType = 'sync')
     {
         if (empty(self::$instance[$syncType][$serverTag])) {
             self::$instance[$syncType][$serverTag] = new static($serverTag, $syncType);
@@ -46,7 +45,8 @@ abstract class Base
         return self::$instance[$syncType][$serverTag];
     }
 
-    protected function getSingleServerConfig($serverTag){
+    protected function getSingleServerConfig($serverTag)
+    {
         $configList = $this->_getServerList($serverTag);
         return count($configList) > 1 ? $configList[array_rand($configList)] : $configList[0];
     }
@@ -59,7 +59,8 @@ abstract class Base
 
     abstract protected function _getServerList($serverTag);
 
-    public function getServerTag(){
+    public function getServerTag()
+    {
         return $this->_serverTag;
     }
 }

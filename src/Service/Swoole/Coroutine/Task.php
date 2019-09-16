@@ -3,7 +3,6 @@ namespace TheFairLib\Service\Swoole\Coroutine;
 
 class Task
 {
-
     protected $callbackData;
     protected $taskId;
     protected $corStack;
@@ -49,16 +48,13 @@ class Task
      */
     public function run(\Generator $gen)
     {
-
         while (true) {
-
             try {
 
                 /*
                     异常处理
                  */
                 if ($this->exception) {
-
                     $gen->throw($this->exception);
                     $this->exception = null;
                     continue;
@@ -71,7 +67,6 @@ class Task
                     中断内嵌 继续入栈
                  */
                 if ($value instanceof \Generator) {
-
                     $this->corStack->push($gen);
 //                    \SysLog::info(__METHOD__ . " corStack push ", __CLASS__);
                     $gen = $value;
@@ -116,13 +111,11 @@ class Task
                 \SysLog::info(__METHOD__ . " corStack pop ", __CLASS__);
                 $gen = $this->corStack->pop();
                 $gen->send($value);
-
             } catch (\Exception $e) {
-
                 if ($this->corStack->isEmpty()) {
 
                     /*
-                        throw the exception 
+                        throw the exception
                     */
 //                    \SysLog::error(__METHOD__ . " exception ===" . $e->getMessage(), __CLASS__);
                     return;
@@ -143,7 +136,7 @@ class Task
     {
 
         /*
-            继续run的函数实现 ，栈结构得到保存 
+            继续run的函数实现 ，栈结构得到保存
          */
 
         $gen = $this->corStack->pop();
@@ -153,7 +146,6 @@ class Task
         $value = $gen->send($this->callbackData);
 
         $this->run($gen);
-
     }
 
     /**
@@ -167,7 +159,6 @@ class Task
 
     public function getCoroutine()
     {
-
         return $this->coroutine;
     }
 }

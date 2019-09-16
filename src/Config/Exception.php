@@ -7,9 +7,9 @@
  * @copyright 2015-2025
  */
 namespace TheFairLib\Config;
+
 use TheFairLib\Exception\BaseException;
 
 class Exception extends BaseException
 {
-
 }

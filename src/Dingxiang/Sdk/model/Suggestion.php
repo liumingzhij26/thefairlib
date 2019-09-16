@@ -21,5 +21,4 @@ class Suggestion
         $this->code = $code;
         $this->message = $message;
     }
-
 }

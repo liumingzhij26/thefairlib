@@ -5,7 +5,7 @@
  * Date: 2017/8/25
  * Time: 9:26
  */
-include ("CaptchaClient.php");
+include("CaptchaClient.php");
 /**
  * 构造入参为appId和appSecret
  * appId和前端验证码的appId保持一致，appId可公开
@@ -14,16 +14,16 @@ include ("CaptchaClient.php");
  **/
 $appId = "appId";
 $appSecret = "appSecret";
-$client = new CaptchaClient($appId,$appSecret);
+$client = new CaptchaClient($appId, $appSecret);
 $client->setTimeOut(2);      //设置超时时间
 # $client->setCaptchaUrl("http://cap.dingxiang-inc.com/api/tokenVerify");   //特殊情况需要额外指定服务器,可以在这个指定，默认情况下不需要设置
 $response = $client->verifyToken("token:213123");
 echo $response->serverStatus;
 //确保验证状态是SERVER_SUCCESS，SDK中有容错机制，在网络出现异常的情况会返回通过
-if($response->result){
+if ($response->result) {
     echo "true";
-    /**token验证通过，继续其他流程**/
-}else{
+/**token验证通过，继续其他流程**/
+} else {
     echo "false";
     /**token验证失败**/
 }

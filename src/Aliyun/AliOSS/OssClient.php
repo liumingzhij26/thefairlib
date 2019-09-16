@@ -7,18 +7,17 @@ use TheFairLib\Config\Config;
 
 class OssClient
 {
+    public static $instance;
 
-    static public $instance;
+    public static $bucket;
 
-    static public $bucket;
-
-    static public $config;
+    public static $config;
 
     /**
      * @param $bucket
      * @return OssClient
      */
-    static public function Instance($bucket)
+    public static function Instance($bucket)
     {
         $class = get_called_class();
         if (empty(self::$instance[$class])) {
@@ -41,7 +40,7 @@ class OssClient
         return self::$instance[self::$bucket];
     }
 
-    public function signObject($url, $timeout = 60, $method = 'GET', $options = NULL)
+    public function signObject($url, $timeout = 60, $method = 'GET', $options = null)
     {
         if (self::$config['acl_type'] == 'private') {//私有读
             try {
@@ -72,5 +71,4 @@ class OssClient
         }
         return $url;
     }
-
 }

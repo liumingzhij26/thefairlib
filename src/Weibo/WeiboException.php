@@ -10,5 +10,6 @@ namespace TheFairLib\Weibo;
 
 use TheFairLib\Exception\BaseException;
 
-class WeiboException extends BaseException{
+class WeiboException extends BaseException
+{
 }

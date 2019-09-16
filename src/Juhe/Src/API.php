@@ -14,11 +14,11 @@ use TheFairLib\Utility\Utility;
 
 abstract class API
 {
-    static public $instance;
+    public static $instance;
     /**
      * @return API
      */
-    static public function Instance()
+    public static function Instance()
     {
         $class = get_called_class();
         if (empty(self::$instance[$class])) {
@@ -37,7 +37,8 @@ abstract class API
      * @return array|mixed|string
      * @throws JuheException
      */
-    protected function _sendRequest($url, $params, $returnResultOnly = true, $responseFormat = 'json'){
+    protected function _sendRequest($url, $params, $returnResultOnly = true, $responseFormat = 'json')
+    {
         $params = array_merge($params, [
             'key' => $this->_getAppKey(),
             'dtype' => $responseFormat,
@@ -47,10 +48,10 @@ abstract class API
         $result = [];
         if (!empty($curl->response)) {
             $result = Utility::decode($curl->response);
-            if($returnResultOnly === true && isset($result['result'])){
-                if(!empty($result['error_code'])){
+            if ($returnResultOnly === true && isset($result['result'])) {
+                if (!empty($result['error_code'])) {
                     throw new JuheException("{$result['error_code']} : {$result['reason']}");
-                }else{
+                } else {
                     $result = $result['result'];
                 }
             }

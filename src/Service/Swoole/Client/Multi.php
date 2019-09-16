@@ -3,7 +3,6 @@ namespace TheFairLib\Service\Swoole\Client;
 
 class Multi extends Base
 {
-
     public $callList = array();    //IO请求列表
     public $callRsp = array();    //回报结果
     public $client_key;    //client的key

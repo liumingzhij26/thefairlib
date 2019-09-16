@@ -10,8 +10,9 @@ use TheFairLib\I18n\TranslateHelper;
 date_default_timezone_set('Asia/Shanghai');
 
 //检测API路径
-if (!defined('OSS_API_PATH'))
+if (!defined('OSS_API_PATH')) {
     define('OSS_API_PATH', dirname(__FILE__));
+}
 
 //加载conf.inc.php文件,里面保存着OSS的地址以及用户访问的ID和KEY
 //$lang = TranslateHelper::getLang();
@@ -72,13 +73,12 @@ if (function_exists('get_loaded_extensions')) {
 
 class Base
 {
-
-    static public $instance;
+    public static $instance;
 
     /**
      * @return Base
      */
-    static public function Instance()
+    public static function Instance()
     {
         $class = get_called_class();
         if (empty(self::$instance[$class])) {
@@ -96,7 +96,6 @@ class Base
     public function getALIOSSSDK($label = 'OSS')
     {
         if (empty(self::$instance['ALIOSSSDK'])) {
-
             $config = Config::get_aliyun();
             $lang = TranslateHelper::getLang();
             if (empty($lang)) {
@@ -119,6 +118,4 @@ class Base
     {
         return OSS_TEST_BUCKET;
     }
-
-
 }

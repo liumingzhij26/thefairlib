@@ -3,7 +3,6 @@ namespace TheFairLib\Service\Swoole\Client;
 
 class Timer
 {
-
     protected static $event = array();
     protected static $isOnTimer = false;
 
@@ -42,7 +41,6 @@ class Timer
 
 //        \SysLog::info(__METHOD__ . " del event key == $key ", __CLASS__);
         if (isset(self::$event[$key])) {
-
             unset(self::$event[$key]);
         }
     }
@@ -60,7 +58,6 @@ class Timer
         }
 
         foreach (self::$event as $socket => $e) {
-
             $now = microtime(true);
 //            \SysLog::debug(__METHOD__ . " key == $socket  now == $now timeout == " . $e['timeout'], __CLASS__);
             if ($now > $e['timeout']) {
@@ -78,9 +75,7 @@ class Timer
      */
     public static function init()
     {
-
         if (!self::$isOnTimer) {
-
             swoole_timer_tick(1000 * self::LOOPTIME, function ($timer_id) {
                 //循环数组，踢出超时情况
                 self::loop($timer_id);
@@ -89,5 +84,4 @@ class Timer
             self::$isOnTimer = true;
         }
     }
-
 }

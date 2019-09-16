@@ -1,5 +1,6 @@
 <?php
 namespace TheFairLib\Service\Swoole;
+
 /**
  * Swoole系统核心类，外部使用全局变量$php引用
  * Swoole框架系统的核心类，提供一个swoole对象引用树和基础的调用功能
@@ -11,7 +12,7 @@ class Core
      * Swoole类的实例
      * @var Swoole
      */
-    static public $php;
+    public static $php;
 
     public $env;
     protected $hooks = array();
@@ -22,13 +23,17 @@ class Core
 
     private function __construct()
     {
-        if (!defined('DEBUG')) define('DEBUG', 'on');
-        if (DEBUG == 'off') \error_reporting(0);
+        if (!defined('DEBUG')) {
+            define('DEBUG', 'on');
+        }
+        if (DEBUG == 'off') {
+            \error_reporting(0);
+        }
 
         $this->env['sapi_name'] = php_sapi_name();
     }
 
-    static function getInstance()
+    public static function getInstance()
     {
         if (!self::$php) {
             self::$php = new Swoole;
@@ -40,7 +45,7 @@ class Core
      * 初始化环境
      * @return unknown_type
      */
-    function __init()
+    public function __init()
     {
         if (defined('DEBUG') and DEBUG == 'on') {
             //记录运行时间和内存占用情况
@@ -71,7 +76,7 @@ class Core
      * 获取资源消耗
      * @return unknown_type
      */
-    function runtime()
+    public function runtime()
     {
         // 显示运行时间
         $return['time'] = number_format((microtime(true) - $this->env['runtime']['start']), 4) . 's';
@@ -82,7 +87,7 @@ class Core
         return $return;
     }
 
-    function __clean()
+    public function __clean()
     {
         $this->env['runtime'] = array();
         $this->callHook(self::HOOK_CLEAN);

@@ -21,7 +21,7 @@ class AliyunRabbitmqClient
     /**
      * @var $this
      */
-    static public $instance;
+    public static $instance;
 
     private $accessKey;
     private $accessSecret;
@@ -58,7 +58,7 @@ class AliyunRabbitmqClient
                 $ts = (int)(microtime(true) * 1000);
                 $value = utf8_encode($this->accessSecret);
                 $key = utf8_encode((string)$ts);
-                $sig = strtoupper(hash_hmac('sha1', $value, $key, FALSE));
+                $sig = strtoupper(hash_hmac('sha1', $value, $key, false));
                 return base64_encode(utf8_encode($sig . ':' . $ts));
         }
     }
@@ -69,7 +69,7 @@ class AliyunRabbitmqClient
      * @param string $server
      * @return AliyunRabbitmqClient
      */
-    static public function Instance($server = 'default')
+    public static function Instance($server = 'default')
     {
         if (empty(self::$instance[$server])) {
             self::$instance[$server] = new self($server);
@@ -84,7 +84,13 @@ class AliyunRabbitmqClient
      */
     public function getConnection()
     {
-        return (new AMQPStreamConnection($this->config['host'], $this->config['port'], $this->getUser(), $this->getPassword(), $this->config['vhost'], $insist = false,
+        return (new AMQPStreamConnection(
+            $this->config['host'],
+            $this->config['port'],
+            $this->getUser(),
+            $this->getPassword(),
+            $this->config['vhost'],
+            $insist = false,
             $login_method = 'AMQPLAIN',
             $login_response = null,
             $locale = 'en_US',
@@ -93,7 +99,7 @@ class AliyunRabbitmqClient
             $context = null,
             $keepalive = true,
             $heartbeat = 60,
-            $channel_rpc_timeout = 3));
+            $channel_rpc_timeout = 3
+        ));
     }
-
 }

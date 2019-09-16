@@ -42,7 +42,6 @@ class Curl
 
     public function __construct()
     {
-
         if (!extension_loaded('curl')) {
             throw new Exception('cURL library is not loaded');
         }
@@ -65,10 +64,9 @@ class Curl
     {
         $this->setopt(CURLOPT_URL, $url);
         $this->setopt(CURLOPT_POST, true);
-       if (is_array($data) || is_object($data))
-		{
-			$data = http_build_query($data);
-		}
+        if (is_array($data) || is_object($data)) {
+            $data = http_build_query($data);
+        }
         $this->setopt(CURLOPT_POSTFIELDS, $data);
         $this->_exec();
     }

@@ -16,7 +16,6 @@ use TheFairLib\Utility\Utility;
 use \Yaf\Exception as Exception;
 use Yaf\Registry;
 
-
 abstract class Error extends ErrorBase
 {
     /**
@@ -36,7 +35,10 @@ abstract class Error extends ErrorBase
     {
         if ($e instanceof PageException) {
             $this->showError(
-                $e->getMessage(), $e->getExtData(), $e->getExtCode(), $e->getHttpStatus()
+                $e->getMessage(),
+                $e->getExtData(),
+                $e->getExtCode(),
+                $e->getHttpStatus()
             );
         } else {
             if (defined('APP_NAME')) {
@@ -54,7 +56,6 @@ abstract class Error extends ErrorBase
                 $this->_DealIllegalRequest($e->getMessage());
             }
         }
-
     }
 
     protected function _errorNotfoundModule(Exception $e)

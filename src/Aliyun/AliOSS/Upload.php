@@ -109,7 +109,6 @@ class Upload
         $this->fullName = $this->_getFolder() . '/' . $this->newName . $this->_getFileExt();
         $this->ossPath = $this->_getOssFolder($label);
         if ($this->stateInfo == $this->stateMap[0]) {
-
             if (is_uploaded_file($file['tmp_name'])) {
                 if (!move_uploaded_file($file["tmp_name"], $this->fullName)) {
                     $this->stateInfo = $this->_getStateInfo("MOVE");
@@ -232,7 +231,6 @@ class Upload
                 isset($type[$imageType]) ? $this->imageInfo : $this->imageInfo = 'not image';//获得图片大小信息
             }
         }
-
     }
 
     /**

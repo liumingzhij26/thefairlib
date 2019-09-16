@@ -10,5 +10,4 @@ namespace TheFairLib\BigPipe;
 
 class Exception extends \TheFairLib\Exception\Page\Exception
 {
-
 }

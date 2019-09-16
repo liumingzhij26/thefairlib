@@ -12,6 +12,6 @@ namespace TheFairLib\Queue;
 
 use TheFairLib\Exception\BaseException;
 
-class Exception extends BaseException {
-
+class Exception extends BaseException
+{
 }

@@ -17,7 +17,7 @@ class TranslateHelper
      *
      * @var string
      */
-    static private $_lang = 'cn';
+    private static $_lang = 'cn';
 
     /**
      * 设置当前显示语言
@@ -25,7 +25,8 @@ class TranslateHelper
      * @param $lang
      * @return mixed
      */
-    static public function setLang($lang){
+    public static function setLang($lang)
+    {
         return self::$_lang = $lang;
     }
 
@@ -34,7 +35,8 @@ class TranslateHelper
      *
      * @return string
      */
-    static public function getLang(){
+    public static function getLang()
+    {
         return self::$_lang;
     }
 
@@ -47,7 +49,8 @@ class TranslateHelper
      * @param string $lang
      * @return bool
      */
-    static public function translate($type, $label, $lang = ''){
+    public static function translate($type, $label, $lang = '')
+    {
         $funcName = 'get_i18n_'.(empty($lang) || !in_array($lang, ['cn', 'jp']) ? self::getLang() : $lang).'_'.$type;
         $ret = Config::$funcName($label);
         return empty($ret) ? false : $ret;

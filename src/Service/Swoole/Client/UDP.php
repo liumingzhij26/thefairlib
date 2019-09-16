@@ -3,7 +3,6 @@ namespace TheFairLib\Service\Swoole\Client;
 
 class UDP extends Base
 {
-
     public $ip;
     public $port;
     public $data;
@@ -33,7 +32,6 @@ class UDP extends Base
 
     public function send(callable $callback)
     {
-
         $client = new  \swoole_client(SWOOLE_SOCK_UDP, SWOOLE_SOCK_ASYNC);
 
         $client->on("connect", function ($cli) {
@@ -41,11 +39,9 @@ class UDP extends Base
         });
 
         $client->on('close', function ($cli) {
-
         });
 
         $client->on('error', function ($cli) use ($callback) {
-
             $cli->close();
             call_user_func_array($callback, array('r' => 1, 'key' => $this->key, 'calltime' => $this->calltime, 'error_msg' => 'conncet error'));
         });
@@ -57,7 +53,7 @@ class UDP extends Base
 
             $cli->close();
             $this->calltime = microtime(true) - $this->calltime;
-            //swoole_timer_clear($this ->timer); 
+            //swoole_timer_clear($this ->timer);
             call_user_func_array($callback, array('r' => 0, 'key' => $this->key, 'calltime' => $this->calltime, 'data' => $data));
         });
 

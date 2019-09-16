@@ -1,6 +1,7 @@
 <?php
 
 namespace TheFairLib\Utility\ParseTools;
+
 use PHPHtmlParser\Dom\HtmlNode;
 use TheFairLib\Utility\Utility;
 
@@ -16,7 +17,7 @@ class ParseUtils
     /**
      * @return ParseUtils
      */
-    static public function Instance()
+    public static function Instance()
     {
         $class = get_called_class();
         if (empty(self::$instance[$class])) {
@@ -78,7 +79,7 @@ class ParseUtils
      * @param $text
      * @return string
      */
-    function trimContent($text)
+    public function trimContent($text)
     {
         $text = str_replace('&nbsp;', '', $text);
         return trim(html_entity_decode($text));
@@ -90,7 +91,7 @@ class ParseUtils
      * @param $searchStr
      * @return array
      */
-    function findAll($str, $searchStr)
+    public function findAll($str, $searchStr)
     {
         $lastPos = 0;
         $positions = array();
@@ -114,7 +115,7 @@ class ParseUtils
      * @param $styleName
      * @return string
      */
-    function getCssValueFromItem($item, $styleName)
+    public function getCssValueFromItem($item, $styleName)
     {
         $styleStr = strtolower($item->getAttribute('style'));
         $styleName = strtolower($styleName);
@@ -141,7 +142,7 @@ class ParseUtils
      * @param HtmlNode $item
      * @return string
      */
-    function getDataId($item)
+    public function getDataId($item)
     {
         return strtolower($item->getAttribute('dataid'));
     }
@@ -165,9 +166,8 @@ class ParseUtils
      * @param $key
      * @return string
      */
-    public function getDefaultAttributeValue($key){
+    public function getDefaultAttributeValue($key)
+    {
         return Utility::arrayGet($this->_defaultAttributes, $key, '');
     }
-
-
 }

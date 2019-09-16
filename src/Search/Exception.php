@@ -12,6 +12,6 @@ namespace TheFairLib\Search;
 
 use TheFairLib\Exception\BaseException;
 
-class Exception extends BaseException {
-
+class Exception extends BaseException
+{
 }

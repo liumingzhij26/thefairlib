@@ -6,15 +6,18 @@
  * Date: 15/12/18
  * Time: 下午3:14
  */
-class APIConnectionException extends Exception {
+class APIConnectionException extends Exception
+{
     public $isResponseTimeout;
-    function __construct($message, $isResponseTimeout = false) {
+    public function __construct($message, $isResponseTimeout = false)
+    {
         parent::__construct($message);
         $this->isResponseTimeout = $isResponseTimeout;
     }
 }
 
-class APIRequestException extends Exception {
+class APIRequestException extends Exception
+{
     public $httpCode;
     public $code;
     public $message;
@@ -26,7 +29,8 @@ class APIRequestException extends Exception {
 
     private static $expected_keys = array('code', 'message');
 
-    function __construct($response){
+    public function __construct($response)
+    {
         $this->response = $response['body'];
         $this->httpCode = $response['http_code'];
         $payload = json_decode($response['body'], true);
@@ -53,7 +57,4 @@ class APIRequestException extends Exception {
             $this->rateLimitReset = $headers['X-Rate-Limit-Reset'];
         }
     }
-
-
-
 }

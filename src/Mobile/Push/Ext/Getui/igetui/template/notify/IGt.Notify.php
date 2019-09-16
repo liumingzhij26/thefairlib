@@ -3,25 +3,26 @@
 /**
  * Class IGtNotify
  */
-class IGtNotify {
+class IGtNotify
+{
 
     /**
      * 通知标题
      * @var
      */
-    var $title;
+    public $title;
 
     /**
      * 通知内容
      * @var
      */
-    var $content;
+    public $content;
 
     /**
      * 通知内容中携带的透传内容
      * @var
      */
-    var $payload;
+    public $payload;
 
     /**
      * @return mixed

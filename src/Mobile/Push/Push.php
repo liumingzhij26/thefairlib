@@ -13,7 +13,7 @@ use TheFairLib\Mobile\Push\Ext\Jpush\Jpush;
 
 class Push
 {
-    static public $instance;
+    public static $instance;
 
     /**
      *
@@ -28,7 +28,7 @@ class Push
             case 'getui':
                 $class = new GeTui($configLabel);
                 break;
-            case 'jpush' :
+            case 'jpush':
                 $class = new Jpush($configLabel);
                 break;
             default:
@@ -37,7 +37,7 @@ class Push
         return $class;
     }
 
-    static public function Instance()
+    public static function Instance()
     {
         if (empty(self::$instance)) {
             self::$instance = new self();

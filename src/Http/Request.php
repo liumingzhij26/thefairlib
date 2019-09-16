@@ -8,9 +8,10 @@
  */
 namespace TheFairLib\Http;
 
-class Request{
+class Request
+{
     private static $_instance = null;
-    static public function Instance()
+    public static function Instance()
     {
         if (empty(self::$_instance)) {
             self::$_instance = new self();
@@ -18,22 +19,26 @@ class Request{
         return self::$_instance;
     }
 
-    public static function getOriginalAction(){
+    public static function getOriginalAction()
+    {
         $path = self::Instance()->_getUriInfo('path');
         return self::Instance()->_getPathInfo($path, 'filename');
     }
 
-    public static function getRequestFormat(){
+    public static function getRequestFormat()
+    {
         $path = self::Instance()->_getUriInfo('path');
         return self::Instance()->_getPathInfo($path, 'extension');
     }
 
-    private function _getPathInfo($path, $key = ''){
+    private function _getPathInfo($path, $key = '')
+    {
         $pathInfo = pathinfo($path);
         return !empty($key) ? (isset($pathInfo[$key]) ? $pathInfo[$key] : '') : $pathInfo;
     }
 
-    private function _getUriInfo($key = ''){
+    private function _getUriInfo($key = '')
+    {
         $uri = $_SERVER['REQUEST_URI'];
         $uriInfo = parse_url($uri);
         return !empty($key) ? (isset($uriInfo[$key]) ? $uriInfo[$key] : '') : $uriInfo;

@@ -5,16 +5,15 @@
  * Date: 14-8-23
  * Time: 下午4:56
  */
-Class ApnsUtils
+class ApnsUtils
 {
-
-    static function validatePayloadLength($locKey, $locArgs, $message, $actionLocKey, $launchImage, $badge, $sound, $payload,$contentAvailable)
+    public static function validatePayloadLength($locKey, $locArgs, $message, $actionLocKey, $launchImage, $badge, $sound, $payload, $contentAvailable)
     {
-        $json = ApnsUtils :: processPayload($locKey, $locArgs, $message, $actionLocKey, $launchImage, $badge, $sound, $payload,$contentAvailable);
+        $json = ApnsUtils :: processPayload($locKey, $locArgs, $message, $actionLocKey, $launchImage, $badge, $sound, $payload, $contentAvailable);
         return strlen($json);
     }
 
-    static function processPayload($locKey, $locArgs, $message, $actionLocKey, $launchImage, $badge, $sound, $payload, $contentAvailable)
+    public static function processPayload($locKey, $locArgs, $message, $actionLocKey, $launchImage, $badge, $sound, $payload, $contentAvailable)
     {
         $isValid = false;
         $pb = new Payload();
@@ -23,7 +22,7 @@ Class ApnsUtils
             $pb->setAlertLocKey(($locKey));
             // loc-args
             if ($locArgs != null && strlen($locArgs) > 0) {
-                $pb->setAlertLocArgs(explode(',',($locArgs)));
+                $pb->setAlertLocArgs(explode(',', ($locArgs)));
             }
             $isValid = true;
         }
@@ -46,7 +45,7 @@ Class ApnsUtils
 
         // badge
         $badgeNum = -1;
-        if(is_numeric($badge)){
+        if (is_numeric($badge)) {
             $badgeNum = (int)$badge;
         }
         if ($badgeNum >= 0) {
@@ -72,43 +71,43 @@ Class ApnsUtils
             $pb->addParam("payload", ($payload));
         }
 
-        if($isValid == false){
+        if ($isValid == false) {
             throw new Exception("one of the params(locKey,message,badge) must not be null or contentAvailable must be 1");
         }
         $json = $pb->toString();
-        if($json == null){
+        if ($json == null) {
             throw new Exception("payload json is null");
         }
         return $json;
     }
 }
 
-Class Payload
+class Payload
 {
-    var $APS = "aps";
-    var $params;
-    var $alert;
-    var $badge;
-    var $sound = "";
+    public $APS = "aps";
+    public $params;
+    public $alert;
+    public $badge;
+    public $sound = "";
 
-    var $alertBody;
-    var $alertActionLocKey;
-    var $alertLocKey;
-    var $alertLocArgs;
-    var $alertLaunchImage;
-    var $contentAvailable;
+    public $alertBody;
+    public $alertActionLocKey;
+    public $alertLocKey;
+    public $alertLocArgs;
+    public $alertLaunchImage;
+    public $contentAvailable;
 
-    function getParams()
+    public function getParams()
     {
         return $this->params;
     }
 
-    function  setParams($params)
+    public function setParams($params)
     {
         $this->params = $params;
     }
 
-    function addParam($key, $obj)
+    public function addParam($key, $obj)
     {
         if ($this->params == null) {
             $this->params = array();
@@ -119,97 +118,97 @@ Class Payload
         $this->params[$key] = $obj;
     }
 
-    function getAlert()
+    public function getAlert()
     {
         return $this->alert;
     }
 
-    function setAlert($alert)
+    public function setAlert($alert)
     {
         $this->alert = $alert;
     }
 
-    function getBadge()
+    public function getBadge()
     {
         return $this->badge;
     }
 
-    function setBadge($badge)
+    public function setBadge($badge)
     {
         $this->badge = $badge;
     }
 
-    function getSound()
+    public function getSound()
     {
         return $this->sound;
     }
 
-    function setSound($sound)
+    public function setSound($sound)
     {
         $this->sound = $sound;
     }
 
-    function getAlertBody()
+    public function getAlertBody()
     {
         return $this->alertBody;
     }
 
-    function setAlertBody($alertBody)
+    public function setAlertBody($alertBody)
     {
         $this->alertBody = $alertBody;
     }
 
-    function getAlertActionLocKey()
+    public function getAlertActionLocKey()
     {
         return $this->alertActionLocKey;
     }
 
-    function setAlertActionLocKey($alertActionLocKey)
+    public function setAlertActionLocKey($alertActionLocKey)
     {
         $this->alertActionLocKey = $alertActionLocKey;
     }
 
-    function getAlertLocKey()
+    public function getAlertLocKey()
     {
         return $this->alertLocKey;
     }
 
-    function  setAlertLocKey($alertLocKey)
+    public function setAlertLocKey($alertLocKey)
     {
         $this->alertLocKey = $alertLocKey;
     }
 
-    function getAlertLaunchImage()
+    public function getAlertLaunchImage()
     {
         return $this->alertLaunchImage;
     }
 
-    function setAlertLaunchImage($alertLaunchImage)
+    public function setAlertLaunchImage($alertLaunchImage)
     {
         $this->alertLaunchImage = $alertLaunchImage;
     }
 
-    function getAlertLocArgs()
+    public function getAlertLocArgs()
     {
         return $this->alertLocArgs;
     }
 
-    function setAlertLocArgs($alertLocArgs)
+    public function setAlertLocArgs($alertLocArgs)
     {
         $this->alertLocArgs = $alertLocArgs;
     }
 
-    function getContentAvailable()
+    public function getContentAvailable()
     {
         return $this->contentAvailable;
     }
 
-    function setContentAvailable($contentAvailable)
+    public function setContentAvailable($contentAvailable)
     {
         $this->contentAvailable = $contentAvailable;
     }
 
-    function putIntoJson($key, $value, $obj)
+    public function putIntoJson($key, $value, $obj)
     {
         if ($value != null) {
             $obj[$key] = $value;
@@ -217,7 +216,7 @@ Class Payload
         return $obj;
     }
 
-    function toString()
+    public function toString()
     {
         $object = array();
         $apsObj = array();
@@ -247,7 +246,7 @@ Class Payload
         if ("com.gexin.ios.silence" != ($this->getSound())) {
             $apsObj = $this->putIntoJson("sound", ($this->getSound()), $apsObj);
         }
-        if($this->getContentAvailable() == 1){
+        if ($this->getContentAvailable() == 1) {
             $apsObj["content-available"]=1;
         }
         $object[$this->APS] = $apsObj;
@@ -256,45 +255,46 @@ Class Payload
                 $object[($key)] = ($value);
             }
         }
-		return Util::json_encode($object);
+        return Util::json_encode($object);
     }
 }
 
 class Util
 {
-    static function json_encode($input){
+    public static function json_encode($input)
+    {
         // 从 PHP 5.4.0 起, 增加了这个选项.
-        if(defined('JSON_UNESCAPED_UNICODE')){
+        if (defined('JSON_UNESCAPED_UNICODE')) {
             return json_encode($input, JSON_UNESCAPED_UNICODE);
         }
-        if(is_string($input)){
+        if (is_string($input)) {
             $text = $input;
-			$text = str_replace("\\", "\\\\", $text);
-			//$text = str_replace('/', "\\/",   $text);
-			$text = str_replace('"', "\\".'"', $text);
-			$text = str_replace("\b", "\\b", $text);
-			$text = str_replace("\t", "\\t", $text);
-			$text = str_replace("\n", "\\n", $text);
-			$text = str_replace("\f", "\\f", $text);
-			$text = str_replace("\r", "\\r", $text);
-			//$text = str_replace("\u", "\\u", $text);
+            $text = str_replace("\\", "\\\\", $text);
+            //$text = str_replace('/', "\\/",   $text);
+            $text = str_replace('"', "\\".'"', $text);
+            $text = str_replace("\b", "\\b", $text);
+            $text = str_replace("\t", "\\t", $text);
+            $text = str_replace("\n", "\\n", $text);
+            $text = str_replace("\f", "\\f", $text);
+            $text = str_replace("\r", "\\r", $text);
+            //$text = str_replace("\u", "\\u", $text);
             return '"' . $text . '"';
-        } else if(is_array($input) || is_object($input)) {
+        } elseif (is_array($input) || is_object($input)) {
             $arr = array();
             $is_obj = is_object($input) || (array_keys($input) !== range(0, count($input) - 1));
-            foreach($input as $k=>$v){
-                if($is_obj){
+            foreach ($input as $k=>$v) {
+                if ($is_obj) {
                     $arr[] = self::json_encode($k) . ':' . self::json_encode($v);
-                }else{
+                } else {
                     $arr[] = self::json_encode($v);
                 }
             }
-            if($is_obj){
+            if ($is_obj) {
                 return '{' . join(',', $arr) . '}';
-            }else{
+            } else {
                 return '[' . join(',', $arr) . ']';
             }
-        }else{
+        } else {
             return $input . '';
         }
     }

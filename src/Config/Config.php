@@ -36,16 +36,16 @@ final class Config
      * @param string $type
      * @throws Exception
      */
-    private static function _getInstance($configTag, $type = self::NORMAL_CLASS_TAG){
-
+    private static function _getInstance($configTag, $type = self::NORMAL_CLASS_TAG)
+    {
         $md5Key     = $configTag.$type;
         $md5        = md5($md5Key);
-        if(isset(self::$configList[$md5])){
+        if (isset(self::$configList[$md5])) {
             $return = self::$configList[$md5];
-        }else{
-            if(strpos($configTag, '.') === false){
+        } else {
+            if (strpos($configTag, '.') === false) {
                 $fileName = ucwords($configTag);
-            }else{
+            } else {
                 $pathAry            = explode('.', $configTag);
                 $count              = count($pathAry);
                 $pathAry[$count-1]  = ucwords($pathAry[$count-1]);
@@ -53,31 +53,31 @@ final class Config
             }
             $filePath   = APP_PATH . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . $fileName . '.php';
 
-            if(file_exists($filePath)){
-                switch($type){
-                    case self::NORMAL_CLASS_TAG :
+            if (file_exists($filePath)) {
+                switch ($type) {
+                    case self::NORMAL_CLASS_TAG:
                         //线上配置
                         $prodFilePath = APP_PATH . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'production' . DIRECTORY_SEPARATOR . $fileName . '.php';
-                        if(file_exists($prodFilePath)){
+                        if (file_exists($prodFilePath)) {
                             $return = require $prodFilePath;
-                        }else{
+                        } else {
                             $return = require $filePath;
                         }
                         break;
-                    case self::YAF_SIMPLE_CLASS_TAG :
+                    case self::YAF_SIMPLE_CLASS_TAG:
                         $className = '\\Yaf\\Config\\'.ucwords($type);
                         $return =  new $className(require $filePath);
                         break;
-                    case self::YAF_INI_CLASS_TAG :
+                    case self::YAF_INI_CLASS_TAG:
                         $className = '\\Yaf\\Config\\'.ucwords($type);
                         $return =  new $className(require $filePath);
                         break;
-                    default :
+                    default:
                         throw new Exception('CONFIG TYPE ERROR');
                 }
 
                 self::$configList[$md5] = $return;
-            }else{
+            } else {
                 throw new Exception('CONFIG FILE NOT FOUND'.$filePath);
             }
         }
@@ -93,15 +93,17 @@ final class Config
      * @return mixed
      * @throws Exception
      */
-    public static function load($configTag, $type = self::NORMAL_CLASS_TAG){
-        if(!defined('APP_PATH')){
+    public static function load($configTag, $type = self::NORMAL_CLASS_TAG)
+    {
+        if (!defined('APP_PATH')) {
             throw new Exception('NOT DEFINED APP PATH');
         }
 
         return self::_getInstance($configTag, $type);
     }
 
-    public static function __callStatic($func, $arguments){
+    public static function __callStatic($func, $arguments)
+    {
         $funcAry = explode('_', $func);
         if (empty($funcAry)) {
             return false;

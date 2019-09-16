@@ -8,7 +8,6 @@
 
 class SignUtil
 {
-
     private static $EVENT_CODE = "eventCode";
     private static $FLAG = "flag";
 
@@ -16,12 +15,10 @@ class SignUtil
     {
         $sortedParams = self::sortedParams($ctuRequest);
         return md5($appSecret . $sortedParams . $appSecret);
-
     }
 
     private static function sortedParams($ctuRequest)
     {
-
         $eventCode = $ctuRequest->eventCode;
         $flag = $ctuRequest->flag;
         $data = $ctuRequest->data;
@@ -38,5 +35,4 @@ class SignUtil
         }
         return $paramStr;
     }
-
 }

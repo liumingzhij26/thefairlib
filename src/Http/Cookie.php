@@ -18,7 +18,8 @@ class Cookie
     private $_secure = false;
     private $_httpOnly = true;
 
-    public function __construct($name, $value = '', $expire = 0, $path = '/', $domain = '', $secure = false, $httpOnly = true){
+    public function __construct($name, $value = '', $expire = 0, $path = '/', $domain = '', $secure = false, $httpOnly = true)
+    {
         $this->_name        = $name;
         $this->_value       = $value;
         $this->_expire      = $expire;
@@ -28,63 +29,78 @@ class Cookie
         $this->_httpOnly    = $httpOnly;
     }
 
-    public function setDomain($domain){
+    public function setDomain($domain)
+    {
         return $this->_domain = $domain;
     }
 
-    public function getDomain(){
+    public function getDomain()
+    {
         return $this->_domain;
     }
 
-    public function setExpire($expire = 0){
+    public function setExpire($expire = 0)
+    {
         return $this->_expire = $expire;
     }
 
-    public function getExpire(){
+    public function getExpire()
+    {
         return $this->_expire;
     }
 
-    public function setHttpOnly($httpOnly = true){
+    public function setHttpOnly($httpOnly = true)
+    {
         return $this->_httpOnly = $httpOnly;
     }
 
-    public function getHttpOnly(){
+    public function getHttpOnly()
+    {
         return $this->_httpOnly;
     }
 
-    public function setName($name){
+    public function setName($name)
+    {
         return $this->_name = $name;
     }
 
-    public function getName(){
+    public function getName()
+    {
         return $this->_name;
     }
 
-    public function setPath($path){
+    public function setPath($path)
+    {
         return $this->_path = $path;
     }
 
-    public function getPath(){
+    public function getPath()
+    {
         return $this->_path;
     }
 
-    public function setSecure($secure = false){
+    public function setSecure($secure = false)
+    {
         return $this->_secure = $secure;
     }
 
-    public function getSecure(){
+    public function getSecure()
+    {
         return $this->_secure;
     }
 
-    public function setValue($value){
+    public function setValue($value)
+    {
         return $this->_value = $value;
     }
 
-    public function getValue(){
+    public function getValue()
+    {
         return $this->_value;
     }
 
-    public function getHeader(){
+    public function getHeader()
+    {
         return
             rawurlencode($this->_name).'='.rawurlencode($this->_value)
             .(isset($this->_domain) ? '; Domain='.rawurlencode($this->_domain) : '')

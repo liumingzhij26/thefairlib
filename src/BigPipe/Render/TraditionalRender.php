@@ -7,11 +7,13 @@
  * @copyright 2015-2025
  */
 namespace TheFairLib\BigPipe\Render;
+
 use TheFairLib\BigPipe\Exception;
 use TheFairLib\BigPipe\Pagelet;
 use TheFairLib\BigPipe\Render;
 
-class TraditionalRender extends Render{
+class TraditionalRender extends Render
+{
     protected $scripts = array();
     protected $styles = array();
     protected $plContents = array();
@@ -19,35 +21,37 @@ class TraditionalRender extends Render{
     protected $exceptions = array();
     protected $globalMetaData = array();//pl向page传递公共信息
 
-    protected function enter(Pagelet $pl){
+    protected function enter(Pagelet $pl)
+    {
         $this->metaDataChain[] = $pl->getMetaData();
         $this->scripts = array_merge($this->scripts, $pl->getDependsScripts());
         $this->styles = array_merge($this->styles, $pl->getDependsStyles());
     }
 
-    protected function leave(Pagelet $pl){
+    protected function leave(Pagelet $pl)
+    {
         $tplEngine = $this->getTemplateEngine();
 
         self::assignMetaChainToTemplate($tplEngine, $this->metaDataChain);
         $this->prepareGlobalData();
         self::assignMetaChainToTemplate($tplEngine, $this->globalMetaData);
-        try{
+        try {
             $tplEngine->assign($pl->prepareData());
-        }catch (Exception $ex){
+        } catch (Exception $ex) {
             $this->collectException($ex);
-            if($pl === $this->pl){
+            if ($pl === $this->pl) {
                 //output blank
-            }else{
+            } else {
                 $this->plContents[$pl->getName()] = '';
             }
             return ;
         }
         $tplEngine->assign('pagelets', $this->plContents);
-        if($pl === $this->pl){
+        if ($pl === $this->pl) {
             $tplEngine->assign('pagelet_scripts', $this->scripts);
             $tplEngine->assign('pagelet_styles', $this->styles);
             $tplEngine->display($pl->getTemplate());
-        }else{
+        } else {
             try {
                 $html = $tplEngine->fetch($pl->getTemplate());
             } catch (Exception $e) {
@@ -60,12 +64,13 @@ class TraditionalRender extends Render{
         array_pop($this->metaDataChain);
     }
 
-    public function prepareGlobalData(){
+    public function prepareGlobalData()
+    {
         $metaData	= is_array($this->pl->getGlobalMetaData()) ? array($this->pl->getGlobalMetaData()) : array();
         $children	= $this->pl->getChildren();
-        if(!empty($children)){
-            foreach($children as $child){
-                if($child instanceof Pagelet){
+        if (!empty($children)) {
+            foreach ($children as $child) {
+                if ($child instanceof Pagelet) {
                     $childMeta = is_array($child->getGlobalMetaData()) ? array($child->getGlobalMetaData()) : array();
                     $metaData = array_merge($metaData, $childMeta);
                 }
@@ -74,7 +79,8 @@ class TraditionalRender extends Render{
         $this->globalMetaData = array_merge($metaData, $this->globalMetaData);
     }
 
-    public function closure(){
+    public function closure()
+    {
         $this->processExceptions();
     }
 }

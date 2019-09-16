@@ -21,8 +21,7 @@ class DingxingClient
 
     protected $client;
 
-    static $riskFields = array
-    (
+    public static $riskFields = array(
         'create_time', // 创建时间
         'log_type',    // 日志类型
         'token',       // 顶相token

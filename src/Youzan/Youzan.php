@@ -15,15 +15,15 @@ use Yaf\Exception;
 
 class Youzan
 {
-    static public $instance;
+    public static $instance;
 
-    static private $client = null;
+    private static $client = null;
 
     /**
      * @return Youzan
      * @throws Exception
      */
-    static public function Instance()
+    public static function Instance()
     {
         $class = get_called_class();
         if (empty(self::$instance)) {

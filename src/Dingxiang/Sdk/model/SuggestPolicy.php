@@ -21,5 +21,4 @@ class SuggestPolicy
         $this->code = $code;
         $this->name = $name;
     }
-
 }

@@ -24,7 +24,7 @@ use TheFairLib\Utility\Utility;
 
 class RabbitmqProducerClient
 {
-    static public $instance;
+    public static $instance;
 
     private $server;
 
@@ -61,7 +61,7 @@ class RabbitmqProducerClient
      * @param string $server
      * @return RabbitmqProducerClient
      */
-    static public function Instance($server = 'default')
+    public static function Instance($server = 'default')
     {
         if (empty(self::$instance[$server])) {
             self::$instance[$server] = new self($server);
@@ -89,7 +89,7 @@ class RabbitmqProducerClient
     /**
      * 全局关闭
      */
-    static public function allCloseConnection()
+    public static function allCloseConnection()
     {
         try {
             if (!empty(self::$instance)) {

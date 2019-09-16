@@ -19,24 +19,28 @@ class Controller extends Base
      */
     protected static $_responseObj = false;
 
-    protected function init(){
-        if(self::$_responseObj === false){
+    protected function init()
+    {
+        if (self::$_responseObj === false) {
             self::$_responseObj = new Service(new \stdClass());
         }
     }
 
-    public function showResult($result, $msg = '', $code = '0'){
+    public function showResult($result, $msg = '', $code = '0')
+    {
         self::$_responseObj->setCode($code);
         self::$_responseObj->setMsg($msg);
         self::$_responseObj->setResult($result);
         $this->_setResponse(self::$_responseObj->send());
     }
 
-    public function showError($error, $result = array() , $code = '40001'){
+    public function showError($error, $result = array(), $code = '40001')
+    {
         $this->showResult($result, $error, $code);
     }
 
-    public function showSuccess($msg = ''){
+    public function showSuccess($msg = '')
+    {
         $this->showResult(['state' => true], (!empty($msg) ? $msg : 'success'));
     }
 }

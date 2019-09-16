@@ -26,14 +26,17 @@ $response = $client->schedule()->createSingleSchedule("每天14点发送的定�
 echo 'Result=' . json_encode($response) . $br;
 
 // 创建一个每天14点发送的定时任务
-$response = $client->schedule()->createPeriodicalSchedule("每天14点发送的定时任务", $payload,
-        array(
+$response = $client->schedule()->createPeriodicalSchedule(
+    "每天14点发送的定时任务",
+    $payload,
+    array(
             "start"=>"2016-12-22 13:45:00",
             "end"=>"2016-12-25 13:45:00",
             "time"=>"14:00:00",
             "time_unit"=>"DAY",
             "frequency"=>1
-        ));
+        )
+);
 echo 'Result=' . json_encode($response) . $br;
 
 $schedule_id = $response->data->schedule_id;
@@ -51,6 +54,3 @@ echo "Result=" . json_encode($response) . $br;
 // 删除定时任务
 $response = $client->schedule()->deleteSchedule($schedule_id);
 echo "Result=" . json_encode($response) . $br;
-
-
-

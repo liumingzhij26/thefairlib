@@ -10,18 +10,18 @@ require_once(dirname(__FILE__) . '/' . 'IGt.Batch.php');
 require_once(dirname(__FILE__) . '/' . 'igetui/utils/AppConditions.php');
 
 //http的域名
-define('HOST','http://sdk.open.api.igexin.com/apiex.htm');
+define('HOST', 'http://sdk.open.api.igexin.com/apiex.htm');
 
 //https的域名
 //define('HOST','https://api.getui.com/apiex.htm');
                
 
-define('APPKEY','');
-define('APPID','');
-define('MASTERSECRET','');
-define('CID','');
-define('DEVICETOKEN','');
-define('Alias','请输入别名');
+define('APPKEY', '');
+define('APPID', '');
+define('MASTERSECRET', '');
+define('CID', '');
+define('DEVICETOKEN', '');
+define('Alias', '请输入别名');
 //define('BEGINTIME','2015-03-06 13:18:00');
 //define('ENDTIME','2015-03-06 13:24:00');
 
@@ -49,67 +49,73 @@ pushMessageToApp();
 
 
 
-function getPersonaTagsDemo() {
+function getPersonaTagsDemo()
+{
     $igt = new IGeTui(HOST, APPKEY, MASTERSECRET);
     $ret = $igt->getPersonaTags(APPID);
     var_dump($ret);
 }
 
-function getUserCountByTagsDemo() {
-	$igt = new IGeTui(HOST, APPKEY, MASTERSECRET);
+function getUserCountByTagsDemo()
+{
+    $igt = new IGeTui(HOST, APPKEY, MASTERSECRET);
     $tagList = array("金在中","龙卷风");
-	$ret = $igt->getUserCountByTags(APPID, $tagList);
-	var_dump($ret);
+    $ret = $igt->getUserCountByTags(APPID, $tagList);
+    var_dump($ret);
 }
 
-function getPushMessageResultDemo(){
+function getPushMessageResultDemo()
+{
 
 
 //    putenv("gexin_default_domainurl=http://183.129.161.174:8006/apiex.htm");
 
-    $igt = new IGeTui(HOST,APPKEY,MASTERSECRET);
+    $igt = new IGeTui(HOST, APPKEY, MASTERSECRET);
 
     $ret = $igt->getPushResult("OSA-0522_QZ7nHpBlxF6vrxGaLb1FA3");
     var_dump($ret);
 
-    $ret = $igt->queryAppUserDataByDate(APPID,"20140807");
+    $ret = $igt->queryAppUserDataByDate(APPID, "20140807");
     var_dump($ret);
 
-    $ret = $igt->queryAppPushDataByDate(APPID,"20140807");
+    $ret = $igt->queryAppPushDataByDate(APPID, "20140807");
     var_dump($ret);
 }
 
 
 //用户状态查询
-function getUserStatus() {
-    $igt = new IGeTui(HOST,APPKEY,MASTERSECRET);
-    $rep = $igt->getClientIdStatus(APPID,CID);
+function getUserStatus()
+{
+    $igt = new IGeTui(HOST, APPKEY, MASTERSECRET);
+    $rep = $igt->getClientIdStatus(APPID, CID);
     var_dump($rep);
-    echo ("<br><br>");
+    echo("<br><br>");
 }
 
 //推送任务停止
-function stoptask(){
-
-    $igt = new IGeTui(HOST,APPKEY,MASTERSECRET);
+function stoptask()
+{
+    $igt = new IGeTui(HOST, APPKEY, MASTERSECRET);
     $igt->stop("OSA-1127_QYZyBzTPWz5ioFAixENzs3");
 }
 
 //通过服务端设置ClientId的标签
-function setTag(){
-    $igt = new IGeTui(HOST,APPKEY,MASTERSECRET);
+function setTag()
+{
+    $igt = new IGeTui(HOST, APPKEY, MASTERSECRET);
     $tagList = array('','中文','English');
-    $rep = $igt->setClientTag(APPID,CID,$tagList);
+    $rep = $igt->setClientTag(APPID, CID, $tagList);
     var_dump($rep);
-    echo ("<br><br>");
+    echo("<br><br>");
 }
 
-function getUserTags() {
-    $igt = new IGeTui(HOST,APPKEY,MASTERSECRET);
-    $rep = $igt->getUserTags(APPID,CID);
+function getUserTags()
+{
+    $igt = new IGeTui(HOST, APPKEY, MASTERSECRET);
+    $rep = $igt->getUserTags(APPID, CID);
     //$rep.connect();
     var_dump($rep);
-    echo ("<br><br>");
+    echo("<br><br>");
 }
 
 //
@@ -120,9 +126,10 @@ function getUserTags() {
 //
 
 //单推接口案例
-function pushMessageToSingle(){
+function pushMessageToSingle()
+{
     //$igt = new IGeTui(HOST,APPKEY,MASTERSECRET);
-    $igt = new IGeTui(NULL,APPKEY,MASTERSECRET,false);
+    $igt = new IGeTui(null, APPKEY, MASTERSECRET, false);
 
     //消息模版：
     // 1.TransmissionTemplate:透传功能模板
@@ -152,15 +159,13 @@ function pushMessageToSingle(){
     try {
         $rep = $igt->pushMessageToSingle($message, $target);
         var_dump($rep);
-        echo ("<br><br>");
-
-    }catch(RequestException $e){
+        echo("<br><br>");
+    } catch (RequestException $e) {
         $requstId =e.getRequestId();
-        $rep = $igt->pushMessageToSingle($message, $target,$requstId);
+        $rep = $igt->pushMessageToSingle($message, $target, $requstId);
         var_dump($rep);
-        echo ("<br><br>");
+        echo("<br><br>");
     }
-
 }
 
 function pushMessageToSingleBatch()
@@ -206,14 +211,13 @@ function pushMessageToSingleBatch()
     $targetNoti->set_clientId(CID2);
     $batch->add($messageNoti, $targetNoti);
     try {
-
         $rep = $batch->submit();
         var_dump($rep);
         echo("<br><br>");
-    }catch(Exception $e){
+    } catch (Exception $e) {
         $rep=$batch->retry();
         var_dump($rep);
-        echo ("<br><br>");
+        echo("<br><br>");
     }
 }
 
@@ -242,7 +246,7 @@ function pushMessageToList()
     $message->set_data($template);//设置推送消息类型
 //    $message->set_PushNetWorkType(1);	//设置是否根据WIFI推送消息，1为wifi推送，0为不限制推送
 //    $contentId = $igt->getContentId($message);
-    $contentId = $igt->getContentId($message,"toList任务别名功能");	//根据TaskId设置组名，支持下划线，中文，英文，数字
+    $contentId = $igt->getContentId($message, "toList任务别名功能");	//根据TaskId设置组名，支持下划线，中文，英文，数字
 
     //接收方1
     $target1 = new IGtTarget();
@@ -256,13 +260,13 @@ function pushMessageToList()
 
     var_dump($rep);
 
-    echo ("<br><br>");
-
+    echo("<br><br>");
 }
 
 //群推接口案例
-function pushMessageToApp(){
-    $igt = new IGeTui(HOST,APPKEY,MASTERSECRET);
+function pushMessageToApp()
+{
+    $igt = new IGeTui(HOST, APPKEY, MASTERSECRET);
     $template = IGtTransmissionTemplateDemo();
     //$template = IGtLinkTemplateDemo();
     //个推信息体
@@ -281,24 +285,25 @@ function pushMessageToApp(){
 
 
     //$cdt = new AppConditions();
-   // $cdt->addCondition(AppConditions::PHONE_TYPE, $phoneTypeList);
-   // $cdt->addCondition(AppConditions::REGION, $provinceList);
+    // $cdt->addCondition(AppConditions::PHONE_TYPE, $phoneTypeList);
+    // $cdt->addCondition(AppConditions::REGION, $provinceList);
     //$cdt->addCondition(AppConditions::TAG, $tagList);
     //$cdt->addCondition("age", $age);
 
     $message->set_appIdList($appIdList);
     //$message->set_conditions($cdt->getCondition());
 
-    $rep = $igt->pushMessageToApp($message,"任务组名");
+    $rep = $igt->pushMessageToApp($message, "任务组名");
 
     var_dump($rep);
-    echo ("<br><br>");
+    echo("<br><br>");
 }
 
 //所有推送接口均支持四个消息模板，依次为通知弹框下载模板，通知链接模板，通知透传模板，透传模板
 //注：IOS离线推送需通过APN进行转发，需填写pushInfo字段，目前仅不支持通知弹框下载功能
 
-function IGtNotyPopLoadTemplateDemo(){
+function IGtNotyPopLoadTemplateDemo()
+{
     $template =  new IGtNotyPopLoadTemplate();
 
     $template ->set_appId(APPID);//应用appid
@@ -327,7 +332,8 @@ function IGtNotyPopLoadTemplateDemo(){
     return $template;
 }
 
-function IGtLinkTemplateDemo(){
+function IGtLinkTemplateDemo()
+{
     $template =  new IGtLinkTemplate();
     $template ->set_appId(APPID);//应用appid
     $template ->set_appkey(APPKEY);//应用appkey
@@ -342,7 +348,8 @@ function IGtLinkTemplateDemo(){
     return $template;
 }
 
-function IGtNotificationTemplateDemo(){
+function IGtNotificationTemplateDemo()
+{
     $template =  new IGtNotificationTemplate();
     $template->set_appId(APPID);//应用appid
     $template->set_appkey(APPKEY);//应用appkey
@@ -358,7 +365,8 @@ function IGtNotificationTemplateDemo(){
     return $template;
 }
 
-function IGtTransmissionTemplateDemo(){
+function IGtTransmissionTemplateDemo()
+{
     $template =  new IGtTransmissionTemplate();
     $template->set_appId(APPID);//应用appid
     $template->set_appkey(APPKEY);//应用appkey
@@ -395,7 +403,7 @@ function IGtTransmissionTemplateDemo(){
     $apn->alertMsg=$alertmsg;
     $apn->badge=7;
     $apn->sound="";
-    $apn->add_customMsg("payload","payload");
+    $apn->add_customMsg("payload", "payload");
     $apn->contentAvailable=1;
     $apn->category="ACTIONABLE";
     $template->set_apnInfo($apn);

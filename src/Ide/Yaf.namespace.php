@@ -22,22 +22,23 @@
 
 namespace
 {
-    define('YAF\VERSION',                   '2.2.9');
-    define('YAF\ERR\STARTUP\FAILED',        512);
-    define('YAF\ERR\ROUTE\FAILED',          513);
-    define('YAF\ERR\DISPATCH\FAILED',       514);
-    define('YAF\ERR\AUTOLOAD\FAILED',       520);
-    define('YAF\ERR\NOTFOUND\MODULE',       515);
-    define('YAF\ERR\NOTFOUND\CONTROLLER',   516);
-    define('YAF\ERR\NOTFOUND\ACTION',       517);
-    define('YAF\ERR\NOTFOUND\VIEW',         518);
-    define('YAF\ERR\CALL\FAILED',           519);
-    define('YAF\ERR\TYPE\ERROR',            521);
+    define('YAF\VERSION', '2.2.9');
+    define('YAF\ERR\STARTUP\FAILED', 512);
+    define('YAF\ERR\ROUTE\FAILED', 513);
+    define('YAF\ERR\DISPATCH\FAILED', 514);
+    define('YAF\ERR\AUTOLOAD\FAILED', 520);
+    define('YAF\ERR\NOTFOUND\MODULE', 515);
+    define('YAF\ERR\NOTFOUND\CONTROLLER', 516);
+    define('YAF\ERR\NOTFOUND\ACTION', 517);
+    define('YAF\ERR\NOTFOUND\VIEW', 518);
+    define('YAF\ERR\CALL\FAILED', 519);
+    define('YAF\ERR\TYPE\ERROR', 521);
 }
 
 namespace Yaf
 {
     use Yaf;
+
     /**
      * (Yaf >= 2.2.9)
      * Class Application
@@ -82,7 +83,7 @@ namespace Yaf
          *
          * @var Application
          */
-        static protected $_app;
+        protected static $_app;
 
         /**
          * (Yaf >= 2.2.9)
@@ -143,7 +144,9 @@ namespace Yaf
          *
          * @return Application
          */
-        static public function app(){}
+        public static function app()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -153,7 +156,9 @@ namespace Yaf
          *
          * @return Application
          */
-        public function bootstrap(){}
+        public function bootstrap()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -161,7 +166,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function run(){}
+        public function run()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -169,7 +176,9 @@ namespace Yaf
          *
          * @return Application
          */
-        public function clearLastError(){}
+        public function clearLastError()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -181,7 +190,9 @@ namespace Yaf
          * @param string $section 加载的配置节点，使用该节点的配置初始化应用.
          * @return Application
          */
-        public function __construct($config, $section = 'product'){}
+        public function __construct($config, $section = 'product')
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -192,7 +203,9 @@ namespace Yaf
          *
          * @return void
          */
-        public function execute(callable $entry, $parameter = null){}
+        public function execute(callable $entry, $parameter = null)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -200,7 +213,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function environ(){}
+        public function environ()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -208,7 +223,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function getAppDirectory(){}
+        public function getAppDirectory()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -216,7 +233,9 @@ namespace Yaf
          *
          * @return Config_Abstract
          */
-        public function getConfig(){}
+        public function getConfig()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -224,7 +243,9 @@ namespace Yaf
          *
          * @return Dispatcher
          */
-        public function getDispatcher(){}
+        public function getDispatcher()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -232,7 +253,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function getLastErrorMsg(){}
+        public function getLastErrorMsg()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -240,7 +263,9 @@ namespace Yaf
          *
          * @return Int
          */
-        public function getLastErrorNo(){}
+        public function getLastErrorNo()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -248,7 +273,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function getModules(){}
+        public function getModules()
+        {
+        }
         /**
          * (Yaf >= 2.2.9)
          * 设置应用的主目录
@@ -257,7 +284,9 @@ namespace Yaf
          *
          * @return Application
          */
-        public function setAppDirectory($directory){}
+        public function setAppDirectory($directory)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -265,7 +294,9 @@ namespace Yaf
          *
          * @return void
          */
-        private function __clone(){}
+        private function __clone()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -273,7 +304,9 @@ namespace Yaf
          *
          * @return void
          */
-        public function __destruct(){}
+        public function __destruct()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -281,7 +314,9 @@ namespace Yaf
          *
          * @return void
          */
-        private function __sleep(){}
+        private function __sleep()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -289,7 +324,9 @@ namespace Yaf
          *
          * @return void
          */
-        private function __wakeup(){}
+        private function __wakeup()
+        {
+        }
     }
 
     /**
@@ -302,7 +339,9 @@ namespace Yaf
      *
      * @package Yaf
      */
-    abstract class Bootstrap_Abstract{}
+    abstract class Bootstrap_Abstract
+    {
+    }
 
     /**
      * (Yaf >= 2.2.9)
@@ -358,7 +397,7 @@ namespace Yaf
          *
          * @var Dispatcher
          */
-        static protected $_instance;
+        protected static $_instance;
 
         /**
          * (Yaf >= 2.2.9)
@@ -456,7 +495,9 @@ namespace Yaf
          *
          * @return Dispatcher
          */
-        public function disableView(){}
+        public function disableView()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -464,7 +505,9 @@ namespace Yaf
          *
          * @return Dispatcher
          */
-        public function enableView(){}
+        public function enableView()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -475,7 +518,9 @@ namespace Yaf
          *
          * @return View_Interface
          */
-        public function initView($tpl_dir, $options = null){}
+        public function initView($tpl_dir, $options = null)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -485,7 +530,9 @@ namespace Yaf
          *
          * @return View_Interface
          */
-        public function setView(View_Interface $view){}
+        public function setView(View_Interface $view)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -495,7 +542,9 @@ namespace Yaf
          *
          * @return Dispatcher
          */
-        public function setRequest(Request_Abstract $request){}
+        public function setRequest(Request_Abstract $request)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -503,14 +552,18 @@ namespace Yaf
          *
          * @return Application
          */
-        public function getApplication(){}
+        public function getApplication()
+        {
+        }
 
         /**
          * 返回路由器实例
          *
          * @return Router
          */
-        public function getRouter(){}
+        public function getRouter()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -518,7 +571,9 @@ namespace Yaf
          *
          * @return Request\Http
          */
-        public function getRequest(){}
+        public function getRequest()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -529,7 +584,9 @@ namespace Yaf
          *
          * @return Dispatcher
          */
-        public function setErrorHandler(callable $callback, $error_type = 32767){}
+        public function setErrorHandler(callable $callback, $error_type = 32767)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -539,7 +596,9 @@ namespace Yaf
          *
          * @return Dispatcher
          */
-        public function setDefaultModule($module){}
+        public function setDefaultModule($module)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -549,7 +608,9 @@ namespace Yaf
          *
          * @return Dispatcher
          */
-        public function setDefaultController($controller){}
+        public function setDefaultController($controller)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -559,7 +620,9 @@ namespace Yaf
          *
          * @return Dispatcher
          */
-        public function setDefaultAction($action){}
+        public function setDefaultAction($action)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -571,7 +634,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function returnResponse($flag){}
+        public function returnResponse($flag)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -583,7 +648,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function autoRender($flag){}
+        public function autoRender($flag)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -595,7 +662,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function flushInstantly($flag){}
+        public function flushInstantly($flag)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -603,7 +672,9 @@ namespace Yaf
          *
          * @return Dispatcher
          */
-        static public function getInstance(){}
+        public static function getInstance()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -613,7 +684,9 @@ namespace Yaf
          *
          * @return Response_Abstract
          */
-        public function dispatch(Request_Abstract $request){}
+        public function dispatch(Request_Abstract $request)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -626,7 +699,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function throwException($flag){}
+        public function throwException($flag)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -642,7 +717,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function catchException($flag){}
+        public function catchException($flag)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -652,13 +729,17 @@ namespace Yaf
          *
          * @return Dispatcher
          */
-        public function registerPlugin(Plugin_Abstract $plugin){}
+        public function registerPlugin(Plugin_Abstract $plugin)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
          * 重置__construct魔术方法.
          */
-        private function __construct(){}
+        private function __construct()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -666,7 +747,9 @@ namespace Yaf
          *
          * @return void
          */
-        private function __clone(){}
+        private function __clone()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -674,7 +757,9 @@ namespace Yaf
          *
          * @return void
          */
-        public function __destruct(){}
+        public function __destruct()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -682,7 +767,9 @@ namespace Yaf
          *
          * @return void
          */
-        private function __sleep(){}
+        private function __sleep()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -690,7 +777,9 @@ namespace Yaf
          *
          * @return void
          */
-        private function __wakeup(){}
+        private function __wakeup()
+        {
+        }
     }
 
     /**
@@ -732,7 +821,7 @@ namespace Yaf
          * @param string $name
          * @return Config_Abstract
          */
-        abstract function get($name);
+        abstract public function get($name);
 
         /**
          * (Yaf >= 2.2.9)
@@ -742,7 +831,7 @@ namespace Yaf
          * @param mixed $value
          * @return boolean
          */
-        abstract function set($name, $value);
+        abstract public function set($name, $value);
 
         /**
          * (Yaf >= 2.2.9)
@@ -750,7 +839,7 @@ namespace Yaf
          *
          * @return boolean
          */
-        abstract function readonly();
+        abstract public function readonly();
 
         /**
          * (Yaf >= 2.2.9)
@@ -758,7 +847,7 @@ namespace Yaf
          *
          * @return array
          */
-        abstract function toArray();
+        abstract public function toArray();
 
         /**
          * (Yaf >= 2.2.9)
@@ -768,7 +857,9 @@ namespace Yaf
          * @param string $name
          * @return Config_Abstract
          */
-        public function __get($name){}
+        public function __get($name)
+        {
+        }
     }
 
     /**
@@ -870,7 +961,9 @@ namespace Yaf
          *
          * @return String
          */
-        protected function render($action_name, $var_array = array()){}
+        protected function render($action_name, $var_array = array())
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -881,7 +974,9 @@ namespace Yaf
          *
          * @return String
          */
-        protected function display($action_name, $var_array = array()){}
+        protected function display($action_name, $var_array = array())
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -889,7 +984,9 @@ namespace Yaf
          *
          * @return Yaf\Request\Http
          */
-        public function getRequest(){}
+        public function getRequest()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -897,7 +994,9 @@ namespace Yaf
          *
          * @return Response_Abstract
          */
-        public function getResponse(){}
+        public function getResponse()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -905,7 +1004,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function getModuleName(){}
+        public function getModuleName()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -915,7 +1016,9 @@ namespace Yaf
          *
          * @return Controller_Abstract
          */
-        public function initView(){}
+        public function initView()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -925,7 +1028,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function setViewPath($path){}
+        public function setViewPath($path)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -933,7 +1038,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function getViewPath(){}
+        public function getViewPath()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -941,7 +1048,9 @@ namespace Yaf
          *
          * @return View_Interface
          */
-        public function getView(){}
+        public function getView()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -958,7 +1067,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function forward($module, $controller = null, $action = null, $parameters = null){}
+        public function forward($module, $controller = null, $action = null, $parameters = null)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -968,7 +1079,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function redirect($url){}
+        public function redirect($url)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -976,7 +1089,9 @@ namespace Yaf
          *
          * @return Array
          */
-        public function getInvokeArgs(){}
+        public function getInvokeArgs()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -986,19 +1101,25 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function getInvokeArg($name){}
+        public function getInvokeArg($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
          * 屏蔽构造方法
          */
-        final public function __construct(){}
+        final public function __construct()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
          * 屏蔽克隆的魔术方法
          */
-        final public function __clone(){}
+        final public function __clone()
+        {
+        }
     }
 
     /**
@@ -1026,7 +1147,9 @@ namespace Yaf
          *
          * @return Controller_Abstract
          */
-        public function getController(){}
+        public function getController()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1139,13 +1262,15 @@ namespace Yaf
          *
          * @var Loader
          */
-        static protected $_instance;
+        protected static $_instance;
 
         /**
          * (Yaf >= 2.2.9)
          * 重置__construct魔术方法.
          */
-        private function __construct(){}
+        private function __construct()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1153,7 +1278,9 @@ namespace Yaf
          *
          * @return void
          */
-        private function __clone(){}
+        private function __clone()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1161,7 +1288,9 @@ namespace Yaf
          *
          * @return void
          */
-        public function __destruct(){}
+        public function __destruct()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1169,7 +1298,9 @@ namespace Yaf
          *
          * @return void
          */
-        private function __sleep(){}
+        private function __sleep()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1177,7 +1308,9 @@ namespace Yaf
          *
          * @return void
          */
-        private function __wakeup(){}
+        private function __wakeup()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1187,7 +1320,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function autoload($class){}
+        public function autoload($class)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1198,7 +1333,9 @@ namespace Yaf
          *
          * @return Loader
          */
-        static public function getInstance($library = null, $global = null){}
+        public static function getInstance($library = null, $global = null)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1208,7 +1345,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function registerLocalNamespace($namespace){}
+        public function registerLocalNamespace($namespace)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1216,7 +1355,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function getLocalNamespace(){}
+        public function getLocalNamespace()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1224,7 +1365,9 @@ namespace Yaf
          *
          * @return void
          */
-        public function clearLocalNamespace(){}
+        public function clearLocalNamespace()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1234,7 +1377,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function isLocalName($class_name){}
+        public function isLocalName($class_name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1244,7 +1389,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        static public function import($file){}
+        public static function import($file)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1255,7 +1402,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function setLibraryPath($library, $global = false){}
+        public function setLibraryPath($library, $global = false)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1265,7 +1414,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function getLibraryPath($global = false){}
+        public function getLibraryPath($global = false)
+        {
+        }
     }
 
     /**
@@ -1287,7 +1438,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function routerStartup(Request_Abstract $request, Response_Abstract $response){}
+        public function routerStartup(Request_Abstract $request, Response_Abstract $response)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1298,7 +1451,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function routerShutdown(Request_Abstract $request, Response_Abstract $response){}
+        public function routerShutdown(Request_Abstract $request, Response_Abstract $response)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1309,7 +1464,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function dispatchLoopStartup(Request_Abstract $request, Response_Abstract $response){}
+        public function dispatchLoopStartup(Request_Abstract $request, Response_Abstract $response)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1320,7 +1477,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function preDispatch(Request_Abstract $request, Response_Abstract $response){}
+        public function preDispatch(Request_Abstract $request, Response_Abstract $response)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1331,7 +1490,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function postDispatch(Request_Abstract $request, Response_Abstract $response){}
+        public function postDispatch(Request_Abstract $request, Response_Abstract $response)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1342,7 +1503,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function dispatchLoopShutdown(Request_Abstract $request, Response_Abstract $response){}
+        public function dispatchLoopShutdown(Request_Abstract $request, Response_Abstract $response)
+        {
+        }
     }
 
     /**
@@ -1364,7 +1527,7 @@ namespace Yaf
          *
          * @var Registry
          */
-        static protected $_instance;
+        protected static $_instance;
 
         /**
          * (Yaf >= 2.2.9)
@@ -1378,7 +1541,9 @@ namespace Yaf
          * (Yaf >= 2.2.9)
          * 重置__construct魔术方法.
          */
-        private function __construct(){}
+        private function __construct()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1386,7 +1551,9 @@ namespace Yaf
          *
          * @return void
          */
-        private function __clone(){}
+        private function __clone()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1396,7 +1563,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        static public function get($name){}
+        public static function get($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1406,7 +1575,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        static public function has($name){}
+        public static function has($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1417,7 +1588,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        static public function set($name, $value){}
+        public static function set($name, $value)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1427,7 +1600,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        static public function del($name){}
+        public static function del($name)
+        {
+        }
     }
 
     /**
@@ -1563,7 +1738,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function isGet(){}
+        public function isGet()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1571,7 +1748,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function isPost(){}
+        public function isPost()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1579,7 +1758,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function isPut(){}
+        public function isPut()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1587,7 +1768,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function isHead(){}
+        public function isHead()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1595,7 +1778,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function isOptions(){}
+        public function isOptions()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1603,7 +1788,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function isCli(){}
+        public function isCli()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1611,7 +1798,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function isXmlHttpRequest(){}
+        public function isXmlHttpRequest()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1622,7 +1811,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function getServer($name, $default = null){}
+        public function getServer($name, $default = null)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1633,7 +1824,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function getEnv($name, $default = null){}
+        public function getEnv($name, $default = null)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1645,7 +1838,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function setParam($name, $value){}
+        public function setParam($name, $value)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1656,7 +1851,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function getParam($name, $default = null){}
+        public function getParam($name, $default = null)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1664,7 +1861,9 @@ namespace Yaf
          *
          * @return Array
          */
-        public function getParams(){}
+        public function getParams()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1674,7 +1873,9 @@ namespace Yaf
          *
          * @return \Exception
          */
-        public function getException(){}
+        public function getException()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1682,7 +1883,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function getModuleName(){}
+        public function getModuleName()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1690,7 +1893,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function getControllerName(){}
+        public function getControllerName()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1698,7 +1903,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function getActionName(){}
+        public function getActionName()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1708,7 +1915,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function setModuleName($name){}
+        public function setModuleName($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1718,7 +1927,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function setControllerName($name){}
+        public function setControllerName($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1728,7 +1939,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function setActionName($name){}
+        public function setActionName($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1736,7 +1949,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function getMethod(){}
+        public function getMethod()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1744,7 +1959,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function getLanguage(){}
+        public function getLanguage()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1754,7 +1971,9 @@ namespace Yaf
          *
          * @return Request_Abstract
          */
-        public function setBaseUri($baseuri){}
+        public function setBaseUri($baseuri)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1762,7 +1981,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function getBaseUri(){}
+        public function getBaseUri()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1770,7 +1991,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function getRequestUri(){}
+        public function getRequestUri()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1780,7 +2003,9 @@ namespace Yaf
          *
          * @return Request_Abstract
          */
-        public function setRequestUri($uri){}
+        public function setRequestUri($uri)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1788,7 +2013,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function isDispatched(){}
+        public function isDispatched()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1796,7 +2023,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function setDispatched(){}
+        public function setDispatched()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1804,7 +2033,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function isRouted(){}
+        public function isRouted()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1812,7 +2043,9 @@ namespace Yaf
          *
          * @return Request_Abstract
          */
-        public function setRouted(){}
+        public function setRouted()
+        {
+        }
     }
 
     /**
@@ -1871,13 +2104,17 @@ namespace Yaf
          * 构造方法
          *
          */
-        public function __construct(){}
+        public function __construct()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
          * 析构方法
          */
-        public function __destruct(){}
+        public function __destruct()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1885,7 +2122,9 @@ namespace Yaf
          *
          * @return void
          */
-        private function __clone(){}
+        private function __clone()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1893,7 +2132,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function __toString(){}
+        public function __toString()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1904,7 +2145,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function setBody($body, $name = 'content'){}
+        public function setBody($body, $name = 'content')
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1914,7 +2157,9 @@ namespace Yaf
          *
          * @return String
          */
-        public function getBody($name = 'content'){}
+        public function getBody($name = 'content')
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1925,7 +2170,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function appendBody($body, $name = 'content'){}
+        public function appendBody($body, $name = 'content')
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1936,7 +2183,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function prependBody($body, $name = 'content'){}
+        public function prependBody($body, $name = 'content')
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1946,7 +2195,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function clearBody(){}
+        public function clearBody()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1956,7 +2207,9 @@ namespace Yaf
          *
          * @return NULL
          */
-        public function getHeader(){}
+        public function getHeader()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1966,7 +2219,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function setAllHeaders(){}
+        public function setAllHeaders()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1976,7 +2231,9 @@ namespace Yaf
          *
          * @return NULL
          */
-        public function setHeader(){}
+        public function setHeader()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1986,7 +2243,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function clearHeaders(){}
+        public function clearHeaders()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -1996,7 +2255,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function setRedirect($url){}
+        public function setRedirect($url)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2004,7 +2265,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function response(){}
+        public function response()
+        {
+        }
     }
 
     /**
@@ -2035,7 +2298,7 @@ namespace Yaf
          * @param array $query
          * @return String
          */
-        public function assemble ($info, $query);
+        public function assemble($info, $query);
     }
 
     /**
@@ -2056,7 +2319,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function match(){}
+        public function match()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2066,7 +2331,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function route(Request_Abstract $request){}
+        public function route(Request_Abstract $request)
+        {
+        }
 
         /**
          * (Yaf >= 2.3.2)
@@ -2076,7 +2343,9 @@ namespace Yaf
          * @param array $query
          * @return String
          */
-        public function assemble($info, $query){}
+        public function assemble($info, $query)
+        {
+        }
     }
 
     /**
@@ -2110,7 +2379,9 @@ namespace Yaf
          * (Yaf >= 2.2.9)
          * 构造方法
          */
-        public function __construct(){}
+        public function __construct()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2121,7 +2392,9 @@ namespace Yaf
          *
          * @return Router
          */
-        public function addRoute($name, Route_Interface $route){}
+        public function addRoute($name, Route_Interface $route)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2131,7 +2404,9 @@ namespace Yaf
          *
          * @return Router
          */
-        public function addConfig($config){}
+        public function addConfig($config)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2141,7 +2416,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function route(Request_Abstract $request){}
+        public function route(Request_Abstract $request)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2151,7 +2428,9 @@ namespace Yaf
          *
          * @return Route_Interface
          */
-        public function getRoute($name){}
+        public function getRoute($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2159,7 +2438,9 @@ namespace Yaf
          *
          * @return Array
          */
-        public function getRoutes(){}
+        public function getRoutes()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2167,7 +2448,9 @@ namespace Yaf
          *
          * @return Route_Interface
          */
-        public function getCurrentRoute(){}
+        public function getCurrentRoute()
+        {
+        }
     }
 
     /**
@@ -2184,7 +2467,9 @@ namespace Yaf
          * (Yaf >= 2.2.9)
          * 重置__construct魔术方法.
          */
-        private function __construct(){}
+        private function __construct()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2192,7 +2477,9 @@ namespace Yaf
          *
          * @return void
          */
-        private function __clone(){}
+        private function __clone()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2200,7 +2487,9 @@ namespace Yaf
          *
          * @return void
          */
-        private function __sleep(){}
+        private function __sleep()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2208,7 +2497,9 @@ namespace Yaf
          *
          * @return void
          */
-        private function __wakeup(){}
+        private function __wakeup()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2216,7 +2507,9 @@ namespace Yaf
          *
          * @return Session
          */
-        static public function getInstance(){}
+        public static function getInstance()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2224,7 +2517,9 @@ namespace Yaf
          *
          * @return Session
          */
-        public function start(){}
+        public function start()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2232,7 +2527,9 @@ namespace Yaf
          *
          * @return void
          */
-        public function __destruct(){}
+        public function __destruct()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2242,7 +2539,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function __isset($name){}
+        public function __isset($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2252,7 +2551,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function get($name){}
+        public function get($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2263,7 +2564,9 @@ namespace Yaf
          *
          * @return Session
          */
-        public function set($name, $value){}
+        public function set($name, $value)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2273,7 +2576,9 @@ namespace Yaf
          *
          * @return Session
          */
-        public function del($name){}
+        public function del($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2281,7 +2586,9 @@ namespace Yaf
          *
          * @return Int
          */
-        public function count(){}
+        public function count()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2289,7 +2596,9 @@ namespace Yaf
          *
          * @return void
          */
-        public function rewind(){}
+        public function rewind()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2297,7 +2606,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function current(){}
+        public function current()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2305,7 +2616,9 @@ namespace Yaf
          *
          * @return void
          */
-        public function next(){}
+        public function next()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2313,7 +2626,9 @@ namespace Yaf
          *
          * @return void
          */
-        public function valid(){}
+        public function valid()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2321,7 +2636,9 @@ namespace Yaf
          *
          * @return mixed
          */
-        public function key(){}
+        public function key()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2331,7 +2648,9 @@ namespace Yaf
          *
          * @return Session
          */
-        public function offsetUnset($name){}
+        public function offsetUnset($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2341,7 +2660,9 @@ namespace Yaf
          *
          * @return Boolean
          */
-        public function offsetExists($name){}
+        public function offsetExists($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2351,7 +2672,9 @@ namespace Yaf
          *
          * @return Session
          */
-        public function offsetGet($name){}
+        public function offsetGet($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2362,7 +2685,9 @@ namespace Yaf
          *
          * @return Session
          */
-        public function offsetSet($name, $value){}
+        public function offsetSet($name, $value)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2372,7 +2697,9 @@ namespace Yaf
          * @param string $name
          * @return mixed
          */
-        public function __get($name){}
+        public function __get($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2383,7 +2710,9 @@ namespace Yaf
          *
          * @return Session
          */
-        public function __set($name, $value){}
+        public function __set($name, $value)
+        {
+        }
     }
 
     /**
@@ -2442,7 +2771,9 @@ namespace Yaf\Config
          * @param string $filename ini文件全路径
          * @param string $section 初始化时的配置节点名称
          */
-        public function __construct($filename, $section = null){}
+        public function __construct($filename, $section = null)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2452,7 +2783,9 @@ namespace Yaf\Config
          *
          * @return Boolean
          */
-        public function __isset($name){}
+        public function __isset($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2464,7 +2797,9 @@ namespace Yaf\Config
          *
          * @return false
          */
-        public function set($name, $value){}
+        public function set($name, $value)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2472,7 +2807,9 @@ namespace Yaf\Config
          *
          * @return Int
          */
-        public function count(){}
+        public function count()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2480,7 +2817,9 @@ namespace Yaf\Config
          *
          * @return void
          */
-        public function rewind(){}
+        public function rewind()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2488,7 +2827,9 @@ namespace Yaf\Config
          *
          * @return Ini
          */
-        public function current(){}
+        public function current()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2496,7 +2837,9 @@ namespace Yaf\Config
          *
          * @return void
          */
-        public function next(){}
+        public function next()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2504,7 +2847,9 @@ namespace Yaf\Config
          *
          * @return void
          */
-        public function valid(){}
+        public function valid()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2512,7 +2857,9 @@ namespace Yaf\Config
          *
          * @return mixed
          */
-        public function key(){}
+        public function key()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2523,7 +2870,9 @@ namespace Yaf\Config
          *
          * @return false
          */
-        public function offsetUnset($name){}
+        public function offsetUnset($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2533,7 +2882,9 @@ namespace Yaf\Config
          *
          * @return Boolean
          */
-        public function offsetExists($name){}
+        public function offsetExists($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2545,7 +2896,9 @@ namespace Yaf\Config
          *
          * @return false
          */
-        public function offsetSet($name, $value){}
+        public function offsetSet($name, $value)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2555,7 +2908,9 @@ namespace Yaf\Config
          * @param string $name
          * @return Ini
          */
-        public function offsetGet($name){}
+        public function offsetGet($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2565,7 +2920,9 @@ namespace Yaf\Config
          * @param string $name
          * @return Ini
          */
-        public function get($name){}
+        public function get($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2575,7 +2932,9 @@ namespace Yaf\Config
          * @param string $name
          * @return Ini
          */
-        public function __get($name){}
+        public function __get($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2587,7 +2946,9 @@ namespace Yaf\Config
          *
          * @return false
          */
-        public function __set($name, $value){}
+        public function __set($name, $value)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2596,7 +2957,9 @@ namespace Yaf\Config
          *
          * @return array|void
          */
-        public function toArray(){}
+        public function toArray()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2605,7 +2968,9 @@ namespace Yaf\Config
          *
          * @return Boolean
          */
-        public function readonly(){}
+        public function readonly()
+        {
+        }
     }
 
     /**
@@ -2625,7 +2990,9 @@ namespace Yaf\Config
          * @param string $config 储存配置的数组
          * @param string $readonly 是否只读
          */
-        public function __construct($config, $readonly){}
+        public function __construct($config, $readonly)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2635,7 +3002,9 @@ namespace Yaf\Config
          *
          * @return Boolean
          */
-        public function __isset($name){}
+        public function __isset($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2646,7 +3015,9 @@ namespace Yaf\Config
          *
          * @return Boolean
          */
-        public function set($name, $value){}
+        public function set($name, $value)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2654,7 +3025,9 @@ namespace Yaf\Config
          *
          * @return Int
          */
-        public function count(){}
+        public function count()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2662,7 +3035,9 @@ namespace Yaf\Config
          *
          * @return void
          */
-        public function rewind(){}
+        public function rewind()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2670,7 +3045,9 @@ namespace Yaf\Config
          *
          * @return Simple
          */
-        public function current(){}
+        public function current()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2678,7 +3055,9 @@ namespace Yaf\Config
          *
          * @return void
          */
-        public function next(){}
+        public function next()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2686,7 +3065,9 @@ namespace Yaf\Config
          *
          * @return void
          */
-        public function valid(){}
+        public function valid()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2694,7 +3075,9 @@ namespace Yaf\Config
          *
          * @return mixed
          */
-        public function key(){}
+        public function key()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2704,7 +3087,9 @@ namespace Yaf\Config
          *
          * @return Boolean
          */
-        public function offsetUnset($name){}
+        public function offsetUnset($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2714,7 +3099,9 @@ namespace Yaf\Config
          *
          * @return Boolean
          */
-        public function offsetExists($name){}
+        public function offsetExists($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2724,7 +3111,9 @@ namespace Yaf\Config
          * @param string $name
          * @return Simple
          */
-        public function offsetGet($name){}
+        public function offsetGet($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2734,7 +3123,9 @@ namespace Yaf\Config
          * @param string $name
          * @return Simple
          */
-        public function get($name){}
+        public function get($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2745,7 +3136,9 @@ namespace Yaf\Config
          *
          * @return Boolean
          */
-        public function offsetSet($name, $value){}
+        public function offsetSet($name, $value)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2755,7 +3148,9 @@ namespace Yaf\Config
          * @param string $name
          * @return Simple
          */
-        public function __get($name){}
+        public function __get($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2766,7 +3161,9 @@ namespace Yaf\Config
          *
          * @return Boolean
          */
-        public function __set($name, $value){}
+        public function __set($name, $value)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2775,7 +3172,9 @@ namespace Yaf\Config
          *
          * @return array|void
          */
-        public function toArray(){}
+        public function toArray()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2784,7 +3183,9 @@ namespace Yaf\Config
          *
          * @return Boolean
          */
-        public function readonly(){}
+        public function readonly()
+        {
+        }
     }
 }
 
@@ -2812,7 +3213,9 @@ namespace Yaf\Request
          * @param string $request_uri Request URI（可选）
          * @param string $base_uri Base URI（可选）
          */
-        public function __construct($request_uri = NULL, $base_uri = NULL){}
+        public function __construct($request_uri = null, $base_uri = null)
+        {
+        }
         /**
          * (Yaf >= 2.2.9)
          * 获取$_GET中名为$name的参数值
@@ -2821,7 +3224,9 @@ namespace Yaf\Request
          *
          * @return mixed
          */
-        public function getQuery($name){}
+        public function getQuery($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2831,7 +3236,9 @@ namespace Yaf\Request
          *
          * @return mixed
          */
-        public function getRequest($name){}
+        public function getRequest($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2841,7 +3248,9 @@ namespace Yaf\Request
          *
          * @return mixed
          */
-        public function getPost($name){}
+        public function getPost($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2851,7 +3260,9 @@ namespace Yaf\Request
          *
          * @return mixed
          */
-        public function getCookie($name){}
+        public function getCookie($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2861,7 +3272,9 @@ namespace Yaf\Request
          *
          * @return mixed
          */
-        public function getFiles($name){}
+        public function getFiles($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2869,7 +3282,9 @@ namespace Yaf\Request
          *
          * @return Boolean
          */
-        public function isXmlHttpRequest(){}
+        public function isXmlHttpRequest()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2880,7 +3295,9 @@ namespace Yaf\Request
          *
          * @return mixed
          */
-        public function get($name, $default = null){}
+        public function get($name, $default = null)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2888,7 +3305,9 @@ namespace Yaf\Request
          *
          * @return void
          */
-        private function __clone(){}
+        private function __clone()
+        {
+        }
     }
 
     /**
@@ -2914,7 +3333,9 @@ namespace Yaf\Request
          * @param mixed | string $action 动作名
          * @param mixed | array $parameters 请求的参数
          */
-        public function __construct($method = null, $module = null, $controller = null, $action = null, $parameters = null){}
+        public function __construct($method = null, $module = null, $controller = null, $action = null, $parameters = null)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2924,7 +3345,9 @@ namespace Yaf\Request
          *
          * @return mixed
          */
-        public function getQuery($name){}
+        public function getQuery($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2934,7 +3357,9 @@ namespace Yaf\Request
          *
          * @return mixed
          */
-        public function getRequest($name){}
+        public function getRequest($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2944,7 +3369,9 @@ namespace Yaf\Request
          *
          * @return mixed
          */
-        public function getPost($name){}
+        public function getPost($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2954,7 +3381,9 @@ namespace Yaf\Request
          *
          * @return mixed
          */
-        public function getCookie($name){}
+        public function getCookie($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2964,7 +3393,9 @@ namespace Yaf\Request
          *
          * @return mixed
          */
-        public function getFiles($name){}
+        public function getFiles($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2972,7 +3403,9 @@ namespace Yaf\Request
          *
          * @return Boolean
          */
-        public function isXmlHttpRequest(){}
+        public function isXmlHttpRequest()
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2983,7 +3416,9 @@ namespace Yaf\Request
          *
          * @return mixed
          */
-        public function get($name, $default = null){}
+        public function get($name, $default = null)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -2991,7 +3426,9 @@ namespace Yaf\Request
          *
          * @return void
          */
-        private function __clone(){}
+        private function __clone()
+        {
+        }
     }
 }
 
@@ -3043,7 +3480,9 @@ namespace Yaf\View
          * @param string $tpl_dir 模板文件目录
          * @param array $options 此属性在php-5.4以下版本中适用，用以设置模板渲染的方式
          */
-        public function __construct($tpl_dir, $options){}
+        public function __construct($tpl_dir, $options)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -3053,7 +3492,9 @@ namespace Yaf\View
          *
          * @return Boolean
          */
-        public function __isset($name){}
+        public function __isset($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -3065,7 +3506,9 @@ namespace Yaf\View
          *
          * @return mixed
          */
-        public function __get($name){}
+        public function __get($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -3077,7 +3520,9 @@ namespace Yaf\View
          *
          * @return mixed
          */
-        public function get($name){}
+        public function get($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -3090,7 +3535,9 @@ namespace Yaf\View
          *
          * @return Boolean
          */
-        public function __set($name, $value){}
+        public function __set($name, $value)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -3102,7 +3549,9 @@ namespace Yaf\View
          *
          * @return mixed
          */
-        public function clear($name){}
+        public function clear($name)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -3115,7 +3564,9 @@ namespace Yaf\View
          *
          * @return Boolean
          */
-        public function assign($name, $value = null){}
+        public function assign($name, $value = null)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -3128,7 +3579,9 @@ namespace Yaf\View
          *
          * @return Boolean
          */
-        public function assignRef($name, $value){}
+        public function assignRef($name, $value)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -3139,7 +3592,9 @@ namespace Yaf\View
          *
          * @return Boolean
          */
-        public function display($tpl, $var_array = array()){}
+        public function display($tpl, $var_array = array())
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -3150,7 +3605,9 @@ namespace Yaf\View
          *
          * @return String
          */
-        public function render($tpl, $var_array = array()){}
+        public function render($tpl, $var_array = array())
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -3160,7 +3617,9 @@ namespace Yaf\View
          *
          * @return Boolean
          */
-        public function setScriptPath($tpl_dir){}
+        public function setScriptPath($tpl_dir)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -3168,7 +3627,9 @@ namespace Yaf\View
          *
          * @return String
          */
-        public function getScriptPath(){}
+        public function getScriptPath()
+        {
+        }
     }
 }
 
@@ -3184,7 +3645,9 @@ namespace Yaf\Response
      *
      * @package Yaf\Response
      */
-    class Cli extends Response_Abstract{}
+    class Cli extends Response_Abstract
+    {
+    }
 
     /**
      * (Yaf >= 2.2.9)
@@ -3253,7 +3716,9 @@ namespace Yaf\Route
          * @param $controller_prefer boolean 表示路由结果是作为动作的路由结果，还是控制器的路由结果，默认的是动作路由结果.
          * @param $delim string 表示一个分隔符，如果设置了这个分隔符，那么在REQUEST_URI中，分隔符之前的作为路由信息载体，而之后的作为请求参数.
          */
-        public function __construct($controller_prefer = 0, $delim = ''){}
+        public function __construct($controller_prefer = 0, $delim = '')
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -3263,7 +3728,9 @@ namespace Yaf\Route
          *
          * @return Boolean
          */
-        public function route(Request_Abstract $request){}
+        public function route(Request_Abstract $request)
+        {
+        }
 
         /**
          * (Yaf >= 2.3.2)
@@ -3273,7 +3740,9 @@ namespace Yaf\Route
          * @param array $query
          * @return String
          */
-        public function assemble($info, $query){}
+        public function assemble($info, $query)
+        {
+        }
     }
 
     /**
@@ -3331,7 +3800,9 @@ namespace Yaf\Route
          * @param array $map 模式分组的映射关系
          * @param array $verify
          */
-        public function __construct($match, $route, $map, $verify){}
+        public function __construct($match, $route, $map, $verify)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -3341,7 +3812,9 @@ namespace Yaf\Route
          *
          * @return Boolean
          */
-        public function route(Request_Abstract $request){}
+        public function route(Request_Abstract $request)
+        {
+        }
 
         /**
          * (Yaf >= 2.3.2)
@@ -3351,7 +3824,9 @@ namespace Yaf\Route
          * @param array $query
          * @return String
          */
-        public function assemble($info, $query){}
+        public function assemble($info, $query)
+        {
+        }
     }
 
     /**
@@ -3399,7 +3874,9 @@ namespace Yaf\Route
          * @param array $route 路由信息
          * @param array $verify
          */
-        public function __construct($match, $route, $verify){}
+        public function __construct($match, $route, $verify)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -3409,7 +3886,9 @@ namespace Yaf\Route
          *
          * @return Boolean
          */
-        public function route(Request_Abstract $request){}
+        public function route(Request_Abstract $request)
+        {
+        }
 
         /**
          * (Yaf >= 2.3.2)
@@ -3419,7 +3898,9 @@ namespace Yaf\Route
          * @param array $query
          * @return String
          */
-        public function assemble($info, $query){}
+        public function assemble($info, $query)
+        {
+        }
     }
 
     /**
@@ -3464,7 +3945,9 @@ namespace Yaf\Route
          * @param string $controller 控制器名
          * @param string $action 动作名
          */
-        public function __construct($module, $controller, $action){}
+        public function __construct($module, $controller, $action)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -3474,7 +3957,9 @@ namespace Yaf\Route
          *
          * @return Boolean
          */
-        public function route(Request_Abstract $request){}
+        public function route(Request_Abstract $request)
+        {
+        }
 
         /**
          * (Yaf >= 2.3.2)
@@ -3484,7 +3969,9 @@ namespace Yaf\Route
          * @param array $query
          * @return String
          */
-        public function assemble($info, $query){}
+        public function assemble($info, $query)
+        {
+        }
     }
 
     /**
@@ -3511,7 +3998,9 @@ namespace Yaf\Route
          *
          * @param $var string 全局路由变量名
          */
-        public function __construct($var){}
+        public function __construct($var)
+        {
+        }
 
         /**
          * (Yaf >= 2.2.9)
@@ -3521,7 +4010,9 @@ namespace Yaf\Route
          *
          * @return Boolean
          */
-        public function route(Request_Abstract $request){}
+        public function route(Request_Abstract $request)
+        {
+        }
 
         /**
          * (Yaf >= 2.3.2)
@@ -3531,7 +4022,9 @@ namespace Yaf\Route
          * @param array $query
          * @return String
          */
-        public function assemble($info, $query){}
+        public function assemble($info, $query)
+        {
+        }
     }
 }
 
@@ -3547,7 +4040,9 @@ namespace Yaf\Exception
      *
      * @package Yaf\Exception
      */
-    class StartupError extends Exception{}
+    class StartupError extends Exception
+    {
+    }
 
     /**
      * (Yaf >= 2.2.9)
@@ -3557,7 +4052,9 @@ namespace Yaf\Exception
      *
      * @package Yaf\Exception
      */
-    class RouterFailed extends Exception{}
+    class RouterFailed extends Exception
+    {
+    }
 
     /**
      * (Yaf >= 2.2.9)
@@ -3567,7 +4064,9 @@ namespace Yaf\Exception
      *
      * @package Yaf\Exception
      */
-    class DispatchFailed extends Exception{}
+    class DispatchFailed extends Exception
+    {
+    }
 
     /**
      * (Yaf >= 2.2.9)
@@ -3577,7 +4076,9 @@ namespace Yaf\Exception
      *
      * @package Yaf\Exception
      */
-    class LoadFailed extends Exception{}
+    class LoadFailed extends Exception
+    {
+    }
 
     /**
      * (Yaf >= 2.2.9)
@@ -3587,7 +4088,9 @@ namespace Yaf\Exception
      *
      * @package Yaf\Exception
      */
-    class TypeError extends Exception{}
+    class TypeError extends Exception
+    {
+    }
 }
 
 namespace Yaf\Exception\LoadFailed
@@ -3602,7 +4105,9 @@ namespace Yaf\Exception\LoadFailed
      *
      * @package Yaf\Exception\LoadFailed
      */
-    class Module extends LoadFailed{}
+    class Module extends LoadFailed
+    {
+    }
 
     /**
      * (Yaf >= 2.2.9)
@@ -3612,7 +4117,9 @@ namespace Yaf\Exception\LoadFailed
      *
      * @package Yaf\Exception\LoadFailed
      */
-    class Controller extends LoadFailed{}
+    class Controller extends LoadFailed
+    {
+    }
 
     /**
      * (Yaf >= 2.2.9)
@@ -3622,7 +4129,9 @@ namespace Yaf\Exception\LoadFailed
      *
      * @package Yaf\Exception\LoadFailed
      */
-    class Action extends LoadFailed{}
+    class Action extends LoadFailed
+    {
+    }
 
     /**
      * (Yaf >= 2.2.9)
@@ -3632,5 +4141,7 @@ namespace Yaf\Exception\LoadFailed
      *
      * @package Yaf\Exception\LoadFailed
      */
-    class View extends LoadFailed{}
+    class View extends LoadFailed
+    {
+    }
 }

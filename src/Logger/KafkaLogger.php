@@ -13,10 +13,8 @@ use Kafka\ProducerConfig;
 use TheFairLib\Config\Config;
 use TheFairLib\Utility\Utility;
 
-
 class KafkaLogger
 {
-
     private static $instance = null;
 
     const KAFKA_NAME_START = 'log';
@@ -83,5 +81,4 @@ class KafkaLogger
         $topicName = self::KAFKA_NAME_START . implode('', array_map('ucfirst', explode('_', $database)));
         $this->sendDirectMessage($topicName, $message);
     }
-
 }

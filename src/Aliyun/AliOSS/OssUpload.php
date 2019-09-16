@@ -109,7 +109,6 @@ class OssUpload
         $this->newName = $this->_getName();
         $this->fullName = $this->_getFolder() . '/' . $this->newName . $this->_getFileExt();
         if ($this->stateInfo == $this->stateMap[0]) {
-
             if (is_uploaded_file($file['tmp_name'])) {
                 if (!move_uploaded_file($file["tmp_name"], $this->fullName)) {
                     $this->stateInfo = $this->_getStateInfo("MOVE");
@@ -221,7 +220,6 @@ class OssUpload
                 isset($type[$imageType]) ? $this->imageInfo : $this->imageInfo = 'not image';//获得图片大小信息
             }
         }
-
     }
 
     /**
@@ -250,15 +248,15 @@ class OssUpload
             'file_type' => $type,
         ];
         switch ($type) {//image,file,video,audio
-            case 'image' :
+            case 'image':
                 $this->getImageInfo();
                 $fileInfo['info'] = $this->imageInfo;
                 break;
-            case 'video' :
+            case 'video':
                 $info = $this->getVideoInfo();
                 $fileInfo = array_merge($fileInfo, $info);
                 break;
-            case 'audio' :
+            case 'audio':
                 $info = $this->getAudioInfo();
                 $fileInfo = array_merge($fileInfo, $info);
                 break;

@@ -13,5 +13,4 @@ use TheFairLib\Exception\BaseException;
 
 class Exception extends BaseException
 {
-
 }

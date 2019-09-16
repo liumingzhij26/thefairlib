@@ -43,13 +43,23 @@ class Request
     /**
      * 将原始请求信息转换到PHP超全局变量中
      */
-    function setGlobal()
+    public function setGlobal()
     {
-        if ($this->get) $_GET = $this->get;
-        if ($this->post) $_POST = $this->post;
-        if ($this->file) $_FILES = $this->file;
-        if ($this->cookie) $_COOKIE = $this->cookie;
-        if ($this->server) $_SERVER = $this->server;
+        if ($this->get) {
+            $_GET = $this->get;
+        }
+        if ($this->post) {
+            $_POST = $this->post;
+        }
+        if ($this->file) {
+            $_FILES = $this->file;
+        }
+        if ($this->cookie) {
+            $_COOKIE = $this->cookie;
+        }
+        if ($this->server) {
+            $_SERVER = $this->server;
+        }
         $_REQUEST = array_merge($this->get, $this->post, $this->cookie);
 
         $_SERVER['REQUEST_URI'] = $this->meta['uri'];
@@ -63,7 +73,7 @@ class Request
         $_SERVER['REMOTE_ADDR'] = $this->remote_ip;
     }
 
-    function unsetGlobal()
+    public function unsetGlobal()
     {
         $_REQUEST = $_SESSION = $_COOKIE = $_FILES = $_POST = $_SERVER = $_GET = array();
     }

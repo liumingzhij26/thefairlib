@@ -20,18 +20,17 @@ use Exception;
 use TheFairLib\Config\Config;
 use TheFairLib\Utility\Utility;
 
-
 /**
  *
  * Class Client
  */
 class ESClient
 {
-    static public $instance;
+    public static $instance;
 
-    static protected $path = '';
+    protected static $path = '';
 
-    static protected $wt = 'json'; //xml
+    protected static $wt = 'json'; //xml
 
     //超时15秒
     protected $timeout = 15;
@@ -40,7 +39,7 @@ class ESClient
 
     protected $_keywords = '';
 
-    static private $client = null;
+    private static $client = null;
 
     const STRICT_MODE = true;
 
@@ -79,7 +78,7 @@ class ESClient
      * @param string $type 索引类型
      * @return ESClient
      */
-    static public function Instance($index, $type = '')
+    public static function Instance($index, $type = '')
     {
         $class = get_called_class();
         if (empty(self::$instance[$index])) {
@@ -210,7 +209,6 @@ class ESClient
     {
         $deleteCount = 0;
         try {
-
             $result = self::client()->deleteByQuery(array_merge($this->getBaseParam(), ["body" => [
                 "query" => [
                     "match_all" => []
@@ -325,6 +323,4 @@ class ESClient
     {
         return $result['result'];
     }
-
-
 }

@@ -24,12 +24,12 @@ class HttpServer extends Protocol implements \TheFairLib\Service\Swoole\Server\P
     const ST_WAIT = 2; //等待数据
     const ST_ERROR = 3; //错误，丢弃此包
 
-    function __construct()
+    public function __construct()
     {
         $this->parser = new Parser();
     }
 
-    function checkHeader($client_id, $http_data)
+    public function checkHeader($client_id, $http_data)
     {
         //新的连接
         if (!isset($this->requests[$client_id])) {
@@ -66,7 +66,7 @@ class HttpServer extends Protocol implements \TheFairLib\Service\Swoole\Server\P
         return $request;
     }
 
-    function checkPost($request)
+    public function checkPost($request)
     {
         if (isset($request->head['Content-Length'])) {
             //超过最大尺寸
@@ -87,7 +87,7 @@ class HttpServer extends Protocol implements \TheFairLib\Service\Swoole\Server\P
         return self::ST_ERROR;
     }
 
-    function checkData($client_id, $http_data)
+    public function checkData($client_id, $http_data)
     {
         if (isset($this->buffer_header[$client_id])) {
             $http_data = $this->buffer_header[$client_id] . $http_data;
@@ -123,13 +123,13 @@ class HttpServer extends Protocol implements \TheFairLib\Service\Swoole\Server\P
      * @param $data
      * @return null
      */
-    function onReceive($serv, $client_id, $from_id, $data)
+    public function onReceive($serv, $client_id, $from_id, $data)
     {
         //检测request data完整性
         $ret = $this->checkData($client_id, $data);
         switch ($ret) {
             //错误的请求
-            case self::ST_ERROR;
+            case self::ST_ERROR:
                 $this->server->close($client_id);
                 return;
             //请求不完整，继续等待
@@ -148,8 +148,7 @@ class HttpServer extends Protocol implements \TheFairLib\Service\Swoole\Server\P
         $request->fd = $client_id;
         $request->setGlobal();
         $dataRet = $this->onRequest($request);
-        if (!is_null($dataRet)) // 有返回直接response
-        {
+        if (!is_null($dataRet)) { // 有返回直接response
             $response = new Swoole\Http\Response;
             //处理请求，产生response对象
             $response->body = $dataRet;
@@ -158,7 +157,7 @@ class HttpServer extends Protocol implements \TheFairLib\Service\Swoole\Server\P
         }
     }
 
-    function afterResponse(Swoole\Http\Request $request, Swoole\Http\Response $response)
+    public function afterResponse(Swoole\Http\Request $request, Swoole\Http\Response $response)
     {
         if (!$this->keepalive or $response->head['Connection'] == 'close') {
             $this->server->close($request->fd);
@@ -175,12 +174,14 @@ class HttpServer extends Protocol implements \TheFairLib\Service\Swoole\Server\P
      * @param $request Swoole\Http\Request
      * @return null
      */
-    function parseRequest($request)
+    public function parseRequest($request)
     {
         $url_info = parse_url($request->meta['uri']);
         $request->time = time();
         $request->meta['path'] = $url_info['path'];
-        if (isset($url_info['fragment'])) $request->meta['fragment'] = $url_info['fragment'];
+        if (isset($url_info['fragment'])) {
+            $request->meta['fragment'] = $url_info['fragment'];
+        }
         if (isset($url_info['query'])) {
             parse_str($url_info['query'], $request->get);
         }
@@ -201,7 +202,7 @@ class HttpServer extends Protocol implements \TheFairLib\Service\Swoole\Server\P
      * @param $response Swoole\Http\Response
      * @return bool
      */
-    function response(Swoole\Http\Request $request, Swoole\Http\Response $response)
+    public function response(Swoole\Http\Request $request, Swoole\Http\Response $response)
     {
         if (!isset($response->head['Date'])) {
             $response->head['Date'] = gmdate("D, d M Y H:i:s T");
@@ -238,7 +239,7 @@ class HttpServer extends Protocol implements \TheFairLib\Service\Swoole\Server\P
      * @param Swoole\Http\Response $response
      * @param string $content
      */
-    function httpError($code, Swoole\Http\Response $response, $content = '')
+    public function httpError($code, Swoole\Http\Response $response, $content = '')
     {
         $response->send_http_status($code);
         $response->head['Content-Type'] = 'text/html';
@@ -248,16 +249,18 @@ class HttpServer extends Protocol implements \TheFairLib\Service\Swoole\Server\P
     /**
      * 捕获错误
      */
-    function onError()
+    public function onError()
     {
         $error = error_get_last();
-        if (!isset($error['type'])) return;
+        if (!isset($error['type'])) {
+            return;
+        }
         switch ($error['type']) {
-            case E_ERROR :
-            case E_PARSE :
+            case E_ERROR:
+            case E_PARSE:
             case E_DEPRECATED:
-            case E_CORE_ERROR :
-            case E_COMPILE_ERROR :
+            case E_CORE_ERROR:
+            case E_COMPILE_ERROR:
                 break;
             default:
                 return;
@@ -277,7 +280,7 @@ class HttpServer extends Protocol implements \TheFairLib\Service\Swoole\Server\P
      * @param $request
      * @return null
      */
-    function onRequest(Swoole\Http\Request $request)
+    public function onRequest(Swoole\Http\Request $request)
     {
     }
 
@@ -295,17 +298,14 @@ class HttpServer extends Protocol implements \TheFairLib\Service\Swoole\Server\P
 
     public function onTask($serv, $taskId, $fromId, $data)
     {
-
     }
 
     public function onFinish($serv, $taskId, $data)
     {
-
     }
 
     public function onTimer($serv, $interval)
     {
-
     }
 
     /**
@@ -313,7 +313,7 @@ class HttpServer extends Protocol implements \TheFairLib\Service\Swoole\Server\P
      * @param $fd
      * @param $from_id
      */
-    function onClose($serv, $fd, $from_id)
+    public function onClose($serv, $fd, $from_id)
     {
     }
 }

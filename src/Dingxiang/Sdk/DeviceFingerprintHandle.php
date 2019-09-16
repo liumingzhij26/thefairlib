@@ -6,7 +6,8 @@
  * Time: 下午7:30
  */
 
-class DeviceFingerprintHandle {
+class DeviceFingerprintHandle
+{
 
     // 默认单位秒
     public $timeout = 2;
@@ -14,11 +15,13 @@ class DeviceFingerprintHandle {
     /**
      * @param $timeout  单位秒
      */
-    public function setTimeout($timeout) {
+    public function setTimeout($timeout)
+    {
         $this->timeout = $timeout;
     }
 
-    public function getTimeout() {
+    public function getTimeout()
+    {
         return $this->timeout;
     }
 
@@ -31,7 +34,8 @@ class DeviceFingerprintHandle {
      * @param $token        token
      * @return              json格式的返回值
      */
-    public function getDeviceInfo($url, $appId, $appSecret, $token) {
+    public function getDeviceInfo($url, $appId, $appSecret, $token)
+    {
         $requestUrl = $url. "?appId=". $appId. "&token=". rawurlencode($token). "&sign=". md5($appSecret. $token. $appSecret);
         return $this->doGetRequest($requestUrl);
     }
@@ -43,7 +47,8 @@ class DeviceFingerprintHandle {
      * @return bool|string  本次请求结果集
      * @throws Exception    网络不通或网络超时将抛出异常
      */
-    public function doGetRequest($url) {
+    public function doGetRequest($url)
+    {
         $params = array('http' => array(
             'method' => 'GET',
             'header' => 'Content-type:text/html',

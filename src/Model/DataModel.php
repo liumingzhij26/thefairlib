@@ -22,16 +22,15 @@ use TheFairLib\Utility\Utility;
 
 abstract class DataModel
 {
-
     protected $server = 'default';
 
-    static protected $instance;
+    protected static $instance;
 
-    static protected $cache;
+    protected static $cache;
 
-    static protected $db = [];
+    protected static $db = [];
 
-    static protected $dbName = 'default';
+    protected static $dbName = 'default';
 
     protected static $_params;
 
@@ -51,9 +50,9 @@ abstract class DataModel
     /**
      * @var Manager
      */
-    static protected $capsule;
+    protected static $capsule;
 
-    static public function Instance()
+    public static function Instance()
     {
         $class = get_called_class();
         if (empty(self::$instance[$class])) {

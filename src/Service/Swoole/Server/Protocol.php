@@ -3,19 +3,19 @@ namespace TheFairLib\Service\Swoole\Server;
 
 interface Protocol
 {
-    function onStart($server, $workerId);
+    public function onStart($server, $workerId);
 
-    function onConnect($server, $client_id, $from_id);
+    public function onConnect($server, $client_id, $from_id);
 
-    function onReceive($server, $client_id, $from_id, $data);
+    public function onReceive($server, $client_id, $from_id, $data);
 
-    function onClose($server, $client_id, $from_id);
+    public function onClose($server, $client_id, $from_id);
 
-    function onShutdown($server, $worker_id);
+    public function onShutdown($server, $worker_id);
 
-    function onTask($serv, $task_id, $from_id, $data);
+    public function onTask($serv, $task_id, $from_id, $data);
 
-    function onFinish($serv, $task_id, $data);
+    public function onFinish($serv, $task_id, $data);
 
-    function onTimer($serv, $interval);
+    public function onTimer($serv, $interval);
 }

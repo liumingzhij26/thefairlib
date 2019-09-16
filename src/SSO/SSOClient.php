@@ -14,7 +14,7 @@ use TheFairLib\Utility\Utility;
 
 class SSOClient
 {
-    static public $instance;
+    public static $instance;
 
     private static $_cookieDomain = '';
     private static $_secret;
@@ -28,7 +28,7 @@ class SSOClient
      * @param string $type
      * @return SSOClient
      */
-    static public function Instance($customConfig = [], $type = 'client')
+    public static function Instance($customConfig = [], $type = 'client')
     {
         if (empty(self::$instance)) {
             self::$instance = new self($customConfig, $type);

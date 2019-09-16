@@ -35,7 +35,7 @@ abstract class Server implements Server\Driver
     // public $serverClass;  //修改为public ---mark  20150620
     public $protocol;  //修改为public ---mark  20150620
 
-    function __construct()
+    public function __construct()
     {
         // Initialization server startup parameters
         $this->setting = array_merge(array(
@@ -55,7 +55,6 @@ abstract class Server implements Server\Driver
 
     public function init()
     {
-
     }
 
     public function setRequire($file)
@@ -68,7 +67,6 @@ abstract class Server implements Server\Driver
 
     public function setProcessName($processName)
     {
-
         $this->processName = $processName;
     }
 
@@ -374,8 +372,7 @@ abstract class Server implements Server\Driver
             $this->log("[warning] " . $this->processName . ": can not find manager pid file");
             $this->log($this->processName . ": reload\033[31;40m [FAIL] \033[0m");
             return false;
-        } elseif (!posix_kill($managerId, 10))//USR1
-        {
+        } elseif (!posix_kill($managerId, 10)) {//USR1
             $this->log("[warning] " . $this->processName . ": send signal to manager failed");
             $this->log($this->processName . ": stop\033[31;40m [FAIL] \033[0m");
             return false;
@@ -384,7 +381,7 @@ abstract class Server implements Server\Driver
         return true;
     }
 
-    protected function  status()
+    protected function status()
     {
         $this->log("*****************************************************************");
         $this->log("Summary: ");
@@ -464,8 +461,4 @@ abstract class Server implements Server\Driver
         Logger::Instance()->info($msg);
         echo $msg . PHP_EOL;
     }
-
 }
-
-
-

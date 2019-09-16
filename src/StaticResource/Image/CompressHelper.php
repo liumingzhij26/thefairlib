@@ -27,7 +27,7 @@ class CompressHelper
                     }
                 }
                 break;
-            default :
+            default:
                 throw new Exception('undefined service type');
         }
         return $urlAry['scheme'] . '://' . $urlAry['host'] . $urlAry['path'] . (!empty($urlAry['query']) ? '&' . $urlAry['query'] : '');
@@ -88,7 +88,6 @@ class CompressHelper
             } else {
                 $qualitySetting = call_user_func_array("array_merge", $allQualitySetting);
             }
-
         } else {
             $qualitySetting = '100';
         }

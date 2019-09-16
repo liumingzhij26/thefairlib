@@ -25,7 +25,7 @@ class Logger
         }
     }
 
-    static public function Instance($appName = '')
+    public static function Instance($appName = '')
     {
         if (empty($appName) && defined('APP_NAME')) {
             $appName = APP_NAME;

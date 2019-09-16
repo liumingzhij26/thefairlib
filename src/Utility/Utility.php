@@ -31,7 +31,6 @@ class Utility
      */
     public static function __callStatic($func, $arguments)
     {
-
         $funcAry = explode('_', $func);
         if (empty($funcAry)) {
             return false;
@@ -73,9 +72,13 @@ class Utility
      */
     public static function arrayGet($array, $key, $default = null)
     {
-        if (is_null($key)) return $array;
+        if (is_null($key)) {
+            return $array;
+        }
 
-        if (isset($array[$key])) return $array[$key];
+        if (isset($array[$key])) {
+            return $array[$key];
+        }
 
         foreach (explode('.', $key) as $segment) {
             if (!is_array($array) || !array_key_exists($segment, $array)) {
@@ -98,7 +101,9 @@ class Utility
      */
     public static function arraySet(&$array, $key, $value)
     {
-        if (is_null($key)) return $array = $value;
+        if (is_null($key)) {
+            return $array = $value;
+        }
 
         $keys = explode('.', $key);
 
@@ -125,8 +130,9 @@ class Utility
     public static function getPhase()
     {
         $phase = Config::get('app.phase');
-        if ($phase != 'staging')
+        if ($phase != 'staging') {
             $phase = '';
+        }
 
         return $phase;
     }
@@ -160,7 +166,6 @@ class Utility
      */
     public static function Decrypt($data, $key, $method = 'AES-128-ECB', $iv = '')
     {
-
         $aesIV = !empty($iv) ? base64_decode($iv) : '';
 
         $aesCipher = base64_decode($data);
@@ -177,7 +182,7 @@ class Utility
      * @param string $default
      * @return array|float|int|string
      */
-    public static function getGpc($var, $target = 'R', $type = 'string', $default = NULL)
+    public static function getGpc($var, $target = 'R', $type = 'string', $default = null)
     {
         switch (strtoupper($target)) {
             case 'R':
@@ -239,9 +244,9 @@ class Utility
             foreach ($arr as $k => $v) {
                 if (is_array($v)) {
                     $ret[$k] = self::dfsArray($v);
-                } else if (is_numeric($v)) {
+                } elseif (is_numeric($v)) {
                     $ret[$k] = $v;
-                } else/* if(is_string($v)) */ {
+                } else /* if(is_string($v)) */ {
                     $ret[$k] = htmlspecialchars($v);
                 }
             }
@@ -350,7 +355,9 @@ class Utility
     public static function utf8SubStr($input, $length, $ignore_html = true, $padding = '...')
     {
         $strlen = strlen($input);
-        if ($strlen <= $length) return $input;
+        if ($strlen <= $length) {
+            return $input;
+        }
 
         $selfclosing = array('br', 'img', 'hr', 'base', 'meta', 'area', 'input'); // 不考虑注释<!--
         $pos = $width = 0;
@@ -384,14 +391,14 @@ class Utility
                             $word_length = 0;
                         }
                     }
-                } else if ($prechar == '38') { // &
+                } elseif ($prechar == '38') { // &
                     $semipos = strpos($input, ';', $pos);
                     /*
                      * &#1234; 应该是占一个汉字的宽度
                      * &nbsp; 占半个汉字宽度,
                      * todo区分
                      */
-                    if ($semipos !== FALSE && $semipos - $pos < 6) { // &#1234; 最多支持6字节长的
+                    if ($semipos !== false && $semipos - $pos < 6) { // &#1234; 最多支持6字节长的
                         $pos_length = $semipos - $pos + 1;
                         $word_length = 0.5;
                     } else {
@@ -446,14 +453,15 @@ class Utility
             $value = ord($str[$i]);
             if ($value > 127) {
                 $count++;
-                if ($value >= 192 && $value <= 223)
+                if ($value >= 192 && $value <= 223) {
                     $i++;
-                elseif ($value >= 224 && $value <= 239)
+                } elseif ($value >= 224 && $value <= 239) {
                     $i = $i + 2;
-                elseif ($value >= 240 && $value <= 247)
+                } elseif ($value >= 240 && $value <= 247) {
                     $i = $i + 3;
-                else
+                } else {
                     return 0;
+                }
             }
             $count++;
         }
@@ -473,9 +481,9 @@ class Utility
      */
     public static function msubstr($str, $start = 0, $length, $charset = "utf-8", $suffix = true)
     {
-        if (function_exists("mb_substr"))
+        if (function_exists("mb_substr")) {
             $slice = mb_substr($str, $start, $length, $charset);
-        elseif (function_exists('iconv_substr')) {
+        } elseif (function_exists('iconv_substr')) {
             $slice = iconv_substr($str, $start, $length, $charset);
         } else {
             $re['utf-8'] = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/";
@@ -536,7 +544,7 @@ class Utility
                 $proSum -= $proCur;
             }
         }
-        unset ($proArr);
+        unset($proArr);
         return $result;
     }
 
@@ -740,7 +748,6 @@ class Utility
         }
         return !empty($data[$stringName]) ? $data[$stringName] : '';
     }
-
 }
 
 

@@ -9,14 +9,14 @@ namespace TheFairLib\Utility\ParseTools;
  */
 
 
-class ReverseParse{
-
+class ReverseParse
+{
     private static $instance;
 
     /**
      * @return ReverseParse
      */
-    static public function Instance()
+    public static function Instance()
     {
         $class = get_called_class();
         if (empty(self::$instance[$class])) {
@@ -52,13 +52,12 @@ class ReverseParse{
                     if (!empty($pLevelItem->text->align)) {
                         $attrs = "style='text-align:{$pLevelItem->text->align}'";
                     }
-                    if(!empty($pLevelItem->id)){
+                    if (!empty($pLevelItem->id)) {
                         $attrs .= " dataid='{$pLevelItem->id}'";
                     }
                     $oneSegment = $this->_buildTag($buildResult, 'p', $attrs);
                 }
-
-            } else if ($pLevelItem->type == 1) {
+            } elseif ($pLevelItem->type == 1) {
                 $oneSegment = $this->_buildImg($pLevelItem);
             }
             $result .= ($oneSegment . "\n");
@@ -92,10 +91,9 @@ class ReverseParse{
 
             if ($markupItem->tag == 'strong') {
                 $currentRet = $this->_insertTag($markupItem, $currentRet, 'strong', '') . "\n";
-            } else if ($markupItem->tag == 'color') {
+            } elseif ($markupItem->tag == 'color') {
                 $currentRet = $this->_insertTag($markupItem, $currentRet, 'span', 'style="color:red"') . "\n";
             }
-
         }
         return $currentRet;
     }
@@ -130,7 +128,7 @@ class ReverseParse{
      */
     private function _buildLi($liItem)
     {
-        if(!empty($liItem->id)){
+        if (!empty($liItem->id)) {
             $attrs = " dataid='{$liItem->id}'";
         }
         return "<ul>" .
@@ -145,7 +143,7 @@ class ReverseParse{
      */
     private function _buildImg($imgItem)
     {
-        if(!empty($imgItem->id)){
+        if (!empty($imgItem->id)) {
             $attrs = " dataid='{$imgItem->id}'";
         }
         return "<img {$attrs} src='{$imgItem->image->source}'/>";

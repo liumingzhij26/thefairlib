@@ -3,7 +3,6 @@ namespace TheFairLib\Service\Swoole\Client;
 
 class MYSQL extends Base
 {
-
     protected $db;
     protected $sql;
     protected $key;
@@ -41,9 +40,7 @@ class MYSQL extends Base
      */
     public function send(callable $callback)
     {
-
         if (!isset($this->db)) {
-
             echo " db not init \n";
             //TODO do callback function to task
             return;
@@ -74,7 +71,6 @@ class MYSQL extends Base
      */
     public function query($sql)
     {
-
         $this->sql = $sql;
         yield $this;
     }
@@ -125,8 +121,7 @@ class MYSQL extends Base
             }
         } else {
             echo "MySQLi Error: " . mysqli_error($this->db) . "\n";
-            //TODO log callback 
+            //TODO log callback
         }
     }
 }
-

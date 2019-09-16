@@ -17,7 +17,7 @@ class Weather extends API
     /**
      * @return Weather
      */
-    static public function Instance()
+    public static function Instance()
     {
         return parent::Instance();
     }

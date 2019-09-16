@@ -1,6 +1,7 @@
 <?php
 
-class YZHttpClient{
+class YZHttpClient
+{
     private static $boundary = '';
 
     public static function get($url, $params)
@@ -21,7 +22,7 @@ class YZHttpClient{
         return self::http($url, 'POST', $body, $headers);
     }
 
-    private static function http($url, $method, $postfields = NULL, $headers = array())
+    private static function http($url, $method, $postfields = null, $headers = array())
     {
         $ci = curl_init();
         /* Curl settings */
@@ -29,15 +30,15 @@ class YZHttpClient{
         curl_setopt($ci, CURLOPT_USERAGENT, 'X-YZ-Client 2.0.0 - PHP');
         curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, 30);
         curl_setopt($ci, CURLOPT_TIMEOUT, 30);
-        curl_setopt($ci, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ci, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ci, CURLOPT_ENCODING, "");
         curl_setopt($ci, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ci, CURLOPT_SSL_VERIFYHOST, 1);
-        curl_setopt($ci, CURLOPT_HEADER, FALSE);
+        curl_setopt($ci, CURLOPT_HEADER, false);
 
         switch ($method) {
             case 'POST':
-                curl_setopt($ci, CURLOPT_POST, TRUE);
+                curl_setopt($ci, CURLOPT_POST, true);
                 if (!empty($postfields)) {
                     curl_setopt($ci, CURLOPT_POSTFIELDS, $postfields);
                 }
@@ -46,7 +47,7 @@ class YZHttpClient{
 
         curl_setopt($ci, CURLOPT_URL, $url);
         curl_setopt($ci, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ci, CURLINFO_HEADER_OUT, TRUE);
+        curl_setopt($ci, CURLINFO_HEADER_OUT, true);
 
         $response = curl_exec($ci);
         $httpCode = curl_getinfo($ci, CURLINFO_HTTP_CODE);
@@ -58,7 +59,9 @@ class YZHttpClient{
 
     private static function build_http_query_multi($params, $files)
     {
-        if (!$params) return '';
+        if (!$params) {
+            return '';
+        }
 
         $pairs = array();
 

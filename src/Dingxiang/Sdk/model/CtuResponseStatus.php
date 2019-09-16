@@ -22,7 +22,4 @@ class CtuResponseStatus
     const NOT_SUPPORTED_POLICY_OPERATOR = "不支持防控策略里的操作符";
     const QPS_EXCEEDING_MAXIMUM_THRESHOLD = "QPS超过最大阀值";
     const SERVICE_INTERNAL_ERROR = "服务器内部错误";
-
-
 }
-

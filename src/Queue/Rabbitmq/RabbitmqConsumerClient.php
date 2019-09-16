@@ -21,7 +21,7 @@ use TheFairLib\Logger\Logger;
 
 class RabbitmqConsumerClient
 {
-    static public $instance;
+    public static $instance;
 
     private $server;
 
@@ -50,7 +50,7 @@ class RabbitmqConsumerClient
      * @param string $server
      * @return RabbitmqConsumerClient
      */
-    static public function Instance($server = 'default')
+    public static function Instance($server = 'default')
     {
         if (empty(self::$instance[$server])) {
             self::$instance[$server] = new self($server);

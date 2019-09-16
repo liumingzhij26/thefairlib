@@ -54,4 +54,3 @@ echo 'Result=' . json_encode($result) . $br;
 // 删除指定Alias
 $result = $client->device()->deleteAlias($ALIAS1);
 echo 'Result=' . json_encode($result) . $br;
-

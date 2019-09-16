@@ -1,5 +1,6 @@
 <?php
 namespace TheFairLib\Service\Swoole\Network;
+
 use TheFairLib\Service\Swoole\Server;
 use TheFairLib\Service\Swoole\Server\Driver;
 

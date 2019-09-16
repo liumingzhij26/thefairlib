@@ -18,16 +18,17 @@ class ServiceException extends BaseException
     private $extCode = '10000';
     private $originalCode = '';
 
-    public function __construct($msg, $data = array(), $code = '40001'){
+    public function __construct($msg, $data = array(), $code = '40001')
+    {
         //检查msg，如果是int，check下error配置，是否存在该错误码
-        if(is_int($msg)){
+        if (is_int($msg)) {
             $errorMsg = Config::get_error($msg);
-            if(!empty($errorMsg)){
+            if (!empty($errorMsg)) {
                 $this->originalCode = $msg;
-                if(is_array($errorMsg)){
+                if (is_array($errorMsg)) {
                     $code   = !empty($errorMsg['code']) ? $errorMsg['code'] : $msg;
                     $msg    = !empty($errorMsg['msg']) ? $errorMsg['msg'] : '';
-                }else{
+                } else {
                     $code   = $msg;
                     $msg    = $errorMsg;
                 }
@@ -39,15 +40,18 @@ class ServiceException extends BaseException
         $this->extCode      = $code;
     }
 
-    public function getExtCode(){
+    public function getExtCode()
+    {
         return $this->extCode;
     }
 
-    public function getExtData(){
+    public function getExtData()
+    {
         return $this->extData;
     }
 
-    public function getOriginalCode(){
+    public function getOriginalCode()
+    {
         return $this->originalCode;
     }
 }

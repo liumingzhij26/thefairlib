@@ -7,7 +7,7 @@
  */
 class RequestException extends Exception
 {
-    var $requestId;
+    public $requestId;
 
     public function __construct($requestId, $message, $e)
     {

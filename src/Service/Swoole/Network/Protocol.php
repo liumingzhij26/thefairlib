@@ -9,14 +9,13 @@ class Protocol
 {
     public $server;
 
-    function __construct()
+    public function __construct()
     {
         $this->init();
     }
 
     public function init()
     {
-
     }
 
     /**

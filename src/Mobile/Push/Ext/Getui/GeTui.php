@@ -286,7 +286,7 @@ class GeTui implements PushInterface
         // 4.NotyPopLoadTemplate：通知弹框下载功能模板
         $template = null;
         switch ($type) {
-            case 'Notification' :
+            case 'Notification':
                 $template = new \IGtNotificationTemplate();
                 $template->set_appId($this->_appID);//应用appid
                 $template->set_appkey($this->_appKey);//应用appkey
@@ -300,7 +300,7 @@ class GeTui implements PushInterface
                 $template->set_isClearable(true);//通知栏是否可清除
                 $template->set_logoURL($logoUrl);
                 break;
-            case 'Link' :
+            case 'Link':
                 $template = new \IGtLinkTemplate();
                 $template->set_appId($this->_appID);//应用appid
                 $template->set_appkey($this->_appKey);//应用appkey
@@ -312,7 +312,7 @@ class GeTui implements PushInterface
                 $template->set_isClearable(true);//通知栏是否可清除
                 $template->set_url($link);//打开连接地址,不能超过200个字符
                 break;
-            case 'Transmission' :
+            case 'Transmission':
                 $template = new \IGtTransmissionTemplate();
                 $template->set_appId($this->_appID);//应用appid
                 $template->set_appkey($this->_appKey);//应用appkey

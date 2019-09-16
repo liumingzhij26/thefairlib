@@ -1,6 +1,7 @@
 <?php
 
-class ReportPayload {
+class ReportPayload
+{
     private static $EFFECTIVE_TIME_UNIT = array('HOUR', 'DAY', 'MONTH');
     private static $LIMIT_KEYS = array('X-Rate-Limit-Limit'=>'rateLimitLimit', 'X-Rate-Limit-Remaining'=>'rateLimitRemaining', 'X-Rate-Limit-Reset'=>'rateLimitReset');
     const REPORT_URL = 'https://report.jpush.cn/v3/received';
@@ -19,7 +20,8 @@ class ReportPayload {
     }
 
 
-    public function getReceived($msgIds) {
+    public function getReceived($msgIds)
+    {
         $queryParams = '?msg_ids=';
         if (is_array($msgIds) && count($msgIds) > 0) {
             $isFirst = true;
@@ -32,7 +34,7 @@ class ReportPayload {
                     $queryParams .= $msgId;
                 }
             }
-        } else if (is_string($msgIds)) {
+        } elseif (is_string($msgIds)) {
             $queryParams .= $msgIds;
         } else {
             throw new InvalidArgumentException("Invalid msg_ids");
@@ -42,7 +44,8 @@ class ReportPayload {
         return $this->__request($url);
     }
 
-    public function getMessages($msgIds) {
+    public function getMessages($msgIds)
+    {
         $queryParams = '?msg_ids=';
         if (is_array($msgIds) && count($msgIds) > 0) {
             $isFirst = true;
@@ -55,7 +58,7 @@ class ReportPayload {
                     $queryParams .= $msgId;
                 }
             }
-        } else if (is_string($msgIds)) {
+        } elseif (is_string($msgIds)) {
             $queryParams .= $msgIds;
         } else {
             throw new InvalidArgumentException("Invalid msg_ids");
@@ -65,7 +68,8 @@ class ReportPayload {
         return $this->__request($url);
     }
 
-    public function getUsers($time_unit, $start, $duration) {
+    public function getUsers($time_unit, $start, $duration)
+    {
         $time_unit = strtoupper($time_unit);
         if (!in_array($time_unit, self::$EFFECTIVE_TIME_UNIT)) {
             throw new InvalidArgumentException('Invalid time unit');
@@ -75,9 +79,10 @@ class ReportPayload {
         return $this->__request($url);
     }
 
-    private function __request($url) {
+    private function __request($url)
+    {
         $response = $this->client->_request($url, JPush::HTTP_GET);
-        if($response['http_code'] === 200) {
+        if ($response['http_code'] === 200) {
             $body = array();
             $body['data'] = (array)json_decode($response['body']);
             $headers = $response['headers'];

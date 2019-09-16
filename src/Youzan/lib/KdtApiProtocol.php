@@ -1,5 +1,6 @@
 <?php
 namespace TheFairLib\Youzan\lib;
+
 class KdtApiProtocol
 {
     const APP_ID_KEY = 'app_id';
@@ -28,7 +29,9 @@ class KdtApiProtocol
 
     public static function sign($appSecret, $params, $method = 'md5')
     {
-        if (!is_array($params)) $params = array();
+        if (!is_array($params)) {
+            $params = array();
+        }
 
         ksort($params);
         $text = '';
@@ -185,4 +188,3 @@ class KdtApiProtocol
         );
     }
 }
-

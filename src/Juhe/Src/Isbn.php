@@ -17,7 +17,7 @@ class Isbn extends API
     /**
      * @return Isbn
      */
-    static public function Instance()
+    public static function Instance()
     {
         return parent::Instance();
     }

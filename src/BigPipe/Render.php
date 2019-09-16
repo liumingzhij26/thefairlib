@@ -15,7 +15,8 @@ use TheFairLib\Smarty\Adapter;
 use TheFairLib\Utility\Utility;
 use Yaf\Registry;
 
-abstract class Render{
+abstract class Render
+{
     /**
      * 当前需要渲染的根Pagelet
      *
@@ -43,12 +44,13 @@ abstract class Render{
      * @return ScriptOnlyStreamlineRender|StreamlineRender|TraditionalRender
      * @throws Exception
      */
-    final static public function create(Pagelet $pl, $renderType = null){
-        if(empty($renderType)){
+    final public static function create(Pagelet $pl, $renderType = null)
+    {
+        if (empty($renderType)) {
             $renderType	= Render::getRenderType();
         }
 
-        switch($renderType) {
+        switch ($renderType) {
             case 'Streamline':
                 return new StreamLineRender($pl);
                 break;
@@ -63,37 +65,42 @@ abstract class Render{
         }
     }
 
-    public function __construct(Pagelet $pl = null){
+    public function __construct(Pagelet $pl = null)
+    {
         $this->pl = $pl;
     }
 
-    static public function getRenderType(){
+    public static function getRenderType()
+    {
         $info = Prober::getClientAgent();
         if (isset($info['browser']) && $info['browser'] && !$info['robot']) {
-            if(isset($_GET['__aj']) && !empty($_GET['__aj'])){
+            if (isset($_GET['__aj']) && !empty($_GET['__aj'])) {
                 return 'ScriptOnlyStreamline';
             }
 
-            if(isset($_GET['__debug']) && $_GET['__debug']){
+            if (isset($_GET['__debug']) && $_GET['__debug']) {
                 return 'Traditional';
             }
 
             return 'Streamline';
-        }else{
+        } else {
             return 'Traditional';
         }
     }
 
-    public function setPagelet(Pagelet $pl){
+    public function setPagelet(Pagelet $pl)
+    {
         $this->pl = $pl;
         return $this;
     }
 
-    public function getPagelet(){
+    public function getPagelet()
+    {
         return $this->pl;
     }
 
-    public function prepare(){
+    public function prepare()
+    {
     }
     /**
      * 深度优先遍历
@@ -102,36 +109,39 @@ abstract class Render{
      * @param callback $callbackEnter
      * @param callback $callbackLeave
      */
-    static public function dfs($root, $callbackEnter, $callbackLeave){
-        if(is_callable($callbackEnter)){
+    public static function dfs($root, $callbackEnter, $callbackLeave)
+    {
+        if (is_callable($callbackEnter)) {
             call_user_func($callbackEnter, $root);
         }
-        foreach ($root->getIterator() as $node){
+        foreach ($root->getIterator() as $node) {
             self::dfs($node, $callbackEnter, $callbackLeave);
         }
-        if(is_callable($callbackLeave)){
+        if (is_callable($callbackLeave)) {
             call_user_func($callbackLeave, $root);
         }
     }
 
-    public function render(){
+    public function render()
+    {
         self::getTemplateEngine();
         $this->prepare();
         self::dfs($this->pl, array($this, 'enter'), array($this, 'leave'));
         $this->closure();
     }
 
-    public static function renderSinglePagelet(Pagelet $pl, $returnHtml = false){
+    public static function renderSinglePagelet(Pagelet $pl, $returnHtml = false)
+    {
         $meta 	= $pl->getMetaData();
         $data 	= $pl->prepareData();
         $tpl	= self::getTemplateEngine();
         $tpl->assign($meta);
         $tpl->assign($data);
         // 处理子pl
-        if($pl->isSkeleton()){
+        if ($pl->isSkeleton()) {
             $childern = array();
-            foreach ($pl->getChildren() as $cPl){
-                if($cPl instanceof Pagelet){
+            foreach ($pl->getChildren() as $cPl) {
+                if ($cPl instanceof Pagelet) {
                     $childern[$cPl->getName()] = self::renderSinglePagelet($cPl, true);
                 }
             }
@@ -139,9 +149,9 @@ abstract class Render{
         }
         $html 	= $tpl->fetch($pl->getTemplate());
 
-        if($returnHtml){
+        if ($returnHtml) {
             return $html;
-        }else{
+        } else {
             echo $html;
             return null;
         }
@@ -151,10 +161,12 @@ abstract class Render{
 
     abstract protected function leave(Pagelet $node);
 
-    public function closure(){
+    public function closure()
+    {
     }
 
-    static protected function renderPageletWithJson(Pagelet $pl, \Smarty $tplEngine){
+    protected static function renderPageletWithJson(Pagelet $pl, \Smarty $tplEngine)
+    {
         $pid 	= 	isset($_GET["__d"]) && !empty($_GET["__d"]) ?
             strip_tags($_GET["__d"]) :
             $pl->getName();
@@ -167,19 +179,22 @@ abstract class Render{
                 'js' 		=> $js,
                 'css' 		=> $pl->getDependsStyles(),
                 'content' 	=> $tplEngine->fetch($pl->getTemplate())
-            ));
+            )
+        );
     }
 
-    static protected function flush(){
-        if(ob_get_level()){
+    protected static function flush()
+    {
+        if (ob_get_level()) {
             ob_flush();
         }
         flush();
     }
 
-    static protected function assignMetaChainToTemplate(\Smarty $tpl, array $metaDataChain){
-        foreach ($metaDataChain as $meta){
-            if($meta){
+    protected static function assignMetaChainToTemplate(\Smarty $tpl, array $metaDataChain)
+    {
+        foreach ($metaDataChain as $meta) {
+            if ($meta) {
                 $tpl->assign($meta);
             }
         }
@@ -188,24 +203,27 @@ abstract class Render{
     /**
      * @return \Smarty
      */
-    protected function getTemplateEngine(){
-        if(self::$templateEngine === false){
+    protected function getTemplateEngine()
+    {
+        if (self::$templateEngine === false) {
             $config = Registry::get("config")->smarty->toArray();
             $adapter = new Adapter(null, $config);
             self::$templateEngine = $adapter->getEngine();
-        }else{
+        } else {
             self::$templateEngine->clearAllAssign();
         }
 
         return self::$templateEngine;
     }
 
-    protected function collectException(Exception $exception){
+    protected function collectException(Exception $exception)
+    {
         $this->exceptions[] = $exception;
     }
 
-    protected function processExceptions(){
-        if($this->exceptions){
+    protected function processExceptions()
+    {
+        if ($this->exceptions) {
             throw $this->exceptions[0];
         }
     }

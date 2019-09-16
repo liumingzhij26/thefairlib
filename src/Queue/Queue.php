@@ -14,14 +14,14 @@ use TheFairLib\Queue\Kafka\Kafka;
 
 class Queue
 {
-    static public $instance;
+    public static $instance;
 
     private $_server = 'kafka';
 
     /**
      * @return Queue
      */
-    static public function Instance()
+    public static function Instance()
     {
         $class = get_called_class();
         if (empty(self::$instance)) {
@@ -37,7 +37,7 @@ class Queue
     public function getApplication()
     {
         switch ($this->_server) {
-            case 'kafka' :
+            case 'kafka':
                 return Kafka::Instance();
                 break;
         }

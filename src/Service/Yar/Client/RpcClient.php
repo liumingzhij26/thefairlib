@@ -7,7 +7,7 @@
  * @copyright 2015-2025
  */
 namespace TheFairLib\Service\Yar\Client;
+
 class RpcClient
 {
-
 }

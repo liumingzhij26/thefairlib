@@ -3,7 +3,6 @@ namespace TheFairLib\Service\Swoole\Client;
 
 class HTTP extends Base
 {
-
     public $accept = 'text/xml,application/xml,application/xhtml+xml,text/html,text/plain,image/png,image/jpeg,image/gif,*/*';
     public $acceptLanguage = 'zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4,ja;q=0.2';
     public $userAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36';
@@ -51,9 +50,8 @@ class HTTP extends Base
      * @param string||array $data
      * @param int $timeout Second
      */
-    public function __construct($url, $method = "GET", $data = NULL, $timeout = NULL)
+    public function __construct($url, $method = "GET", $data = null, $timeout = null)
     {
-
         if (empty($url)) {
             return false;
         }
@@ -94,13 +92,12 @@ class HTTP extends Base
         }
 
         $this->buildRequest();
-
     }
 
     /**
      * @param null $key
      */
-    public function setKey($key = NULL)
+    public function setKey($key = null)
     {
         if (empty($key)) {
             $this->key = md5($this->url . microtime(true) . rand(0, 10000));
@@ -167,7 +164,7 @@ class HTTP extends Base
      * @param $data
      * @return string $data
      */
-    static function gz_decode($data, $type = 'gzip')
+    public static function gz_decode($data, $type = 'gzip')
     {
         if ($type == 'gzip') {
             return gzdecode($data);
@@ -222,7 +219,6 @@ class HTTP extends Base
      */
     public function post($path, $data, $headers)
     {
-
         $this->method = 'POST';
         $this->path = $path;
         $this->setRequestHeaders($headers);
@@ -241,7 +237,6 @@ class HTTP extends Base
      */
     public function useGzip($boolean)
     {
-
         $this->useGzip = $boolean;
     }
 
@@ -251,7 +246,6 @@ class HTTP extends Base
      */
     public function setUserAgent($string)
     {
-
         $this->user_agent = $string;
     }
 
@@ -262,7 +256,6 @@ class HTTP extends Base
      */
     public function setAuthorization($username, $password)
     {
-
         $this->username = $username;
         $this->password = $password;
     }
@@ -274,9 +267,7 @@ class HTTP extends Base
      */
     public function getCookies($host = null)
     {
-
         if (isset($this->cookies[isset($host) ? $host : $this->host])) {
-
             return $this->cookies[isset($host) ? $host : $this->host];
         }
         return array();
@@ -289,9 +280,7 @@ class HTTP extends Base
      */
     public function setCookies($array, $replace = false)
     {
-
         if ($replace || (!isset($this->cookies[$this->host])) || (!is_array($this->cookies[$this->host]))) {
-
             $this->cookies[$this->host] = array();
         }
 
@@ -304,7 +293,6 @@ class HTTP extends Base
      */
     public function setPersistReferers($boolean)
     {
-
         $this->persistReferers = $boolean;
     }
 
@@ -314,7 +302,6 @@ class HTTP extends Base
      */
     public function setHandleRedirects($boolean)
     {
-
         $this->handleRedirects = $boolean;
     }
 
@@ -324,7 +311,6 @@ class HTTP extends Base
      */
     public function setMaxRedirects($num)
     {
-
         $this->maxRedirects = $num;
     }
 
@@ -334,9 +320,7 @@ class HTTP extends Base
      */
     public function setPersistCookies($boolean)
     {
-
         $this->persistCookies = $boolean;
-
     }
 
     /**
@@ -345,7 +329,6 @@ class HTTP extends Base
      */
     public function send(callable $callback)
     {
-
         $client = new  \swoole_client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_ASYNC);
 
         $client->on("connect", function ($cli) {
@@ -356,7 +339,6 @@ class HTTP extends Base
         });
 
         $client->on('error', function ($cli) use ($callback) {
-
             $cli->close();
             $this->calltime = microtime(true) - $this->calltime;
             call_user_func_array($callback, array('r' => 1, 'key' => $this->key, 'calltime' => $this->calltime, 'error_msg' => 'conncet error'));
@@ -371,7 +353,6 @@ class HTTP extends Base
 
         $this->callback = $callback;
         if ($client->connect($this->host, $this->port, $this->timeout)) {
-
             $this->calltime = microtime(true);
             if (floatval(($this->timeout)) > 0) {
                 Timer::add($this->key, $this->timeout, $client, $callback, array('r' => 2, 'key' => $this->key, 'calltime' => $this->calltime, 'error_msg' => $this->host . ':' . $this->port . ' timeout'));
@@ -385,7 +366,6 @@ class HTTP extends Base
      */
     public function setTimeout($timeout)
     {
-
         $this->timeout = $timeout;
     }
 
@@ -397,13 +377,10 @@ class HTTP extends Base
      */
     private function buildQuery($data)
     {
-
         if (is_string($data)) {
-
             $this->postdata = $data;
             return true;
-        } else if (is_object($data) || is_array($data)) {
-
+        } elseif (is_object($data) || is_array($data)) {
             $this->postdata = http_build_query($data);
             return true;
         } else {
@@ -440,7 +417,6 @@ class HTTP extends Base
         }
 
         if (empty($this->rspHeaders)) {
-
             $ret = $this->parseHeader($this->buffer);
 
             if ($ret === false) {
@@ -461,7 +437,6 @@ class HTTP extends Base
                     $location = isset($this->rspHeaders['location']) ? $this->rspHeaders['location'] : '';
                     $location .= isset($this->rspHeaders['uri']) ? $this->rspHeaders['uri'] : '';
                     if (!empty($location)) {
-
                         \SysLog::debug(__METHOD__ . " redirect location ", __CLASS__);
                         //TODO 尝试client内部重定
                         $url = parse_url($location);
@@ -506,7 +481,6 @@ class HTTP extends Base
             Timer::del($this->key);
             call_user_func_array($this->callback, array('r' => 0, 'key' => $this->key, 'calltime' => $this->calltime, 'data' => $data));
         }
-
     }
 
     /**
@@ -515,9 +489,7 @@ class HTTP extends Base
      */
     private function setRequestHeaders($headers = array())
     {
-
         foreach ($headers as $h_k => $h_v) {
-
             $this->requestHeaders[$h_k] = $h_v;
         }
     }
@@ -527,7 +499,6 @@ class HTTP extends Base
      */
     private function buildRequest()
     {
-
         $headers = "{$this->method} {$this->path} HTTP/1.1";
 
         $headerArray = array();
@@ -536,14 +507,12 @@ class HTTP extends Base
         $headerArray['Accept'] = $this->accept;
 
         if (isset($this->useGzip)) {
-
             $headerArray['Accept-encoding'] = $this->acceptEncoding;
         }
 
         $headerArray['Accept-language'] = $this->acceptLanguage;
 
         if (isset($this->referer)) {
-
             $headerArray['Referer'] = $this->referer;
         }
 
@@ -556,7 +525,6 @@ class HTTP extends Base
         }
 
         if (isset($this->username) && isset($this->password)) {
-
             $headerArray['Authorization'] = 'BASIC ' . base64_encode($this->username . ':' . $this->password);
         }
 
@@ -567,7 +535,6 @@ class HTTP extends Base
 
         //将用户设置的header信息覆盖默认值
         foreach ($this->requestHeaders as $h_k => $h_v) {
-
             $headerArray[$h_k] = $h_v;
         }
 
@@ -577,7 +544,6 @@ class HTTP extends Base
         }
 
         $this->request = $headers . "\r\n\r\n" . $this->postdata;
-
     }
 
     /**
@@ -609,7 +575,6 @@ class HTTP extends Base
         unset($headParts[0]);
 
         foreach ($headParts as $header) {
-
             $header = trim($header);
             if (empty($header)) {
                 continue;
@@ -629,5 +594,3 @@ class HTTP extends Base
         return true;
     }
 }
-
-

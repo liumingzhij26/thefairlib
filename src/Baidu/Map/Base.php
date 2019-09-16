@@ -7,12 +7,15 @@
  * @copyright 2015-2025
  */
 namespace TheFairLib\Baidu\Map;
-abstract class Base{
+
+abstract class Base
+{
     private static $instance = null;
     protected $_appKey = null;
     protected $_outPut = 'json';
 
-    static public function Instance(){
+    public static function Instance()
+    {
         if (empty(self::$instance)) {
             self::$instance = new static();
         }
@@ -26,7 +29,8 @@ abstract class Base{
 
     abstract protected function _getApiUrl();
 
-    protected function _sendRequest($params){
+    protected function _sendRequest($params)
+    {
         $url = $this->_getApiUrl();
         $params = array_merge($params, [
             'ak' => $this->_appKey,
@@ -37,7 +41,7 @@ abstract class Base{
         $result = json_decode($curl->response, true);
         if (!empty($result)) {
             $ret = $result['result'];
-        }else{
+        } else {
             $ret = false;
         }
         return $ret;

@@ -21,7 +21,8 @@ class Service extends Response
 
     private $_callback = [];
 
-    public function __construct($result, $msg = '', $code = 0, $callback = []){
+    public function __construct($result, $msg = '', $code = 0, $callback = [])
+    {
         $this->setResult($result);
         $this->setMsg($msg);
         $this->setCode($code);
@@ -30,58 +31,71 @@ class Service extends Response
         parent::__construct($this->_buildApiBody());
     }
 
-    public function getResult(){
+    public function getResult()
+    {
         return $this->_result;
     }
 
-    public function getMsg(){
+    public function getMsg()
+    {
         return $this->_msg;
     }
 
-    public function getCode(){
+    public function getCode()
+    {
         return $this->_code;
     }
 
-    public function getCallback(){
+    public function getCallback()
+    {
         return $this->_callback;
     }
 
-    public function setResult($result){
+    public function setResult($result)
+    {
         return $this->_result = $result;
     }
 
-    public function setMsg($msg){
+    public function setMsg($msg)
+    {
         return $this->_msg = $msg;
     }
 
-    public function setCode($code){
+    public function setCode($code)
+    {
         return $this->_code = $code;
     }
 
-    public function setCallback($callback){
+    public function setCallback($callback)
+    {
         return $this->_callback = $callback;
     }
 
-    protected function _serialize($content){
+    protected function _serialize($content)
+    {
         $content = Utility::encode($content);
 
         return $content;
     }
 
-    protected function _getContentType(){
+    protected function _getContentType()
+    {
         return 'application/json;charset=utf-8';
     }
 
-    protected function _getBodyToSend(){
+    protected function _getBodyToSend()
+    {
         return $this->_serialize($this->getBody());
     }
 
-    public function send(){
+    public function send()
+    {
         $this->setBody($this->_buildApiBody());
         return parent::send(false);
     }
 
-    private function _buildApiBody(){
+    private function _buildApiBody()
+    {
         return array(
             'code' => $this->getCode(),
             'message' => $this->getMsg(),

@@ -190,14 +190,13 @@ class Adapter implements View_Interface
      * @param string $name The template to process.
      * @return string The output.
      */
-    public function render($name, $value = NULL)
+    public function render($name, $value = null)
     {
         return $this->_smarty->fetch($name);
     }
 
-    public function display($name, $value = NULL)
+    public function display($name, $value = null)
     {
         echo $this->_smarty->fetch($name);
     }
-
 }

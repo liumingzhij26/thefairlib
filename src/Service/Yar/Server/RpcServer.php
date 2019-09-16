@@ -8,17 +8,20 @@
  */
 
 namespace TheFairLib\Service\Yar\Server;
+
 use Yaf;
+
 class RpcServer
 {
-    public function run($params=array()){
+    public function run($params=array())
+    {
         $app  = new Yaf\Application(APP_PATH . "/config/application.ini");
 
         $uri = Yaf\Dispatcher::getInstance()->getRequest()->getRequestUri();
-        list($tmp,$module,$controller,$action) = explode('/', $uri);
+        list($tmp, $module, $controller, $action) = explode('/', $uri);
 
         foreach ($params as $key => $value) {
-            Yaf\Dispatcher::getInstance()->getRequest()->setParam($key,$value);
+            Yaf\Dispatcher::getInstance()->getRequest()->setParam($key, $value);
         }
 
         $request = new Yaf\Request\Simple("", $module, $controller, $action, $params);
@@ -31,7 +34,8 @@ class RpcServer
         return $response->getBody();
     }
 
-    public static function start(){
+    public static function start()
+    {
         $server = new \Yar_Server(new static());
         $server->handle();
     }

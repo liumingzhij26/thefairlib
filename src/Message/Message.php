@@ -10,17 +10,16 @@
 
 namespace TheFairLib\Message;
 
-
 use TheFairLib\Message\IM\RongCloud\RongCloud;
 
 class Message
 {
-    static public $instance;
+    public static $instance;
 
     /**
      * @return Message
      */
-    static public function Instance()
+    public static function Instance()
     {
         $class = get_called_class();
         if (empty(self::$instance)) {
@@ -38,7 +37,7 @@ class Message
     public function getApplication($server = 'RongCloud')
     {
         switch ($server) {
-            case 'RongCloud' :
+            case 'RongCloud':
                 return RongCloud::Instance();
                 break;
         }

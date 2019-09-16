@@ -25,7 +25,7 @@ class Page extends Response
 
     private static $instance = null;
 
-    static public function Instance($result = [])
+    public static function Instance($result = [])
     {
         if (empty(self::$instance)) {
             self::$instance = new static($result);

@@ -1,6 +1,7 @@
 <?php
 
-class DevicePayload {
+class DevicePayload
+{
     private static $LIMIT_KEYS = array('X-Rate-Limit-Limit'=>'rateLimitLimit', 'X-Rate-Limit-Remaining'=>'rateLimitRemaining', 'X-Rate-Limit-Reset'=>'rateLimitReset');
 
     const DEVICE_URL = 'https://device.jpush.cn/v3/devices/';
@@ -22,13 +23,15 @@ class DevicePayload {
     }
 
 
-    public function getDevices($registrationId) {
+    public function getDevices($registrationId)
+    {
         $url = DevicePayload::DEVICE_URL . $registrationId;
         $response = $this->client->_request($url, JPush::HTTP_GET);
         return $this->__processResp($response);
     }
 
-    public function updateDevice($registrationId, $alias = null, $mobile=null, $addTags = null, $removeTags = null) {
+    public function updateDevice($registrationId, $alias = null, $mobile=null, $addTags = null, $removeTags = null)
+    {
         $payload = array();
         if (!is_string($registrationId)) {
             throw new InvalidArgumentException('Invalid registration_id');
@@ -87,12 +90,14 @@ class DevicePayload {
         return $this->__processResp($response);
     }
 
-    public function getTags() {
+    public function getTags()
+    {
         $response = $this->client->_request(DevicePayload::TAG_URL, JPush::HTTP_GET);
         return $this->__processResp($response);
     }
 
-    public function isDeviceInTag($registrationId, $tag) {
+    public function isDeviceInTag($registrationId, $tag)
+    {
         if (!is_string($registrationId)) {
             throw new InvalidArgumentException("Invalid registration_id");
         }
@@ -108,7 +113,8 @@ class DevicePayload {
         return $this->__processResp($response);
     }
 
-    public function updateTag($tag, $addDevices = null, $removeDevices = null) {
+    public function updateTag($tag, $addDevices = null, $removeDevices = null)
+    {
         if (!is_string($tag)) {
             throw new InvalidArgumentException("Invalid tag");
         }
@@ -145,7 +151,8 @@ class DevicePayload {
         return $this->__processResp($response);
     }
 
-    public function deleteTag($tag) {
+    public function deleteTag($tag)
+    {
         if (!is_string($tag)) {
             throw new InvalidArgumentException("Invalid tag");
         }
@@ -154,7 +161,8 @@ class DevicePayload {
         return $this->__processResp($response);
     }
 
-    public function getAliasDevices($alias, $platform = null) {
+    public function getAliasDevices($alias, $platform = null)
+    {
         if (!is_string($alias)) {
             throw new InvalidArgumentException("Invalid alias");
         }
@@ -164,7 +172,7 @@ class DevicePayload {
         if (!is_null($platform)) {
             if (is_array($platform)) {
                 $isFirst = true;
-                foreach($platform as $item) {
+                foreach ($platform as $item) {
                     if ($isFirst) {
                         $url = $url . '?platform=' . $item;
                         $isFirst = false;
@@ -172,7 +180,7 @@ class DevicePayload {
                         $url = $url . ',' . $item;
                     }
                 }
-            } else if (is_string($platform)) {
+            } elseif (is_string($platform)) {
                 $url = $url . '?platform=' . $platform;
             } else {
                 throw new InvalidArgumentException("Invalid platform");
@@ -183,7 +191,8 @@ class DevicePayload {
         return $this->__processResp($response);
     }
 
-    public function deleteAlias($alias) {
+    public function deleteAlias($alias)
+    {
         if (!is_string($alias)) {
             throw new InvalidArgumentException("Invalid alias");
         }
@@ -192,7 +201,8 @@ class DevicePayload {
         return $this->__processResp($response);
     }
 
-    public function getDevicesStatus($registrationId) {
+    public function getDevicesStatus($registrationId)
+    {
         if (!is_array($registrationId) && !is_string($registrationId)) {
             throw new InvalidArgumentException('Invalid registration_id');
         }
@@ -209,7 +219,7 @@ class DevicePayload {
 
 
         $response = $this->client->_request(DevicePayload::DEVICE_STATUS_URL, JPush::HTTP_POST, json_encode($payload));
-        if($response['http_code'] === 200) {
+        if ($response['http_code'] === 200) {
             $body = array();
             echo $response['body'];
             $body['data'] = (array)json_decode($response['body']);
@@ -228,8 +238,9 @@ class DevicePayload {
         }
     }
 
-    private function __processResp($response) {
-        if($response['http_code'] === 200) {
+    private function __processResp($response)
+    {
+        if ($response['http_code'] === 200) {
             $body = array();
             $data = json_decode($response['body']);
             if (!is_null($data)) {

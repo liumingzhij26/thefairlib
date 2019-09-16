@@ -20,5 +20,4 @@ class CtuResponse
     {
         $this->uuid = $uuid;
     }
-
 }

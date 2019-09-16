@@ -36,12 +36,10 @@ abstract class Base extends Controller_Abstract
      */
     public function showResult($response)
     {
-
     }
 
     public function showError($response)
     {
-
     }
 
     final protected function _setResponse($content)
@@ -80,7 +78,7 @@ abstract class Base extends Controller_Abstract
     protected function _checkParam($key, $paramConf)
     {
         $value = Utility::getGpc($key, $paramConf['method'], $paramConf['type'], $paramConf['default']);
-        if ($value === NULL) {
+        if ($value === null) {
             throw new Exception('请提交参数：' . $key);
         }
         if ($key == 'item_per_page') {

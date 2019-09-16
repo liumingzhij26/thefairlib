@@ -7,9 +7,9 @@
  */
 
 
-include (__DIR__ . "/model/CtuRequest.php");
-include (__DIR__ . "/model/CtuResponse.php");
-include (__DIR__ . "/util/SignUtil.php");
+include(__DIR__ . "/model/CtuRequest.php");
+include(__DIR__ . "/model/CtuResponse.php");
+include(__DIR__ . "/util/SignUtil.php");
 
 class CtuClient
 {
@@ -38,7 +38,8 @@ class CtuClient
     /**
      * @param $ctuRequest
      */
-    public function checkRisk($ctuRequest, $timeout) {
+    public function checkRisk($ctuRequest, $timeout)
+    {
         // 计算签名
         $sign = SignUtil::sign($this->appSecret, $ctuRequest);
         // 拼接请求URL
@@ -76,7 +77,8 @@ class CtuClient
         return $response;
     }
 
-    public function close($fp){
+    public function close($fp)
+    {
         try {
             if ($fp != null) {
                 fclose($fp);
@@ -86,30 +88,3 @@ class CtuClient
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -17,7 +17,7 @@ class NodeBuilder
      * @param bool $needMarkUpText 是否需要给markup加text调试
      * @return NodeBuilder
      */
-    static public function Instance($needMarkUpText = false)
+    public static function Instance($needMarkUpText = false)
     {
         $class = get_called_class();
         $key = $class . strval($needMarkUpText);
@@ -38,7 +38,7 @@ class NodeBuilder
      */
     public function buildTextNode($text, $lineType = '', $align = '', $id)
     {
-        if(empty($id)){
+        if (empty($id)) {
             $id = ParseUtils::Instance()->genHash($text . $this->_createGuid());
         }
         $ret = [
@@ -66,7 +66,7 @@ class NodeBuilder
      */
     public function buildLi($text, $id)
     {
-        if(empty($id)){
+        if (empty($id)) {
             $id = ParseUtils::Instance()->genHash($text . $this->_createGuid());
         }
         return [
@@ -92,11 +92,10 @@ class NodeBuilder
      */
     public function buildImgNode($item, $id)
     {
-
         $url = $item->getAttribute('src');
         $width = $item->getAttribute('data-width');
         $height = $item->getAttribute('data-height');
-        if(empty($id)){
+        if (empty($id)) {
             $id = ParseUtils::Instance()->genHash($url . $this->_createGuid());
         }
         $ret = [
@@ -107,11 +106,11 @@ class NodeBuilder
             ]
         ];
 
-        if(!empty($width)){
+        if (!empty($width)) {
             $ret['image']['width'] = $width;
         }
 
-        if(!empty($height)){
+        if (!empty($height)) {
             $ret['image']['height'] = $height;
         }
 
@@ -125,7 +124,7 @@ class NodeBuilder
      */
     public function buildEmptyNode($id)
     {
-        if(empty($id)){
+        if (empty($id)) {
             $id = ParseUtils::Instance()->genHash($this->_createGuid());
         }
         return [
@@ -141,7 +140,7 @@ class NodeBuilder
      * @return array
      * @throws \PHPHtmlParser\Exceptions\UnknownChildTypeException
      */
-    function buildSpanMarkup($item, $baseItem)
+    public function buildSpanMarkup($item, $baseItem)
     {
         $text = ParseUtils::Instance()->trimContent(strip_tags($item->innerHtml()));
         $color = ParseUtils::Instance()->getCssValueFromItem($item, 'color');
@@ -172,7 +171,7 @@ class NodeBuilder
      * @return array
      * @throws \PHPHtmlParser\Exceptions\UnknownChildTypeException
      */
-    function buildStrongMarkup($item, $baseItem)
+    public function buildStrongMarkup($item, $baseItem)
     {
         $text = ParseUtils::Instance()->trimContent(strip_tags($item->innerHtml()));
         $pos = $this->getStartEnd($item, $baseItem);
@@ -199,15 +198,15 @@ class NodeBuilder
      * @param $end
      * @return array
      */
-    function buildSentence($text, $start, $end)
+    public function buildSentence($text, $start, $end)
     {
-        if(!empty($text)){
+        if (!empty($text)) {
             $base = [
                 'tag' => 'sentence',
                 'start' => $start . '',
                 'end' => $end . '',
             ];
-            if($this->_needMarkUpText){
+            if ($this->_needMarkUpText) {
                 $base['text'] = $text;
             }
             return $base;
@@ -223,7 +222,7 @@ class NodeBuilder
      * @param \PHPHtmlParser\Dom\HtmlNode $baseItem
      * @return array
      */
-    function getStartEnd($item, $baseItem)
+    public function getStartEnd($item, $baseItem)
     {
         $baseOut = $baseItem->outerHtml();
         $itemOut = $item->outerHtml();
@@ -242,21 +241,23 @@ class NodeBuilder
 
 
 
-    private function _createGuid() {
+    private function _createGuid()
+    {
         $charid = strtoupper(md5(uniqid(mt_rand(), true)));
         $hyphen = chr(45);// "-"
         $uuid = chr(123)// "{"
             .substr($charid, 0, 8).$hyphen
             .substr($charid, 8, 4).$hyphen
-            .substr($charid,12, 4).$hyphen
-            .substr($charid,16, 4).$hyphen
-            .substr($charid,20,12)
+            .substr($charid, 12, 4).$hyphen
+            .substr($charid, 16, 4).$hyphen
+            .substr($charid, 20, 12)
             .chr(125);// "}"
         return $uuid;
     }
 
-    private function _nullToDefault($nullable, $default=''){
-        if(empty($nullable)){
+    private function _nullToDefault($nullable, $default='')
+    {
+        if (empty($nullable)) {
             return $default;
         }
         return $nullable;

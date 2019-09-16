@@ -61,7 +61,7 @@ class OAuth
      *
      * @ignore
      */
-    public $ssl_verifypeer = FALSE;
+    public $ssl_verifypeer = false;
     /**
      * Respons format.
      *
@@ -73,7 +73,7 @@ class OAuth
      *
      * @ignore
      */
-    public $decode_json = TRUE;
+    public $decode_json = true;
     /**
      * Contains the last HTTP headers returned.
      *
@@ -92,7 +92,7 @@ class OAuth
      *
      * @ignore
      */
-    public $debug = FALSE;
+    public $debug = false;
 
     /**
      * boundary of multipart
@@ -108,7 +108,7 @@ class OAuth
     /**
      * @ignore
      */
-    function accessTokenURL()
+    public function accessTokenURL()
     {
         return 'https://api.weibo.com/oauth2/access_token';
     }
@@ -116,7 +116,7 @@ class OAuth
     /**
      * @ignore
      */
-    function authorizeURL()
+    public function authorizeURL()
     {
         return 'https://api.weibo.com/oauth2/authorize';
     }
@@ -124,7 +124,7 @@ class OAuth
     /**
      * construct WeiboOAuth object
      */
-    function __construct($client_id, $client_secret, $access_token = NULL, $refresh_token = NULL)
+    public function __construct($client_id, $client_secret, $access_token = null, $refresh_token = null)
     {
         $this->client_id = $client_id;
         $this->client_secret = $client_secret;
@@ -132,7 +132,7 @@ class OAuth
         $this->refresh_token = $refresh_token;
     }
 
-    static public function getSaeTClientV2($akey, $skey, $access_token, $refresh_token = NULL)
+    public static function getSaeTClientV2($akey, $skey, $access_token, $refresh_token = null)
     {
         return new Client($akey, $skey, $access_token, $refresh_token);
     }
@@ -155,7 +155,7 @@ class OAuth
      *  - apponweibo    站内应用专用,站内应用不传display参数,并且response_type为token时,默认使用改display.授权后不会返回access_token，只是输出js刷新站内应用父框架
      * @return array
      */
-    function getAuthorizeURL($url, $response_type = 'code', $state = NULL, $display = NULL)
+    public function getAuthorizeURL($url, $response_type = 'code', $state = null, $display = null)
     {
         $params = array();
         $params['client_id'] = $this->client_id;
@@ -172,7 +172,7 @@ class OAuth
      * @return mixed
      * @throws WeiboException
      */
-    function getAccessToken($type = 'code', $keys)
+    public function getAccessToken($type = 'code', $keys)
     {
         $params = array();
         $params['client_id'] = $this->client_id;
@@ -196,7 +196,7 @@ class OAuth
         $token = json_decode($response, true);
         if (is_array($token) && !isset($token['error'])) {
             $this->access_token = $token['access_token'];
-            //$this->refresh_token = $token['refresh_token'];
+        //$this->refresh_token = $token['refresh_token'];
         } else {
             throw new WeiboException("get access token failed." . $token['error']);
         }
@@ -210,12 +210,14 @@ class OAuth
      *
      * @return array
      */
-    function parseSignedRequest($signed_request)
+    public function parseSignedRequest($signed_request)
     {
         list($encoded_sig, $payload) = explode('.', $signed_request, 2);
         $sig = self::base64decode($encoded_sig);
         $data = json_decode(self::base64decode($payload), true);
-        if (strtoupper($data['algorithm']) !== 'HMAC-SHA256') return '-1';
+        if (strtoupper($data['algorithm']) !== 'HMAC-SHA256') {
+            return '-1';
+        }
         $expected_sig = hash_hmac('sha256', $payload, $this->client_secret, true);
         return ($sig !== $expected_sig) ? '-2' : $data;
     }
@@ -223,7 +225,7 @@ class OAuth
     /**
      * @ignore
      */
-    function base64decode($str)
+    public function base64decode($str)
     {
         return base64_decode(strtr($str . str_repeat('=', (4 - strlen($str) % 4)), '-_', '+/'));
     }
@@ -233,7 +235,7 @@ class OAuth
      *
      * @return array 成功返回array('access_token'=>'value', 'refresh_token'=>'value'); 失败返回false
      */
-    function getTokenFromJSSDK()
+    public function getTokenFromJSSDK()
     {
         $key = "weibojs_" . $this->client_id;
         if (isset($_COOKIE[$key]) && $cookie = $_COOKIE[$key]) {
@@ -257,7 +259,7 @@ class OAuth
      * @param array $arr 存有access_token和secret_token的数组
      * @return array 成功返回array('access_token'=>'value', 'refresh_token'=>'value'); 失败返回false
      */
-    function getTokenFromArray($arr)
+    public function getTokenFromArray($arr)
     {
         if (isset($arr['access_token']) && $arr['access_token']) {
             $token = array();
@@ -277,7 +279,7 @@ class OAuth
      *
      * @return mixed
      */
-    function get($url, $parameters = array())
+    public function get($url, $parameters = array())
     {
         $response = $this->oAuthRequest($url, 'GET', $parameters);
         if ($this->format === 'json' && $this->decode_json) {
@@ -291,7 +293,7 @@ class OAuth
      *
      * @return mixed
      */
-    function post($url, $parameters = array(), $multi = false)
+    public function post($url, $parameters = array(), $multi = false)
     {
         $response = $this->oAuthRequest($url, 'POST', $parameters, $multi);
         if ($this->format === 'json' && $this->decode_json) {
@@ -305,7 +307,7 @@ class OAuth
      *
      * @return mixed
      */
-    function delete($url, $parameters = array())
+    public function delete($url, $parameters = array())
     {
         $response = $this->oAuthRequest($url, 'DELETE', $parameters);
         if ($this->format === 'json' && $this->decode_json) {
@@ -320,9 +322,8 @@ class OAuth
      * @return string
      * @ignore
      */
-    function oAuthRequest($url, $method, $parameters, $multi = false)
+    public function oAuthRequest($url, $method, $parameters, $multi = false)
     {
-
         if (strrpos($url, 'http://') !== 0 && strrpos($url, 'https://') !== 0) {
             $url = "{$this->host}{$url}.{$this->format}";
         }
@@ -349,7 +350,7 @@ class OAuth
      * @return string API results
      * @ignore
      */
-    function http($url, $method, $postfields = NULL, $headers = array())
+    public function http($url, $method, $postfields = null, $headers = array())
     {
         $this->http_info = array();
         $ci = curl_init();
@@ -358,7 +359,7 @@ class OAuth
         curl_setopt($ci, CURLOPT_USERAGENT, $this->useragent);
         curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, $this->connecttimeout);
         curl_setopt($ci, CURLOPT_TIMEOUT, $this->timeout);
-        curl_setopt($ci, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ci, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ci, CURLOPT_ENCODING, "");
         curl_setopt($ci, CURLOPT_SSL_VERIFYPEER, $this->ssl_verifypeer);
         if (version_compare(phpversion(), '5.4.0', '<')) {
@@ -367,11 +368,11 @@ class OAuth
             curl_setopt($ci, CURLOPT_SSL_VERIFYHOST, 2);
         }
         curl_setopt($ci, CURLOPT_HEADERFUNCTION, array($this, 'getHeader'));
-        curl_setopt($ci, CURLOPT_HEADER, FALSE);
+        curl_setopt($ci, CURLOPT_HEADER, false);
 
         switch ($method) {
             case 'POST':
-                curl_setopt($ci, CURLOPT_POST, TRUE);
+                curl_setopt($ci, CURLOPT_POST, true);
                 if (!empty($postfields)) {
                     curl_setopt($ci, CURLOPT_POSTFIELDS, $postfields);
                     $this->postdata = $postfields;
@@ -384,8 +385,9 @@ class OAuth
                 }
         }
 
-        if (isset($this->access_token) && $this->access_token)
+        if (isset($this->access_token) && $this->access_token) {
             $headers[] = "Authorization: OAuth2 " . $this->access_token;
+        }
 
         if (!empty($this->remote_ip)) {
             if (defined('SAE_ACCESSKEY')) {
@@ -400,7 +402,7 @@ class OAuth
         }
         curl_setopt($ci, CURLOPT_URL, $url);
         curl_setopt($ci, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ci, CURLINFO_HEADER_OUT, TRUE);
+        curl_setopt($ci, CURLINFO_HEADER_OUT, true);
 
         $response = curl_exec($ci);
         $this->http_code = curl_getinfo($ci, CURLINFO_HTTP_CODE);
@@ -430,7 +432,7 @@ class OAuth
      * @return int
      * @ignore
      */
-    function getHeader($ch, $header)
+    public function getHeader($ch, $header)
     {
         $i = strpos($header, ':');
         if (!empty($i)) {
@@ -446,7 +448,9 @@ class OAuth
      */
     public static function build_http_query_multi($params)
     {
-        if (!$params) return '';
+        if (!$params) {
+            return '';
+        }
 
         uksort($params, 'strcmp');
 
@@ -458,7 +462,6 @@ class OAuth
         $multipartbody = '';
 
         foreach ($params as $parameter => $value) {
-
             if (in_array($parameter, array('pic', 'image')) && $value{0} == '@') {
                 $url = ltrim($value, '@');
                 $content = file_get_contents($url);
@@ -474,11 +477,9 @@ class OAuth
                 $multipartbody .= 'content-disposition: form-data; name="' . $parameter . "\"\r\n\r\n";
                 $multipartbody .= $value . "\r\n";
             }
-
         }
 
         $multipartbody .= $endMPboundary;
         return $multipartbody;
     }
 }
-

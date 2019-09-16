@@ -19,28 +19,35 @@ abstract class Response
     private $_cookies;
     private $_sendBody = false;
 
-    public function __construct($body = '', $httpCode = 200){
+    public function __construct($body = '', $httpCode = 200)
+    {
         $this->_body        = $body;
         $this->_httpCode    = $httpCode;
     }
 
-    public function setCookie(Cookie $cookie){
+    public function setCookie(Cookie $cookie)
+    {
         $name = $cookie->getName();
-        if (empty($name)) return false;
+        if (empty($name)) {
+            return false;
+        }
         $name                 = $this->getNewOrExistingKeyInArray($name, $this->_cookies);
         $this->_cookies[$name] = $cookie;
     }
 
-    public function getCookie($name){
+    public function getCookie($name)
+    {
         $name = $this->getNewOrExistingKeyInArray($name, $this->_cookies);
-        return isset($this->_cookies[$name]) ? $this->_cookies[$name] : NULL;
+        return isset($this->_cookies[$name]) ? $this->_cookies[$name] : null;
     }
 
-    public function getCookies(){
+    public function getCookies()
+    {
         return $this->_cookies;
     }
 
-    public function getHttpCode(){
+    public function getHttpCode()
+    {
         return $this->_httpCode;
     }
 
@@ -48,7 +55,8 @@ abstract class Response
      * @param $httpCode
      * @return int
      */
-    public function setHttpCode($httpCode){
+    public function setHttpCode($httpCode)
+    {
         return $this->_httpCode = (int)$httpCode;
     }
 
@@ -57,8 +65,11 @@ abstract class Response
      * @param $value
      * @return bool
      */
-    public function setHeader($header, $value){
-        if (empty($header)) return false;
+    public function setHeader($header, $value)
+    {
+        if (empty($header)) {
+            return false;
+        }
         $header                 = $this->getNewOrExistingKeyInArray($header, $this->_headers);
         $this->_headers[$header] = $value;
         if (strtolower($header) === 'location'
@@ -68,37 +79,42 @@ abstract class Response
         }
     }
 
-    public function getHeader($header){
+    public function getHeader($header)
+    {
         $header = $this->getNewOrExistingKeyInArray($header, $this->_headers);
-        return isset($this->_headers[$header]) ? $this->_headers[$header] : NULL;
+        return isset($this->_headers[$header]) ? $this->_headers[$header] : null;
     }
 
     /**
      * @return string
      */
-    public function getBody(){
+    public function getBody()
+    {
         return $this->_body;
     }
 
     /**
      * @param $body
      */
-    public function setBody($body){
+    public function setBody($body)
+    {
         $this->_body = $body;
     }
 
-    public function getHeaders(){
+    public function getHeaders()
+    {
         return $this->_headers;
     }
 
-    public function setHeaders(array $headers){
+    public function setHeaders(array $headers)
+    {
         $this->_headers = $headers;
     }
 
     public function send($dealHeader = true)
     {
         $body    = $this->_getBodyToSend();
-        if($dealHeader === true){
+        if ($dealHeader === true) {
             header_remove();
             $headers = $this->_getHeadersToSend($body);
             foreach ($headers as $header) {
@@ -107,10 +123,15 @@ abstract class Response
             $cookies = $this->getCookies();
             if (!empty($cookies)) {
                 foreach ($cookies as $cookie) {
-                    setcookie($cookie->getName(), $cookie->getValue(),
-                        $cookie->getExpire(), $cookie->getPath(),
-                        $cookie->getDomain(), $cookie->getSecure(),
-                        $cookie->getHttpOnly());
+                    setcookie(
+                        $cookie->getName(),
+                        $cookie->getValue(),
+                        $cookie->getExpire(),
+                        $cookie->getPath(),
+                        $cookie->getDomain(),
+                        $cookie->getSecure(),
+                        $cookie->getHttpOnly()
+                    );
                 }
             }
         }
@@ -118,7 +139,7 @@ abstract class Response
         if ($this->_sendBody) {
             print $this->_sendBody;
             exit;
-        }else{
+        } else {
             return $body;
         }
     }
@@ -132,10 +153,10 @@ abstract class Response
             $this->setHeader('Access-Control-Max-Age', 86400);
         }
         if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])){
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
                 $this->setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
             }
-            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])){
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
                 $this->setHeader('Access-Control-Allow-Headers', $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']);
             }
         }
@@ -150,7 +171,8 @@ abstract class Response
         }
         return $headers;
     }
-    protected function _getBodyToSend(){
+    protected function _getBodyToSend()
+    {
         $this->setHeader('Content-Type', $this->_getContentType());
         return $this->_sendBody = $this->_serialize($this->_body);
     }
@@ -168,7 +190,9 @@ abstract class Response
 
     private function getNewOrExistingKeyInArray($key, $array)
     {
-        if (empty($array)) return $key;
+        if (empty($array)) {
+            return $key;
+        }
         $keys    = array_keys($array);
         $low_key = strtolower($key);
         foreach ($keys as $existing_key) {
@@ -261,38 +285,45 @@ abstract class Response
         return $this->_statusReason;
     }
 
-    public function setStatusReason($statusReason){
+    public function setStatusReason($statusReason)
+    {
         $this->_statusReason = $statusReason;
     }
 
-    public function removeHeader($header){
-        if (empty($header)) return false;
+    public function removeHeader($header)
+    {
+        if (empty($header)) {
+            return false;
+        }
         $header = $this->getNewOrExistingKeyInArray($header, $this->_headers);
         unset($this->_headers[$header]);
         return true;
     }
 
-    public function getProtocolVersion(){
+    public function getProtocolVersion()
+    {
         if (empty($this->_protocolVersion)) {
             if (isset($_SERVER['SERVER_PROTOCOL'])) {
                 list(, $this->_protocolVersion) = explode('/', $_SERVER['SERVER_PROTOCOL']);
-            }
-            else {
+            } else {
                 $this->_protocolVersion = '1.0';
             }
         }
         return $this->_protocolVersion;
     }
 
-    public function setProtocolVersion($protocolVersion){
+    public function setProtocolVersion($protocolVersion)
+    {
         $this->_protocolVersion = $protocolVersion;
     }
 
-    public function getSendBody(){
+    public function getSendBody()
+    {
         return $this->_sendBody;
     }
 
-    public function setSendBody($sendBody){
+    public function setSendBody($sendBody)
+    {
         $this->_sendBody = $sendBody;
     }
 
@@ -300,7 +331,8 @@ abstract class Response
 
     abstract protected function _getContentType();
 
-    public function isInvalidHttpCode(){
+    public function isInvalidHttpCode()
+    {
         return $this->_httpCode < 100 || $this->_httpCode >= 600;
     }
 }

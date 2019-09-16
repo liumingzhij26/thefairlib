@@ -9,9 +9,10 @@
 include "./DeviceFingerprintHandle.php";
 include "./ServicesRegion.php";
 // 时区
-ini_set('date.timezone','Asia/Shanghai');
+ini_set('date.timezone', 'Asia/Shanghai');
 
-class Demo {
+class Demo
+{
     // 根据实际情况填写
     const appSecret = "你的AppID";
     // 根据实际情况填写
@@ -30,7 +31,8 @@ $responseData = $requestHandle->getDeviceInfo(ServicesRegion::EAST_ASIA, Demo::a
 $result = json_decode($responseData, true);
 
 // 请求状态码。非 200 表示没有获取到设备明细信息
-if ($result['stateCode'] == 200)
+if ($result['stateCode'] == 200) {
     echo json_encode($result['data'], true);
-else
+} else {
     echo $result['message'];
+}

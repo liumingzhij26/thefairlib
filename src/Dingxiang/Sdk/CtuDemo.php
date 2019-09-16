@@ -13,14 +13,14 @@ $appId = "appId";
 $appSecret = "appSecret";
 
 // 时区
-ini_set('date.timezone','Asia/Shanghai');
+ini_set('date.timezone', 'Asia/Shanghai');
 
 // 构造请求参数
 $request = new CtuClient($url, $appId, $appSecret);
 $reqJsonString =  json_encode($request, JSON_UNESCAPED_UNICODE);
 $ctuRequest = new CtuRequest();
 // $data 具体的业务参数,根据业务实际情况传入
-$data = array (
+$data = array(
     "const_id" => "egUbLWXKgiPKBMmcwbZsF1PqoflWOyhKLIhAzw9X1",
     "user_id" => "438699324",
     "phone_number" => "15958004277",
@@ -50,10 +50,10 @@ $result = $jsonResult['result']["riskLevel"];
 if ($result == "ACCEPT") {
     // 无风险,建议放过
     echo "风险结果:无风险,建议放过" . "\n";
-} else if ($result == "REVIEW") {
+} elseif ($result == "REVIEW") {
     // 不确定,需要进一步审核
     echo "风险结果:不确定,需要进一步审核" . "\n";
-} else if ($result == "REJECT") {
+} elseif ($result == "REJECT") {
     // 有风险,建议拒绝
     echo "风险结果:有风险,建议拒绝" . "\n";
 }

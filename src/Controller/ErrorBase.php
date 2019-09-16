@@ -14,7 +14,8 @@ abstract class ErrorBase extends Base
     /**
      * 继承base中的初始化处理
      */
-    protected function init(){
+    protected function init()
+    {
         //@todo
     }
 
@@ -28,8 +29,9 @@ abstract class ErrorBase extends Base
      *
      * @param \Exception $exception
      */
-    public function errorAction(\Exception $exception){
-        if($exception instanceof \Yaf\Exception){
+    public function errorAction(\Exception $exception)
+    {
+        if ($exception instanceof \Yaf\Exception) {
             switch ($exception->getCode()) {
                 case \Yaf\ERR\NOTFOUND\MODULE:
                     $this->_errorNotfoundModule($exception);
@@ -43,14 +45,13 @@ abstract class ErrorBase extends Base
                 case \Yaf\ERR\NOTFOUND\VIEW:
                     $this->_errorNotfoundView($exception);
                     break;
-                default :
+                default:
                     $this->_errorDefault($exception);
                     break;
             }
-        }else{
+        } else {
             $this->_errorDefault($exception);
         }
-
     }
 
     /**
@@ -59,7 +60,8 @@ abstract class ErrorBase extends Base
      * @param \Exception $e
      * @throws \Exception
      */
-    protected function _errorDefault(\Exception $e){
+    protected function _errorDefault(\Exception $e)
+    {
         $this->_DealWithException($e);
     }
 
@@ -69,7 +71,8 @@ abstract class ErrorBase extends Base
      * @param \Yaf\Exception $e
      * @throws \Exception
      */
-    protected function _errorNotfoundModule(\Yaf\Exception $e){
+    protected function _errorNotfoundModule(\Yaf\Exception $e)
+    {
         $this->_DealWithException($e);
     }
 
@@ -79,7 +82,8 @@ abstract class ErrorBase extends Base
      * @param \Yaf\Exception $e
      * @throws \Exception
      */
-    protected function _errorNotfoundController(\Yaf\Exception $e){
+    protected function _errorNotfoundController(\Yaf\Exception $e)
+    {
         $this->_DealWithException($e);
     }
 
@@ -89,7 +93,8 @@ abstract class ErrorBase extends Base
      * @param \Yaf\Exception $e
      * @throws \Exception
      */
-    protected function _errorNotfoundAction(\Yaf\Exception $e){
+    protected function _errorNotfoundAction(\Yaf\Exception $e)
+    {
         $this->_DealWithException($e);
     }
 
@@ -99,7 +104,8 @@ abstract class ErrorBase extends Base
      * @param \Yaf\Exception $e
      * @throws \Exception
      */
-    protected function _errorNotfoundView(\Yaf\Exception $e){
+    protected function _errorNotfoundView(\Yaf\Exception $e)
+    {
         $this->_DealWithException($e);
     }
 
@@ -109,7 +115,8 @@ abstract class ErrorBase extends Base
      * @param \Exception $e
      * @throws \Exception
      */
-    private function _DealWithException(\Exception $e){
+    private function _DealWithException(\Exception $e)
+    {
         throw $e;
     }
 }

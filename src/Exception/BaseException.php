@@ -11,5 +11,4 @@ namespace TheFairLib\Exception;
 
 abstract class BaseException extends \Yaf\Exception
 {
-
 }

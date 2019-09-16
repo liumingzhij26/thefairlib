@@ -8,29 +8,27 @@
 
 class IGtAPNPayload
 {
-    var $APN_SOUND_SILENCE = "com.gexin.ios.silence";
+    public $APN_SOUND_SILENCE = "com.gexin.ios.silence";
     public static $PAYLOAD_MAX_BYTES = 2048;
 
 
-    var $customMsg = array();
+    public $customMsg = array();
 
-    var $badge = -1;
-    var $sound = "default";
-    var $contentAvailable = 0;
-    var $category;
-    var $alertMsg;
-    var $multiMedias = array();
+    public $badge = -1;
+    public $sound = "default";
+    public $contentAvailable = 0;
+    public $category;
+    public $alertMsg;
+    public $multiMedias = array();
 
     public function get_payload()
     {
         try {
-
             $apsMap = array();
 
             if ($this->alertMsg != null) {
                 $msg =  $this->alertMsg->get_alertMsg();
-                if($msg != null)
-                {
+                if ($msg != null) {
                     $apsMap["alert"] = $msg;
                 }
             }
@@ -38,11 +36,9 @@ class IGtAPNPayload
             if ($this->badge >= 0) {
                 $apsMap["badge"] = $this->badge;
             }
-            if($this -> sound == null || $this->sound == '' )
-            {
+            if ($this -> sound == null || $this->sound == '') {
                 $apsMap["sound"] = 'default';
-            }elseif($this->sound != $this->APN_SOUND_SILENCE)
-            {
+            } elseif ($this->sound != $this->APN_SOUND_SILENCE) {
                 $apsMap["sound"] = $this->sound;
             }
 
@@ -57,14 +53,14 @@ class IGtAPNPayload
             }
 
             $map = array();
-            if(count($this->customMsg) > 0){
+            if (count($this->customMsg) > 0) {
                 foreach ($this->customMsg as $key => $value) {
                     $map[$key] = $value;
                 }
             }
             $map["aps"] = $apsMap;
 
-            if($this -> multiMedias != null && sizeof($this -> multiMedias) > 0) {
+            if ($this -> multiMedias != null && sizeof($this -> multiMedias) > 0) {
                 $map["_grinfo_"] = $this->check_multiMedias();
             }
             return json_encode($map);
@@ -80,31 +76,31 @@ class IGtAPNPayload
         }
     }
 
-    function check_multiMedias()
+    public function check_multiMedias()
     {
-        if(sizeof($this -> multiMedias) > 3) {
+        if (sizeof($this -> multiMedias) > 3) {
             throw new RuntimeException("MultiMedias size overlimit");
         }
 
         $needGeneRid = false;
         $rids = array();
-        for($i = 0; $i < sizeof($this -> multiMedias); $i++) {
+        for ($i = 0; $i < sizeof($this -> multiMedias); $i++) {
             $media = $this -> multiMedias[$i];
-            if($media -> get_rid() == null) {
+            if ($media -> get_rid() == null) {
                 $needGeneRid = true;
             } else {
                 $rids[$media -> get_rid()] = 0;
             }
 
-            if($media->get_type() == null || $media->get_url() == null) {
+            if ($media->get_type() == null || $media->get_url() == null) {
                 throw new RuntimeException("MultiMedia resType and resUrl can't be null");
             }
         }
 
-        if(sizeof($rids) != sizeof($this -> multiMedias))  {
+        if (sizeof($rids) != sizeof($this -> multiMedias)) {
             $needGeneRid = true;
         }
-        if($needGeneRid) {
+        if ($needGeneRid) {
             for ($i = 0; $i < sizeof($this->multiMedias); $i++) {
                 $this->multiMedias[$i] -> set_rid("grid-" . $i);
             }
@@ -113,12 +109,14 @@ class IGtAPNPayload
         return $this -> multiMedias;
     }
 
-    function add_multiMedia($media) {
+    public function add_multiMedia($media)
+    {
         $this->multiMedias[] = $media;
         return $this;
     }
 
-    function set_multiMedias($medias) {
+    public function set_multiMedias($medias)
+    {
         $this->multiMedias = $medias;
         return $this;
     }
@@ -128,19 +126,19 @@ interface ApnMsg
     public function get_alertMsg();
 }
 
-class DictionaryAlertMsg implements ApnMsg{
+class DictionaryAlertMsg implements ApnMsg
+{
+    public $title;
+    public $body;
+    public $titleLocKey;
+    public $titleLocArgs = array();
+    public $actionLocKey;
+    public $locKey;
+    public $locArgs = array();
+    public $launchImage;
 
-    var $title;
-    var $body;
-    var $titleLocKey;
-    var $titleLocArgs = array();
-    var $actionLocKey;
-    var $locKey;
-    var $locArgs = array();
-    var $launchImage;
-
-    public function get_alertMsg() {
-
+    public function get_alertMsg()
+    {
         $alertMap = array();
 
         if ($this->title != null && $this->title != "") {
@@ -168,8 +166,7 @@ class DictionaryAlertMsg implements ApnMsg{
             $alertMap["launch-image"] = $this->launchImage;
         }
 
-        if(count($alertMap) == 0)
-        {
+        if (count($alertMap) == 0) {
             return null;
         }
 
@@ -177,11 +174,12 @@ class DictionaryAlertMsg implements ApnMsg{
     }
 }
 
-class SimpleAlertMsg implements ApnMsg{
-    var $alertMsg;
+class SimpleAlertMsg implements ApnMsg
+{
+    public $alertMsg;
 
-    public function get_alertMsg() {
+    public function get_alertMsg()
+    {
         return $this->alertMsg;
     }
 }
-?>

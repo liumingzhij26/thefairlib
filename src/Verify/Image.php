@@ -8,7 +8,7 @@ class Image
 {
 
     //图片验证码
-    CONST CACHE_NAME = "IMAGE_STANDARD_IMAGE_CODE_";
+    const CACHE_NAME = "IMAGE_STANDARD_IMAGE_CODE_";
     //随机因子
     private $charset = [
         'mixture' => 'abcdefghkmnpstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789',
@@ -50,7 +50,7 @@ class Image
 
     private $sessionKeyPrefix = '';
 
-    static private $cache = null;
+    private static $cache = null;
 
     //构造方法初始化
     public function __construct()
@@ -225,10 +225,14 @@ class Image
     {
         $fileName = "1";
         $dirPath = realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'font';
-        if (!$this->randFont) return $dirPath . DIRECTORY_SEPARATOR . $fileName . ".ttf";
+        if (!$this->randFont) {
+            return $dirPath . DIRECTORY_SEPARATOR . $fileName . ".ttf";
+        }
         $file = scandir($dirPath);//查看文件数量
         $count = count($file) - 2;
-        if ($count > 1) $fileName = mt_rand(1, $count);
+        if ($count > 1) {
+            $fileName = mt_rand(1, $count);
+        }
         $fileName = $dirPath . DIRECTORY_SEPARATOR . "{$fileName}.ttf";
         return $fileName;
     }

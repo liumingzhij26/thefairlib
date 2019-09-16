@@ -71,6 +71,4 @@ class ESDocument
             'body' => $this->_data
         ];
     }
-
-
 }

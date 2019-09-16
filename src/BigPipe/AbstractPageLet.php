@@ -20,9 +20,10 @@ abstract class AbstractPageLet extends PageLet
     protected $isSkeleton 	= false;
     protected static $_params;
 
-    public function __construct($tplPath = '') {
+    public function __construct($tplPath = '')
+    {
         self::$_params = Utility::get_requset_params();
-        if(empty($this->name)){
+        if (empty($this->name)) {
             $this->name = strtolower(get_class($this));
         }
 
@@ -38,48 +39,55 @@ abstract class AbstractPageLet extends PageLet
      */
     abstract protected function _getChildren();
 
-    public function getGlobalMetaData(){
+    public function getGlobalMetaData()
+    {
         $medaData = array_merge($this->getPlGlobalData(), $this->plGlobals);
-        if(!empty($medaData["PAGE_TITLE"])){
+        if (!empty($medaData["PAGE_TITLE"])) {
             $medaData["PAGE_TITLE"] = Utility::utf8SubStr($medaData["PAGE_TITLE"], 80);
         }
-        if(!empty($medaData["PAGE_DESC"])){
+        if (!empty($medaData["PAGE_DESC"])) {
             $medaData["PAGE_DESC"] = Utility::utf8SubStr($medaData["PAGE_DESC"], 90);
         }
-        if(!empty($medaData["PAGE_KWD"])){
+        if (!empty($medaData["PAGE_KWD"])) {
             $medaData["PAGE_KWD"] = Utility::utf8SubStr($medaData["PAGE_KWD"], 80);
         }
         return $medaData;
     }
 
-    protected function getPlGlobalData(){
+    protected function getPlGlobalData()
+    {
         $global_data =array();
         return $global_data;
     }
 
-    protected function setPlGlobal($key, $value){
-        if(!empty($value)){
+    protected function setPlGlobal($key, $value)
+    {
+        if (!empty($value)) {
             $this->plGlobals[$key] = $value;
-        }else{
-            if(isset($this->plGlobals[$key])){
+        } else {
+            if (isset($this->plGlobals[$key])) {
                 unset($this->plGlobals[$key]);
             }
         }
     }
 
-    protected function setTitle($title, $type = "PAGE_TITLE"){
+    protected function setTitle($title, $type = "PAGE_TITLE")
+    {
         $this->setPlGlobal($type, $title);
     }
 
-    protected function setDesc($description, $type = "PAGE_DESC"){
+    protected function setDesc($description, $type = "PAGE_DESC")
+    {
         $this->setPlGlobal($type, $description);
     }
 
-    protected function setKwd($keywords, $type = "PAGE_KWD"){
+    protected function setKwd($keywords, $type = "PAGE_KWD")
+    {
         $this->setPlGlobal($type, $keywords);
     }
 
-    protected function message($msg, $redirect='/', $timeout=3){
+    protected function message($msg, $redirect='/', $timeout=3)
+    {
         $_ENV['errmsg'] = array(
             'msg'=>$msg,
             'redirect'=>$redirect,
@@ -88,7 +96,8 @@ abstract class AbstractPageLet extends PageLet
         $this->end(new Exception($msg));
     }
 
-    public function end(Exception $e){
+    public function end(Exception $e)
+    {
         $errData = $e->getData();
         $html = '<div class="alert alert-error">
 		<button type="button" class="close" data-dismiss="alert">×</button>
@@ -104,26 +113,29 @@ abstract class AbstractPageLet extends PageLet
         echo "<script>BigPipe && BigPipe.onPageletArrive(".Utility::encode($pl).")</script>\n";
     }
 
-    public function setDependsScripts($scripts = []) {
+    public function setDependsScripts($scripts = [])
+    {
         $config = Config::get_bigpipe_scripts(str_replace('_', '.', $this->name));
-        if(empty($config) || !is_array($config)){
+        if (empty($config) || !is_array($config)) {
             $config = [];
         }
         $this->scripts = array_merge($scripts, $config);
     }
 
-    public function setDependsStyles($styles = []) {
+    public function setDependsStyles($styles = [])
+    {
         $config = Config::get_bigpipe_styles(str_replace('_', '.', $this->name));
-        if(empty($config) || !is_array($config)){
+        if (empty($config) || !is_array($config)) {
             $config = [];
         }
         $this->styles = array_merge($styles, $config);
     }
 
-    protected function _getTplPath($tplPath){
-        if(empty($tplPath)){
+    protected function _getTplPath($tplPath)
+    {
+        if (empty($tplPath)) {
             $tplPath = str_replace("_", DIRECTORY_SEPARATOR, get_class($this));
-        }else{
+        } else {
             $tplPath = str_replace('\\', DIRECTORY_SEPARATOR, $tplPath);
         }
 

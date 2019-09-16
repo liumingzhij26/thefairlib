@@ -115,18 +115,15 @@ class Prober
      * @param   mixed   string to return: browser, version, robot, mobile, platform; or array of values
      * @return  mixed   requested information, FALSE if nothing is found
      */
-    static function getClientAgent($value = array('robot', 'browser', 'platform', 'mobile'))
+    public static function getClientAgent($value = array('robot', 'browser', 'platform', 'mobile'))
     {
-        if (isset($_SERVER['HTTP_USER_AGENT']))
-        {
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
             // Set the client user agent
             Prober::$user_agent = $_SERVER['HTTP_USER_AGENT'];
         }
-        if (is_array($value))
-        {
+        if (is_array($value)) {
             $agent = array();
-            foreach ($value as $v)
-            {
+            foreach ($value as $v) {
                 // Add each key to the set
                 $agent[$v] = Prober::getClientAgent($v);
             }
@@ -135,48 +132,37 @@ class Prober
         }
         static $info;
 
-        if (isset($info[$value]))
-        {
+        if (isset($info[$value])) {
             // This value has already been found
             return $info[$value];
         }
 
-        if ($value === 'browser' OR $value == 'version')
-        {
+        if ($value === 'browser' or $value == 'version') {
             // Load browsers
             $browsers = self::$user_agent_conf['browser'];
 
-            foreach ($browsers as $search => $name)
-            {
-                if (stripos(Prober::$user_agent, $search) !== FALSE)
-                {
+            foreach ($browsers as $search => $name) {
+                if (stripos(Prober::$user_agent, $search) !== false) {
                     // Set the browser name
                     $info['browser'] = $name;
 
-                    if (preg_match('#'.preg_quote($search).'[^0-9.]*+([0-9.][0-9.a-z]*)#i', Prober::$user_agent, $matches))
-                    {
+                    if (preg_match('#'.preg_quote($search).'[^0-9.]*+([0-9.][0-9.a-z]*)#i', Prober::$user_agent, $matches)) {
                         // Set the version number
                         $info['version'] = $matches[1];
-                    }
-                    else
-                    {
+                    } else {
                         // No version number found
-                        $info['version'] = FALSE;
+                        $info['version'] = false;
                     }
 
                     return $info[$value];
                 }
             }
-        }
-        else
-        {
+        } else {
             // Load the search group for this type
             $group = self::$user_agent_conf[$value];
-            if(!empty($group)){
-                foreach ($group as $search => $name)
-                {
-                    if (stripos(Prober::$user_agent, $search) !== FALSE)
-                    {
+            if (!empty($group)) {
+                foreach ($group as $search => $name) {
+                    if (stripos(Prober::$user_agent, $search) !== false) {
                         // Set the value name
                         return $info[$value] = $name;
                     }
@@ -185,7 +171,6 @@ class Prober
         }
 
         // The value requested could not be found
-        return $info[$value] = FALSE;
+        return $info[$value] = false;
     }
-
 }

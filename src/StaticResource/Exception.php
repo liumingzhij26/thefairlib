@@ -10,6 +10,6 @@ namespace TheFairLib\StaticResource;
 
 use TheFairLib\Exception\BaseException;
 
-class Exception extends BaseException{
-
+class Exception extends BaseException
+{
 }

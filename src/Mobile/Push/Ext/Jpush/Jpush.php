@@ -19,7 +19,6 @@ require dirname(__FILE__) . '/src/JPush/JPush.php';
 
 class Jpush implements PushInterface
 {
-
     private $_appKey = null;
     private $_masterSecret = null;
     private $_apnsProduction = false;//生成环境为true
@@ -47,12 +46,10 @@ class Jpush implements PushInterface
 
     public function sendPushToSingleDevice($deviceToken, $platform, $title, $message, $link, $badge)
     {
-
     }
 
     public function sendPushToDeviceList($deviceTokenList, $platform, $title, $message, $link, $badge)
     {
-
     }
 
     /**
@@ -70,7 +67,9 @@ class Jpush implements PushInterface
      */
     public function pushMessageToSingle($clientId, $platform, $title, $message, $link, $badge, $builderId = 1)
     {
-        if ($platform == 'iphone') $platform = 'ios';
+        if ($platform == 'iphone') {
+            $platform = 'ios';
+        }
         if (empty($clientId) || !in_array($platform, ['ios', 'android', 'winphone'])
             || empty($title) || empty($message)
         ) {
@@ -78,7 +77,7 @@ class Jpush implements PushInterface
         }
         $result = null;
         switch ($platform) {
-            case 'ios' :
+            case 'ios':
                 $result = $this->_push->push()->setPlatform($platform)
                     ->addRegistrationId($clientId)
                     ->setNotificationAlert($message)
@@ -88,7 +87,7 @@ class Jpush implements PushInterface
                     ->setOptions(86400, 3600, null, $this->_apnsProduction)
                     ->send();
                 break;
-            case 'android' :
+            case 'android':
                 $result = $this->_push->push()->setPlatform($platform)
                     ->addRegistrationId($clientId)
                     ->setNotificationAlert($message)
@@ -128,5 +127,4 @@ class Jpush implements PushInterface
     {
         return $this->_push->push();
     }
-
 }
