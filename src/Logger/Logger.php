@@ -9,6 +9,7 @@
 
 namespace TheFairLib\Logger;
 
+use Exception;
 use TheFairLib\Utility\Utility;
 use TheFairLib\Dingxiang\DingxingClient;
 
@@ -17,6 +18,7 @@ class Logger
     private $_name = null;
     private static $instance = null;
     private $_type = null;
+    public $path = '/tmp/logs/www/';
 
     public function __construct($appName)
     {
@@ -34,6 +36,14 @@ class Logger
             self::$instance = new static($appName);
         }
         return self::$instance;
+    }
+
+    public function setPath($path)
+    {
+        if (!is_dir($path)) {
+            throw new Exception('empty dir');
+        }
+        $this->path = $path;
     }
 
     public function info($s)
@@ -73,7 +83,7 @@ class Logger
             } else {
                 $log['act_time'] = is_numeric($log['act_time']) ? $log['act_time'] : strtotime($log['act_time']);
             }
-            $log['log_type'] =  '[' . strtoupper($this->_type) . ']';
+            $log['log_type'] = '[' . strtoupper($this->_type) . ']';
             $log = implode('||', $log);
             $this->output($this->format($log));
         }
@@ -84,7 +94,7 @@ class Logger
     {
         $s = date("Y-m-d H:i:s +u") . ": $s\n";
 
-        $dir = '/tmp/logs/www/' . str_replace('.', '/', strtolower($this->_name));
+        $dir = $this->path . str_replace('.', '/', strtolower($this->_name));
         if (!is_dir($dir)) {
             mkdir($dir, 0777, true);
         }
@@ -129,5 +139,6 @@ class Logger
         $logType = '[' . strtoupper($logType) . ']';
         $log = "{$dateTime}||{$logType}||{$eventType}||{$responseTime}||{$code}||{$clientIp}||{$url}||{$param}||{$serverIp}||{$msg}";
         $this->output($this->format($log));
+        return true;
     }
 }
