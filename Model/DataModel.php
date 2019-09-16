@@ -10,11 +10,14 @@
 namespace TheFairLib\Model;
 
 use Illuminate\Database\Capsule\Manager;
+use Illuminate\Database\Connection;
+use Illuminate\Database\Events\StatementPrepared;
+use Illuminate\Events\Dispatcher;
+use PDO;
 use TheFairLib\Config\Config;
 use TheFairLib\DB\Redis\Cache;
 use TheFairLib\DB\Redis\Storage;
 use TheFairLib\Queue\Rabbitmq\RabbitmqProducerClient;
-use TheFairLib\Search\Solr\Client;
 use TheFairLib\Utility\Utility;
 
 abstract class DataModel
@@ -109,7 +112,7 @@ abstract class DataModel
 
     /**
      * @param $dbName
-     * @return \Illuminate\Database\Connection
+     * @return Connection
      * @throws Exception
      */
     protected function db($dbName = '')
@@ -131,6 +134,15 @@ abstract class DataModel
 
             self::$capsule->addConnection($conf, $dbName);
             self::$capsule->setAsGlobal();
+            self::$capsule->bootEloquent();
+
+            //从 laravel 5.4 版本起，数据查询结果默认返回对象，#PDO::FETCH_OBJ https://github.com/laravel/framework/issues/17557
+            $dispatcher = new Dispatcher();
+
+            $dispatcher->listen(StatementPrepared::class, function ($event) {
+                $event->statement->setFetchMode(PDO::FETCH_ASSOC);
+            });
+            self::$capsule->setEventDispatcher($dispatcher);
             self::$db[] = $dbName;
         }
         $tmp = self::$capsule;
@@ -141,7 +153,7 @@ abstract class DataModel
      * 获取辅库连接
      *
      * @param string $dbName
-     * @return \PDO
+     * @return PDO
      * @throws Exception
      */
     protected function readDb($dbName = '')
@@ -153,7 +165,7 @@ abstract class DataModel
      * 获取主库连接
      *
      * @param string $dbName
-     * @return \PDO
+     * @return PDO
      * @throws Exception
      */
     protected function writeDb($dbName = '')
@@ -227,7 +239,7 @@ abstract class DataModel
             if (!empty($order)) {
                 $sqlObj = $sqlObj->orderByRaw($order);
             }
-            $ret = $sqlObj->limit($itemPerPage)->offset(($page - 1) * $itemPerPage)->get($fields);
+            $ret = $sqlObj->limit($itemPerPage)->offset(($page - 1) * $itemPerPage)->get($fields)->toArray();
         } else {
             $ret = [];
         }
@@ -446,7 +458,7 @@ abstract class DataModel
                 if (!empty($order)) {
                     $tmpSqlObj = $tmpSqlObj->orderByRaw($order);
                 }
-                $tmpRet = $tmpSqlObj->get($fields);
+                $tmpRet = $tmpSqlObj->get($fields)->toArray();
                 if (!empty($tmpRet)) {
                     if ($useShardingKeyMerge === true) {
                         foreach ($tmpRet as $tmpItem) {
@@ -508,7 +520,6 @@ abstract class DataModel
         Storage::closeConnection();
         Cache::closeConnection();
         RabbitmqProducerClient::allCloseConnection();//关闭MQ
-        Client::closeConnection();//solr
     }
 
     public static function clearSessionCache()
