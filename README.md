@@ -1,5 +1,8 @@
 ### 说明，兼容php7.0+
 
+## 老版本请使用："lmz/thefairlib": "^2.0"
+
+
 ```
 {
   "config": {"vendor-dir": "vendor"},
