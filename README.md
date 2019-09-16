@@ -32,7 +32,7 @@ TheFairLib 是基于yaf框架,集成了一些基本的类
 
 * 消息列表使用接入rabbitMq
 
-* 全文搜索使用solr/es
+* 全文搜索使用es
 
 * RPC服务器,使用swoole
 

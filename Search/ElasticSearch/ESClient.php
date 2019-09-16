@@ -24,7 +24,6 @@ use TheFairLib\Utility\Utility;
 /**
  *
  * Class Client
- * @package TheFairLib\Search\Solr
  */
 class ESClient
 {
