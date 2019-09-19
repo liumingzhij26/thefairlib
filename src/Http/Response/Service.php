@@ -88,7 +88,7 @@ class Service extends Response
         return $this->_serialize($this->getBody());
     }
 
-    public function send()
+    public function send($dealHeader = true)
     {
         $this->setBody($this->_buildApiBody());
         return parent::send(false);

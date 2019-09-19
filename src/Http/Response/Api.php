@@ -6,6 +6,7 @@
  * @version 1.0
  * @copyright 2015-2025
  */
+
 namespace TheFairLib\Http\Response;
 
 use TheFairLib\Http\Response;
@@ -87,7 +88,7 @@ class Api extends Response
         return 'application/json;charset=utf-8';
     }
 
-    public function send()
+    public function send($dealHeader = true)
     {
         $cookies = Utility::getResponseCookie();
         if (!empty($cookies)) {
@@ -96,7 +97,7 @@ class Api extends Response
             }
         }
         $this->setBody($this->_buildApiBody());
-        return parent::send();
+        return parent::send($dealHeader);
     }
 
     private function _buildApiBody()
@@ -104,7 +105,7 @@ class Api extends Response
         return array(
             'code' => $this->getCode(),
             'message' => array('text' => $this->getMsg(), 'action' => 'toast'),
-            'result' => (object) $this->getResult(),
+            'result' => (object)$this->getResult(),
         );
     }
 }
