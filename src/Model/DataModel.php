@@ -22,15 +22,16 @@ use TheFairLib\Utility\Utility;
 
 abstract class DataModel
 {
+
     protected $server = 'default';
 
-    protected static $instance;
+    static protected $instance;
 
-    protected static $cache;
+    static protected $cache;
 
-    protected static $db = [];
+    static protected $db = [];
 
-    protected static $dbName = 'default';
+    static protected $dbName = 'default';
 
     protected static $_params;
 
@@ -50,9 +51,9 @@ abstract class DataModel
     /**
      * @var Manager
      */
-    protected static $capsule;
+    static protected $capsule;
 
-    public static function Instance()
+    static public function Instance()
     {
         $class = get_called_class();
         if (empty(self::$instance[$class])) {
@@ -238,7 +239,7 @@ abstract class DataModel
             if (!empty($order)) {
                 $sqlObj = $sqlObj->orderByRaw($order);
             }
-            $ret = $sqlObj->limit($itemPerPage)->offset(($page - 1) * $itemPerPage)->get($fields)->toArray();
+            $ret = $sqlObj->limit($itemPerPage)->offset(($page - 1) * $itemPerPage)->get($fields);
         } else {
             $ret = [];
         }
