@@ -1,12 +1,17 @@
 <?php
+
 /**
  * Base.php
  *
- * @author liumingzhij26@gmail.com
+ * @author ZhangHan <zhanghan@thefair.net.cn>
  * @version 1.0
- * @copyright 2015-2025
+ * @copyright 2015-2025 TheFair
  */
+
 namespace TheFairLib\DB\Redis;
+
+use RedisClusterException;
+use TheFairLib\Db\Exception;
 
 abstract class Base
 {
@@ -23,14 +28,34 @@ abstract class Base
     /*
      * config
      */
-    public $config = array();
+    public $config = [];
 
+    /**
+     * @param $name
+     * @return RedisCluster
+     * @throws RedisClusterException
+     */
     final protected function getRedisInstance($name)
     {
         $this->_init();
         $parameters = $this->config($name);
-        $options = array('cluster' => 'redis');
-        return new \Predis\Client($parameters, $options);
+
+        if (empty($parameters)) {
+            throw new Exception("DB config not found: {$name}");
+        }
+
+        // todo add memcache
+        switch ($parameters['driver']) {
+            case 'redis':
+                $instance = $parameters['cluster']['enable'] ? new RedisCluster($parameters) : new RedisClient($parameters);
+                break;
+
+            default:
+                throw new Exception("Unknown DB driver: {$name}/{$parameters['driver']}");
+                break;
+        }
+
+        return $instance;
     }
 
     abstract protected function _init();
@@ -69,10 +94,14 @@ abstract class Base
     public static function closeConnection()
     {
         if (!empty(self::$instance)) {
-            foreach (self::$instance as $name => $redis) {
-                if ($redis->isConnected()) {
+            try {
+                foreach (self::$instance as $name => $redis) {
                     $redis->disconnect();
+                    unset(self::$instance[$name]);
                 }
+            } catch (\Throwable $e) {
+            } catch (\Exception $e) {
+            } catch (\Error $e) {
             }
         }
     }

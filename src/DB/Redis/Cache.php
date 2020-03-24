@@ -2,9 +2,9 @@
 /**
  * Cache.php
  *
- * @author liumingzhij26@gmail.com
+ * @author ZhangHan <zhanghan@thefair.net.cn>
  * @version 1.0
- * @copyright 2015-2025
+ * @copyright 2015-2025 TheFair
  */
 namespace TheFairLib\DB\Redis;
 
@@ -13,13 +13,12 @@ use TheFairLib\Config\Config;
 
 class Cache extends Base
 {
-    public function config($name)
-    {
+    public function config($name){
         $config = Config::get_db_redis();
         $conf   = $config['cache'];
-        if (!isset($conf[$name])) {
+        if(!isset($conf[$name])){
             throw new Exception('Redis Conf Error');
-        } else {
+        }else{
             return $conf[$name];
         }
     }
@@ -33,7 +32,7 @@ class Cache extends Base
 //        return self::$instance[$name];
 //    }
 
-    protected function _init()
-    {
+    protected function _init(){
+
     }
 }

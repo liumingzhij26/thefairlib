@@ -25,7 +25,8 @@
     "aliyuncs/oss-sdk-php": "~2.0",
     "paquettg/php-html-parser": "^1.7",
     "ext-openssl": "*",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "ext-redis": "*"
   },
   "require-dev": {
     "eaglewu/swoole-ide-helper": "dev-master"
